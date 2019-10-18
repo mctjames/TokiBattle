@@ -42,3 +42,6 @@ select a team of Tokimon from a pool of possible candidates, and then face off i
 opponent who has also selected Tokimon of their own. Users should be able to submit moves at the
 same time and then the stats of the Tokimon will be used to determine who acts first.
 
+Group Meeting and Dynamics
+
+James McTaggart is our scrum master. We plan to meet at least twice a week to set goals. This should be quite easy as we are all friends and see each other reasonably often anyway. Everyone will work on every part of the project. We plan to have a steady stream of commits for each iteration.
