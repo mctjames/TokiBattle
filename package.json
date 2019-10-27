@@ -1,0 +1,33 @@
+{
+  "name": "tokibattle",
+  "version": "1.0.0",
+  "description": "Tokibattle, battle tokimon, Yayyy!!! Give us marks.",
+  "main": "index.js",
+  "engines": {
+    "node": "12.x"
+  },
+  "scripts": {
+    "start": "node index.js"    
+  },
+  "author": "james_nora_sean_eric_thomas",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
+    "git": "^0.1.5",
+    "node": "^12.13.0",
+    "nodejs": "0.0.0",
+    "nodemon": "^1.19.4",
+    "pg": "^7.12.1",
+    "socket.io": "^2.3.0"
+  },
+  "homepage": "https://github.com/mctjames/TokiBattle#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mctjames/TokiBattle.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mctjames/TokiBattle/issues"
+  }
+}
