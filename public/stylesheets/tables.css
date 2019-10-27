@@ -1,0 +1,42 @@
+table {
+    width: 800px;
+}
+
+th {
+    text-align: left;
+}
+
+table, th, td {
+    border: 1px solid  #c4c5c5;
+    border-collapse: collapse;
+    background: #c4c5c5
+}
+
+th, td {
+    width: 200px;
+    text-align: center;
+}
+
+th {
+    background-color: #ddd;
+}
+
+/* #wrap {
+    background-color: #ffcb03;
+} */
+
+#Sorry {
+    color: white;
+}
+
+#sorrytext {
+    font-size: 45;
+}
+
+#sorryhead {
+    font-size: 30
+}
+
+body {
+    /* opacity: 0.5 */
+}
