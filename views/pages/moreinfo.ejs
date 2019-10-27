@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tokimons More Info</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/tokimon.css" />
+    <script src="js/script.js"></script>
+  </head>
+  <body>
+      <div id="moreInfoPageBackgroundImage">
+        <a href="https://sheltered-thicket-38577.herokuapp.com">Home</a> <a href="https://sheltered-thicket-38577.herokuapp.com/Tokimons">Tokimon List</a>
+
+          <div class="infoContainer">
+                <% rows.forEach((r) => { %>
+
+                <h2 class="infoHead">
+                  <%= r.t_name %>
+                </h2>
+                <table>
+                    <tr>
+                        <th class="fakeHeading">
+                            Tokimon ID
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <%= r.id %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="fakeHeading">
+                            Tokimon Total
+                        </th>
+                    </tr>
+                    <tr>
+                        <td class="fakeHeading">
+                            <%= r.t_total %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="fakeHeading">
+                            Tokimon Weight
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <%= r.t_weight %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="fakeHeading">
+                            Tokimon Height
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <%= r.t_height %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="fakeHeading">
+                            Tokimon Fly
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <%= r.t_fly %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="fakeHeading">
+                            Tokimon Fight
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <%= r.t_fight %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="fakeHeading">
+                            Tokimon Fire
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <%= r.t_fire %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="fakeHeading">
+                            Tokimon Water
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <%= r.t_water %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="fakeHeading">
+                            Tokimon Electric
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <%= r.t_electric %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="fakeHeading">
+                            Tokimon Frozen
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <%= r.t_frozen %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="fakeHeading">
+                            Tokimon Trainer
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <%= r.t_trainer %>
+                        </td>
+                    </tr>
+                </table>
+                <h3>
+                    Tokimon Description
+                </h3>
+                <p>
+                    <%= r.t_desc %>
+                </p>
+                <% }); %>
+            </div>
+      </div>    
+  </body>
+</html>

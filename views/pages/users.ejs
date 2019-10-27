@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tokimons</title>
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/tokimon.css" />
+    <script src="js/script.js"></script>
+  </head>
+  <body>
+    <div id="listPageBackgroundImage">
+      <a href="https://sheltered-thicket-38577.herokuapp.com">Home</a>
+      <p class="pageContent">Tokimons are rare. This is the list of Tokimons found so far. Each Tokimon has a unique ID which can be used to distinguish those with similar characteristics.</p>
+      <div class="greyPart">
+        <table class="actualTable">
+          <thead>
+            <tr>
+              <th class="actualTh">
+                Tokimon ID
+              </th>
+              <th class="actualTh">
+                Tokimon Name
+              </th>
+              <th class="actualTh">
+                Tokimon Weight
+               </th>
+               <th class="actualTh">
+                Tokimon Height
+               </th>
+               <th class="actualTh">
+                Tokimon Fly
+               </th>
+               <th class="actualTh">
+                Tokimon Fight
+               </th>
+               <th class="actualTh">
+                Tokimon Fire
+               </th>
+               <th class="actualTh">
+                Tokimon Water
+               </th>
+               <th class="actualTh">
+                Tokimon Electric
+               </th>
+               <th class="actualTh">
+                Tokimon Frozen
+               </th>
+               <th class="actualTh">
+                Tokimon Trainer
+               </th>
+               <th class="actualTh"> <!--class="ToBeHidden"> --> 
+                  Tokimon Total
+                </th>
+               <th  class="actualTh"> 
+                Options
+               </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% rows.forEach((r) => { %>
+              <tr>
+                <td class="actualTd">
+                    <%= r.id %>
+                </td>
+                <td class="actualTd">
+                    <%= r.t_name %>
+                </td>
+                <td class="actualTd">
+                    <%= r.t_weight %>
+                </td>
+                <td class="actualTd">
+                    <%= r.t_height %>
+                </td>
+                <td class="actualTd">
+                    <%= r.t_fly %>
+                </td>
+                <td class="actualTd">
+                    <%= r.t_fight %>
+                </td>
+                <td class="actualTd">
+                    <%= r.t_fire %>
+                </td>
+                <td class="actualTd">
+                    <%= r.t_water %>
+                </td>
+                <td class="actualTd">
+                    <%= r.t_electric %>
+                </td>
+                <td class="actualTd">
+                    <%= r.t_frozen %>
+                </td>
+                <td class="actualTd">
+                    <%= r.t_trainer %>
+                </td>
+                <td  class="actualTd">  <!--class="ToBeHidden"> -->
+                    <%= r.t_total %>
+                </td>
+                <td class="actualTd">
+                    <form action="/delete" onsubmit="return confirmDelete()" method="POST">
+                      <input class="ToBeHidden" type="text" name="tokiID" value=<%= r.id %>>
+                      <input type="submit" value="Delete">
+                    </form><br>
+                    <form action="/selectToModify" onsubmit="return confirmModify()" method="POST">
+                      <input class="ToBeHidden" type="text" name="tokiID" id="tokiID" value=<%= r.id %>>
+                      <input type="submit" value="Modify">
+                    </form><br>
+                    <form action="/moreinfo" method="POST">
+                      <input class="ToBeHidden" type="text" name="tokiID" id="tokiID" value=<%= r.id %>>
+                      <input type="submit" value="More Info">
+                    </form><br>
+                </td>
+              </tr> 
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

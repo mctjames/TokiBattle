@@ -1,0 +1,254 @@
+body, html {
+    height: 100%;
+    margin: 0;
+  }
+
+  h1 {
+    margin: 0 0 5% 40%;
+  }
+
+  h2 {
+    margin: 0 0 5% 35%;
+  }
+  
+  .pageContent {
+    margin: 0 10% 10% 10%;
+  }
+
+  #backgroundImage {
+    
+    background-image: url("pictures/Pikachu.jpg");
+  
+    
+    height: 200%; 
+  
+    
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  #addPageBackgroundImage {
+    
+    background-image: url("pictures/Pikachu.jpg");
+  
+    
+    height: 200%; 
+  
+    
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  #modifyPageBackgroundImage {
+    
+    background-image: url("pictures/Pikachu.jpg");
+  
+    
+    height: 200%; 
+  
+    
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  #moreInfoPageBackgroundImage {
+    
+    background-image: url("pictures/Pikachu.jpg");
+  
+    
+    height: 200%; 
+  
+    
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  #listPageBackgroundImage {
+    background-image: url("pictures/Pikachu.jpg");
+  
+    
+    height: 600%; 
+  
+    
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .tokimonSelections {
+    margin-left: 40%;
+  }
+
+  .listOfTokimons {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .listOfTokimons img {
+    width: 75%;
+    height: auto;
+  }
+  
+  .listOfTokimons .centered {
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    /* transform: translate(-50%, -50%); */
+  }
+
+  .centered {
+    font-weight: 900;
+    background-color: white;
+  }
+
+  .addTokimon {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .addTokimon img {
+    width: 75%;
+    height: auto;
+  }
+  
+  .addTokimon .centered {
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    /* transform: translate(-50%, -50%); */
+  }
+
+  .removeTokimon {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .removeTokimon img {
+    width: 75%;
+    height: auto;
+  }
+  
+  .removeTokimon .centered {
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    /* transform: translate(-50%, -50%); */
+  }
+
+  .actualTable {
+    background-color: #e9eef1;
+    border: solid 1pt #c4c5c5;
+    border-collapse: collapse;
+    margin: 20px 20px 20px 20px;
+}
+
+.actualTh {
+    background-color: #ddddde;
+    width: 200px;
+    border: solid 1pt #c4c5c5;
+    padding: 1pt;
+    text-align: left;
+    padding: 0px 0px 0px 5px;
+    font-size: 15px;
+}
+
+.actualTd {
+    line-height: 8px; 
+    width: 200px;
+    border: solid 1pt #c4c5c5;
+    padding: 10pt;
+    padding: 15px 25px 15px 5px;
+    font-size: 15px;
+    text-align: left;
+}
+
+.value {
+  width: 30%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.addContainer {
+  margin: 0 0 10px 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modifyContainer {
+  margin: 0 0 10px 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.infoContainer {
+  background-color: #e9eef1;
+  margin: 5% 10% 10px 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.infoHead {
+  margin: 0 0 0 45%;
+}
+
+/* The class below is for moreinfo fake table only */
+.fakeHeading {
+  text-align: left;
+}
+
+.forms {
+  background-color: #e9eef1;
+  margin: 20px 80px 20px 80px;
+}
+
+.submitButton {
+  margin: 0 0 5% 30%;
+  width: 20%;
+  height: 40px;
+}
+
+.textItem {
+  margin: 0 0 0 0;
+}
+
+.fieldItem {
+  margin: 0 0 0 30px;
+}
+
+.addPageContent {
+  background-color: white;
+  /* margin: 0 12% 0 12%; */
+}
+
+.addPageHeading {
+  margin: 0 0 0 25%;
+}
+
+/*
+.greyPart {
+  width: 70%;
+  margin: 0 0 0 20px;
+  padding: 0 0 0 20px;
+  height: 650px;
+  background-color: #e9eef1;
+}*/
+
+/* tr { line-height: 8px; } */
+
+.ToBeHidden {
+  display: none;
+}

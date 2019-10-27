@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tokimons</title>
+    <script src="js/script.js"></script>
+  </head>
+  <body>
+    <p>Great! This Tokimon has been updated in our Tokimon database.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            Tokimon ID
+          </th>
+          <th>
+            Tokimon Name
+          </th>
+          <th>
+            Tokimon Weight
+           </th>
+           <th>
+            Tokimon Height
+           </th>
+           <th>
+            Tokimon Fly
+           </th>
+           <th>
+            Tokimon Fight
+           </th>
+           <th>
+            Tokimon Fire
+           </th>
+           <th>
+            Tokimon Water
+           </th>
+           <th>
+            Tokimon Electric
+           </th>
+           <th>
+            Tokimon Frozen
+           </th>
+           <th>
+            Tokimon Trainer
+           </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% rows.forEach((r) => { %>
+          <tr>
+            <td>
+                <%= r.id %>
+            </td>
+            <td>
+                <%= r.t_name %>
+            </td>
+            <td>
+                <%= r.t_weight %>
+            </td>
+            <td>
+                <%= r.t_height %>
+            </td>
+            <td>
+                <%= r.t_fly %>
+            </td>
+            <td>
+                <%= r.t_fight %>
+            </td>
+            <td>
+                <%= r.t_fire %>
+            </td>
+            <td>
+                <%= r.t_water %>
+            </td>
+            <td>
+                <%= r.t_electric %>
+            </td>
+            <td>
+                <%= r.t_frozen %>
+            </td>
+            <td>
+                <%= r.t_trainer %>
+            </td>
+          </tr> 
+        <% }); %>
+      </tbody>
+    </table>
+  </body>
+</html>
