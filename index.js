@@ -1,25 +1,80 @@
+/**
+ * Variable Declarations
+ */
+
 const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5000
 const bodyParser = require('body-parser')
+const socketIO = require('socket.io')
+const io = socketIO(server) //create a socketIO server
+
 const { Pool } = require('pg');
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: true
 });
+pool.connect();
 
+// For turning on and off console.log commands
+var debug = true; 
 
-express()
-  .use(express.static(path.join(__dirname, 'public')))
-  .use(express.urlencoded({extended : false}))
-  .use(bodyParser())
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/landing'))
-  .get('/landingpage', (req, res) => res.render('pages/landing'))
-  .get('/add', (req, res) => res.render('pages/addnew'))
-  
-  .get('/Tokimons', (req,res) => {
+/**
+ * Node.js Express Setup
+ */
+
+var app = express();
+app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
+app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.urlencoded({extended : false}))
+app.use(bodyParser())
+app.use(express.json())
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
+
+/**
+ * SocketIO Connection
+ */
+
+// Example from Class
+io.on('connection', (socket) => { // listening for events
+  if (debug) 
+    Console.log('Client connected');
+	Socket.on('disconnect', () => console.log('Client disconnected'));
+	Socket.on('chat', function(message) { // chat = event (from HTML)
+		Console.log("chat message: " + message);
+		io.emit('message', message); // broadcast message event, emit message to all clients
+	});
+});
+
+setInterval(() => io.emit('time', new Date().toTimeString()), 1000); //listening for event on client-side every second by sending new time/string object
+
+// End of Example
+
+/**
+ * Main Page 
+ * @query - Creates tables in database if they do not exist (several queries)
+ * @render - Render the main page
+ */
+
+app.get('/', (req, res) => {
+  var createTrainerTableQuery = 
+    `CREATE TABLE IF NOT EXISTS trainers
+      (username varchar(20) PRIMARY KEY, 
+      password varchar(20) NOT NULL, 
+      )`
+
+  pool.query(createTrainerTableQuery, (error, result) => {
+    if(error) 
+      res.end(error);
+  });
+
+  res.render('tokimon.ejs')
+});
+
+/*
+  // Old Stuff
+  app.get('/Tokimons', (req,res) => {
     var getUsersQuery = `SELECT * FROM Tokimon`;
     pool.query(getUsersQuery, (error, result) => {
       if (error)
@@ -90,4 +145,57 @@ express()
       });
   })
   
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+  var createSpriteTableQuery = 
+    `CREATE TABLE IF NOT EXISTS tokimons 
+      (spriteid serial PRIMARY KEY, 
+      spritename varchar(20),
+      frontsprite int UNIQUE,
+      backsprite int UNIQUE REFERENCES sprites(spriteid),
+      )`
+
+  var createTokimonTableQuery = 
+    `CREATE TABLE IF NOT EXISTS tokimons 
+      (tokimonid serial PRIMARY KEY, 
+        tokimonname varchar(20), 
+        hp int, 
+        attack int, 
+        defense int,
+        flying int, 
+        fighting int, 
+        fire int, 
+        water int, 
+        electric int, 
+        ice int, 
+        total int,
+        frontsprite int UNIQUE REFERENCES sprites(spriteid),
+        backsprite int UNIQUE REFERENCES sprites(spriteid),
+        )`
+
+
+  pool.query(createTokimonQuery, (error, result) => {
+  });
+
+  var createTrainerQuery = 
+    `CREATE TABLE IF NOT EXISTS trainers
+      (trainerid serial PRIMARY KEY, 
+        name varchar(20), 
+        password varchar(20), 
+        email varchar(50)
+        )`
+  pool.query(createTrainerQuery, (error, result) => {
+  });
+
+  var createTeamsQuery = 
+    `CREATE TABLE IF NOT EXISTS teams
+      (teamid serial PRIMARY KEY, 
+        trainerid int REFERENCES trainers(trainerid),
+        tokimon1 int REFERENCES tokimons(tokimonid) UNIQUE,
+        tokimon2 int REFERENCES tokimons(tokimonid) UNIQUE,
+        tokimon3 int REFERENCES tokimons(tokimonid) UNIQUE,
+        tokimon4 int REFERENCES tokimons(tokimonid) UNIQUE,
+        tokimon5 int REFERENCES tokimons(tokimonid) UNIQUE,
+        tokimon6 int REFERENCES tokimons(tokimonid) UNIQUE
+        )`
+  pool.query(createTrainerQuery, (error, result) => {
+  });
+*/
