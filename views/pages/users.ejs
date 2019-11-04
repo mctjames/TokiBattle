@@ -16,43 +16,55 @@
           <thead>
             <tr>
               <th class="actualTh">
-                Tokimon ID
-              </th>
-              <th class="actualTh">
                 Tokimon Name
               </th>
               <th class="actualTh">
-                Tokimon Weight
+                Fire
                </th>
                <th class="actualTh">
-                Tokimon Height
+                Water
                </th>
                <th class="actualTh">
-                Tokimon Fly
+                Electric
                </th>
                <th class="actualTh">
-                Tokimon Fight
+                Fly
                </th>
                <th class="actualTh">
-                Tokimon Fire
+                Fight
                </th>
                <th class="actualTh">
-                Tokimon Water
+                Ice
                </th>
                <th class="actualTh">
-                Tokimon Electric
+                Hit Points
                </th>
                <th class="actualTh">
-                Tokimon Frozen
+                Attack
                </th>
                <th class="actualTh">
-                Tokimon Trainer
+                Defense
                </th>
-               <th class="actualTh"> <!--class="ToBeHidden"> --> 
-                  Tokimon Total
-                </th>
+               <th class="actualTh">
+                Speed
+               </th>
+               <th class="actualTh">
+                Move 1
+               </th>
+               <th class="actualTh">
+                Move 2
+               </th>
+               <th class="actualTh">
+                Move 3
+               </th>
+               <th class="actualTh">
+                Move 4
+               </th>
+               <th class="actualTh">
+                See Info
+               </th>
                <th  class="actualTh"> 
-                Options
+                Add to Team
                </th>
             </tr>
           </thead>
@@ -60,55 +72,62 @@
             <% rows.forEach((r) => { %>
               <tr>
                 <td class="actualTd">
-                    <%= r.id %>
+                    <%= r.name %>
                 </td>
                 <td class="actualTd">
-                    <%= r.t_name %>
+                    <%= r.Fire %>
                 </td>
                 <td class="actualTd">
-                    <%= r.t_weight %>
+                    <%= r.Water %>
                 </td>
                 <td class="actualTd">
-                    <%= r.t_height %>
+                    <%= r.Electric %>
                 </td>
                 <td class="actualTd">
-                    <%= r.t_fly %>
+                    <%= r.Flying %>
                 </td>
                 <td class="actualTd">
-                    <%= r.t_fight %>
+                    <%= r.Fighting %>
                 </td>
                 <td class="actualTd">
-                    <%= r.t_fire %>
+                    <%= r.Ice %>
                 </td>
                 <td class="actualTd">
-                    <%= r.t_water %>
+                    <%= r.HP %>
                 </td>
                 <td class="actualTd">
-                    <%= r.t_electric %>
+                    <%= r.attack %>
                 </td>
                 <td class="actualTd">
-                    <%= r.t_frozen %>
+                    <%= r.defense %>
                 </td>
                 <td class="actualTd">
-                    <%= r.t_trainer %>
-                </td>
-                <td  class="actualTd">  <!--class="ToBeHidden"> -->
-                    <%= r.t_total %>
+                    <%= r.Speed %>
                 </td>
                 <td class="actualTd">
-                    <form action="/delete" onsubmit="return confirmDelete()" method="POST">
-                      <input class="ToBeHidden" type="text" name="tokiID" value=<%= r.id %>>
-                      <input type="submit" value="Delete">
-                    </form><br>
-                    <form action="/selectToModify" onsubmit="return confirmModify()" method="POST">
-                      <input class="ToBeHidden" type="text" name="tokiID" id="tokiID" value=<%= r.id %>>
-                      <input type="submit" value="Modify">
-                    </form><br>
+                    <%= r.move1 %>
+                </td>
+                <td class="actualTd">
+                    <%= r.move2 %>
+                </td>
+                <td class="actualTd">
+                    <%= r.move3 %>
+                </td>
+                <td class="actualTd">
+                    <%= r.move4 %>
+                </td>
+                <td class="actualTd">
                     <form action="/moreinfo" method="POST">
                       <input class="ToBeHidden" type="text" name="tokiID" id="tokiID" value=<%= r.id %>>
                       <input type="submit" value="More Info">
                     </form><br>
                 </td>
+                <td class="actualTd">
+                  <form action="/addToTeam" method="POST">  <!--create add to team POST method which will return to the same page such that the added Tokimon is not shown -->
+                    <input class="ToBeHidden" type="text" name="tokiID" id="tokiID" value=<%= r.id %>>
+                    <input type="submit" value="Add to Team">
+                  </form><br>
+              </td>
               </tr> 
             <% }); %>
           </tbody>
