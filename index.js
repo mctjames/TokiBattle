@@ -50,7 +50,9 @@ express()
 
         if(r.username === req.body["uname"]) {
           if(r.password != req.body["psw"]) {
-            res.send('login failed')
+            //res.send('login failed')
+            var results = {'status': "failed"}
+            res.render('pages/login', results)
           }
           else {
               var authLogon = `SELECT * FROM trainer WHERE username = ${req.body["uname"]}`;
