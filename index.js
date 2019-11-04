@@ -3,17 +3,21 @@ const path = require('path')
 const PORT = process.env.PORT || 5000
 const bodyParser = require('body-parser')
 const { Pool } = require('pg');
-const pool = new Pool({
+var pool;
+pool = new Pool({
   // connectionString: process.env.DATABASE_URL,
   // ssl: true
-  connectionString:'postgres:postgres:Coffee16@localhost/postgres'
+
+  connectionString:'postgres://postgres:password@localhost/postgres'
 });
+pool.connect();
 
 
 express()
   .use(express.static(path.join(__dirname, 'public')))
   .use(express.urlencoded({extended : false}))
   .use(bodyParser())
+  .use(express.json())
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/login'))
@@ -29,28 +33,54 @@ express()
   })  
   
   .post('/authenticate', (req,res) => {
-    var authquery = `SELECT * FROM trainer WHERE username = ${req.body["uname"]}`;
+    var authquery = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
+    console.log(authquery);
+    console.log("test!!!!!!!!")    
     pool.query(authquery, (error, result) => {
-      if (error)
-        res.end(error);
+      console.log("test1234456789")
+      console.log(result);
+      console.log("1@#");
+       if (error)
+         res.end(error);
       var results = result.rows;
       results.forEach((r) => {
+        console.log("test******************")
         if(r.username === req.body["uname"]) {
           if(r.password != req.body["psw"]) {
+
             res.send('login failed');
+            console.log("((((((((((((((((((999");
+          
+            console.log("````````````````````````")
+            
           }
         }
       });
     });
 
-    var authLogon = `SELECT * FROM teams WHERE username = ${req.body["uname"]}`;
+    console.log("once again!")
+    var authLogon = `SELECT * FROM trainer WHERE username = ${req.body["uname"]}`;
+   
+    setTimeout(function(){
     pool.query(authLogon, (error, result) => {
+            console.log("test%%%%%%%%%%%%%%") 
       if (error)
+            console.log("test$$$$$$$$$$$")
+            //console.log(result)
         res.end(error);
+            console.log("test&&&&&&&")
+
       var results = {'rows': result.rows };
-      res.send('welcome user');
+      console.log("here!");
+      //res.send('wrong passwprd')
+      
   });
-  })
+  res.send('welcome user');
+
+  }, 1000)
+})
+
+
 
   .post('/add', (req,res) => {
     var total = parseInt(`${req.body["tokimonWeight"]}`) + parseInt(`${req.body["tokimonHeight"]}`) + parseInt(`${req.body["tokimonFly"]}`) + parseInt(`${req.body["tokimonFight"]}`) + parseInt(`${req.body["tokimonFire"]}`) + parseInt(`${req.body["tokimonWater"]}`) + parseInt(`${req.body["tokimonElectric"]}`) + parseInt(`${req.body["tokimonFrozen"]}`);
