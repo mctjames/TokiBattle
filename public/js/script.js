@@ -45,27 +45,18 @@ function confirmModify() {
 }
 
 
-// Code Thomas was working on last night
-
-// function checkPassword() {
-//     if(document.body("psw") != document.body("psw-repeat")) {
-//         return false;
-//     }
-// }
-
-
 // James took a crack at it this morning 
 
-// function check(){
-//     var fistInput = document.getElementById("psw").value;
-//     var secondInput = document.getElementById("psw-repeat").value;
+function check(){
+    var firstInput = document.getElementById("psw").value;
+    var secondInput = document.getElementById("psw-repeat").value;
+    console.log(firstInput);
+    console.log(secondInput);
 
-//   if(firstInput !== secondInput)
-//   {
-//     alert("Your passwords do not match!");
-//   }
-//       console.log("They match!!!!!!!!!!!!")
-// }
-
-
-
+  if(firstInput != secondInput)
+  {
+    alert("Your passwords do not match!");
+    return false;
+  }
+      console.log("They match!!!!!!!!!!!!")
+}
