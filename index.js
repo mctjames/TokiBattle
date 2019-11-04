@@ -27,6 +27,28 @@ express()
     });
   })  
   
+  .post('/authenticate', (req,res) => {
+    var authquery = `SELECT * FROM trainer WHERE username = ${req.body["uname"]}`;
+    pool.query(authquery, (error, result) => {
+      if (error)
+        res.end(error);
+      var results = result.rows;
+      results.forEach((r) => {
+        if(r.username === req.body["uname"]) {
+          if(r.password != req.body["psw"]) {
+            res.send('login failed');
+          }
+        };
+
+    var authLogon = `SELECT * FROM teams WHERE username = ${req.body["uname"]}`;
+    pool.query(authLogon, (error, result) => {
+      if (error)
+        res.end(error);
+      var results = {'rows': result.rows };
+      res.send('welcome user');
+  })
+  })
+
   .post('/add', (req,res) => {
     var total = parseInt(`${req.body["tokimonWeight"]}`) + parseInt(`${req.body["tokimonHeight"]}`) + parseInt(`${req.body["tokimonFly"]}`) + parseInt(`${req.body["tokimonFight"]}`) + parseInt(`${req.body["tokimonFire"]}`) + parseInt(`${req.body["tokimonWater"]}`) + parseInt(`${req.body["tokimonElectric"]}`) + parseInt(`${req.body["tokimonFrozen"]}`);
     var addTokiQuery = `INSERT INTO Tokimon (t_name, t_weight, t_height, t_fly, t_fight, t_fire, t_water, t_electric, t_frozen, t_trainer, t_total, t_desc) VALUES ('${req.body["tokimonName"]}', '${req.body["tokimonWeight"]}', '${req.body["tokimonHeight"]}', '${req.body["tokimonFly"]}', '${req.body["tokimonFight"]}', '${req.body["tokimonFire"]}', '${req.body["tokimonWater"]}', '${req.body["tokimonElectric"]}', '${req.body["tokimonFrozen"]}', '${req.body["tokimonTrainer"]}', '${total}', '${req.body["tokimonDescription"]}') RETURNING id`;
