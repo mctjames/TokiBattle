@@ -4,6 +4,9 @@ const PORT = process.env.PORT || 5000
 const bodyParser = require('body-parser')
 const { Pool } = require('pg');
 var pool;
+
+const DEBUG = 0;
+
 pool = new Pool({
   // connectionString: process.env.DATABASE_URL,
   // ssl: true
@@ -35,33 +38,47 @@ express()
   .post('/authenticate', (req,res) => {
     var authquery = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
     console.log(authquery);
-    console.log("test!!!!!!!!")    
+
     pool.query(authquery, (error, result) => {
-      console.log("test1234456789")
-      console.log(result);
-      console.log("1@#");
+
+
+
        if (error)
          res.end(error);
       var results = result.rows;
       results.forEach((r) => {
-        console.log("test******************")
+
         if(r.username === req.body["uname"]) {
           if(r.password != req.body["psw"]) {
+            res.send('login failed')
+          }
+          else {
+              var authLogon = `SELECT * FROM trainer WHERE username = ${req.body["uname"]}`;
+              pool.query(authLogon, (error, result) => {
 
-            res.send('login failed');
-            console.log("((((((((((((((((((999");
-          
-            console.log("````````````````````````")
-            
+                if (error)
+                  res.end(error);
+      
+                var results = {'rows': result.rows };
+                console.log(result);
+               // var usernameObject = [username: r]
+
+              });
+              res.render('pages/landing', results)   
+           // res.send('welcome user');
           }
         }
       });
     });
 
 
+
+    if(DEBUG) {
+
     console.log("once again!")
     var authLogon = `SELECT * FROM trainer WHERE username = ${req.body["uname"]}`;
    
+   console.log("11111111111111111111")
     setTimeout(function(){
     pool.query(authLogon, (error, result) => {
             console.log("test%%%%%%%%%%%%%%") 
@@ -76,15 +93,22 @@ express()
       //res.send('wrong passwprd')
       
   });
-  res.send('welcome user');
+    console.log("222222222222222")
+
+      res.send('welcome user');
+
+
+  console.log("333333333333333333")
 
   }, 1000)
+  }
 })
 
-.post("/register", (req, res) => {
+.post('/register', (req, res) => {
   
     res.render('register.ejs')
-});
+})
+
 
 
   .post('/add', (req,res) => {
