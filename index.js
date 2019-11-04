@@ -23,7 +23,16 @@ express()
   .use(express.json())
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/login'))
+  .get('/', (req, res) => {
+    var alterQuery = `ALTER TABLE trainer ADD admin bit`;
+    pool.query(alterQuery, (error, result) => {
+      if (error)
+        res.end(error);
+      var results = {'rows': result.rows };
+      res.render('pages/users', results)
+    });
+  res.render('pages/login')
+  })
     
   .get('/Tokimons', (req,res) => {
     var getUsersQuery = `SELECT * FROM Tokimon`;
