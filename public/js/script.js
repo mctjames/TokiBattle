@@ -43,3 +43,29 @@ function confirmDelete() {
 function confirmModify() {
     var r = confirm("Are you sure you want to modify!");
 }
+
+
+// Code Thomas was working on last night
+
+// function checkPassword() {
+//     if(document.body("psw") != document.body("psw-repeat")) {
+//         return false;
+//     }
+// }
+
+
+// James took a crack at it this morning 
+
+// function check(){
+//     var fistInput = document.getElementById("psw").value;
+//     var secondInput = document.getElementById("psw-repeat").value;
+
+//   if(firstInput !== secondInput)
+//   {
+//     alert("Your passwords do not match!");
+//   }
+//       console.log("They match!!!!!!!!!!!!")
+// }
+
+
+

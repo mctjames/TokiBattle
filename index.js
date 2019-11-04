@@ -55,12 +55,12 @@ express()
             res.render('pages/login', results)
           }
           else {
-              var authLogon = `SELECT * FROM trainer WHERE username = ${req.body["uname"]}`;
+              var authLogon = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
               pool.query(authLogon, (error, result) => {
-
+              console.log(authLogon);
                 if (error)
                   res.end(error);
-      
+                console.log(result);
                 var results = {'rows': result.rows };
                 console.log(result);
                // var usernameObject = [username: r]
@@ -108,22 +108,21 @@ express()
 
 .post('/register', (req, res) => {
   
-    res.render('register.ejs')
+    res.render('pages/register.ejs')
 })
 
-
-
-  .post('/add', (req,res) => {
-    var total = parseInt(`${req.body["tokimonWeight"]}`) + parseInt(`${req.body["tokimonHeight"]}`) + parseInt(`${req.body["tokimonFly"]}`) + parseInt(`${req.body["tokimonFight"]}`) + parseInt(`${req.body["tokimonFire"]}`) + parseInt(`${req.body["tokimonWater"]}`) + parseInt(`${req.body["tokimonElectric"]}`) + parseInt(`${req.body["tokimonFrozen"]}`);
-    var addTokiQuery = `INSERT INTO Tokimon (t_name, t_weight, t_height, t_fly, t_fight, t_fire, t_water, t_electric, t_frozen, t_trainer, t_total, t_desc) VALUES ('${req.body["tokimonName"]}', '${req.body["tokimonWeight"]}', '${req.body["tokimonHeight"]}', '${req.body["tokimonFly"]}', '${req.body["tokimonFight"]}', '${req.body["tokimonFire"]}', '${req.body["tokimonWater"]}', '${req.body["tokimonElectric"]}', '${req.body["tokimonFrozen"]}', '${req.body["tokimonTrainer"]}', '${total}', '${req.body["tokimonDescription"]}') RETURNING id`;
+.post('/addUser', (req,res) => {
+    var addTokiQuery = `INSERT INTO trainer (username, password) VALUES ('${req.body["uname"]}', '${req.body["psw"]}')`;
     console.log(addTokiQuery);
     pool.query(addTokiQuery, (error, result) => {
       if (error)
         res.end(error);
-      var results = {'rows': result.rows };
-      res.redirect(301, `/Tokimons`);
+      // var results = {'rows': result.rows };
+      res.render('pages/login');
     });
   })
+
+  
 
   .post('/delete', (req,res) => { 
     var deleteTokiQuery = `DELETE FROM Tokimon WHERE id='${req.body["tokiID"]}'`;
