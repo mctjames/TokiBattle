@@ -73,7 +73,10 @@ express()
       });
     });
 
+
+
     if(DEBUG) {
+
     console.log("once again!")
     var authLogon = `SELECT * FROM trainer WHERE username = ${req.body["uname"]}`;
    
@@ -103,6 +106,10 @@ express()
   }
 })
 
+.post('/register', (req, res) => {
+  
+    res.render('register.ejs')
+})
 
 
 
