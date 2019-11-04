@@ -23,16 +23,7 @@ express()
   .use(express.json())
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
-  .get('/', (req, res) => {
-    var alterQuery = `ALTER TABLE trainer ADD admin bit`;
-    pool.query(alterQuery, (error, result) => {
-      if (error)
-        res.end(error);
-      var results = {'rows': result.rows };
-      res.render('pages/users', results)
-    });
-  res.render('pages/login')
-  })
+  .get('/', (req, res) => res.render('pages/login'))
     
   .get('/Tokimons', (req,res) => {
     var getUsersQuery = `SELECT * FROM Tokimon`;
@@ -121,16 +112,46 @@ express()
 })
 
 .post('/addUser', (req,res) => {
-    var addTokiQuery = `INSERT INTO trainer (username, password) VALUES ('${req.body["uname"]}', '${req.body["psw"]}')`;
-    console.log(addTokiQuery);
-    pool.query(addTokiQuery, (error, result) => {
+    var confirmUsername = `SELECT COUNT(*) FROM trainer WHERE username='${req.body["uname"]}'`;
+    console.log(confirmUsername);
+    
+    pool.query(confirmUsername, (error, result) => {
       if (error)
         res.end(error);
-      // var results = {'rows': result.rows };
-      res.render('pages/login');
+      var results = result.rows;
+      results.forEach((r) => {
+        if(parseInt(r.count) ===0 ) {
+          var addTokiQuery = `INSERT INTO trainer (username, password) VALUES ('${req.body["uname"]}', '${req.body["psw"]}')`;
+          console.log(addTokiQuery);
+          pool.query(addTokiQuery, (error, result) => {
+          if (error)
+            res.end(error);
+          res.render('pages/login');
+          });
+        }
+        else {
+          var results = {'status': "Username taken"}
+          res.render('pages/register', results)
+        }
+      })
+      console.log(results);
+      console.log("it didnt work!")
     });
+    
   })
 
+// .post('/addUser', (req,res) => {
+//     //var confirmUsername = `SELECT COUNT(*) FROM trainer WHERE username='${req.body["uname"]}'`;
+
+//     var addTokiQuery = `INSERT INTO trainer (username, password) VALUES ('${req.body["uname"]}', '${req.body["psw"]}')`;
+//     console.log(addTokiQuery);
+//     pool.query(addTokiQuery, (error, result) => {
+//       if (error)
+//         res.end(error);
+//       // var results = {'rows': result.rows };
+//       res.render('pages/login');
+//     });
+//   })
   
 
   .post('/delete', (req,res) => { 
