@@ -15,7 +15,7 @@ express()
   .use(bodyParser())
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/landing'))
+  .get('/', (req, res) => res.render('pages/login'))
   .get('/landingpage', (req, res) => res.render('pages/landing'))
   .get('/add', (req, res) => res.render('pages/addnew'))
   
