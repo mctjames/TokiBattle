@@ -15,7 +15,6 @@ pool = new Pool({
 });
 pool.connect();
 
-
 express()
   .use(express.static(path.join(__dirname, 'public')))
   .use(express.urlencoded({extended : false}))
@@ -23,7 +22,12 @@ express()
   .use(express.json())
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/login'))
+  .get('/', (req, res) => {
+    var newTableCreateQuery = `CREATE TABLE IF NOT EXISTS trainer (username varchar(20), password varchar(20), admin bit)`;
+    pool.query(newTableCreateQuery, (error, result) => {
+    });
+  res.render('pages/login')
+  })
     
   .get('/Tokimons', (req,res) => {
     var getUsersQuery = `SELECT * FROM Tokimon`;
