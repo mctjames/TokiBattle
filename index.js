@@ -16,9 +16,7 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/login'))
-  .get('/landingpage', (req, res) => res.render('pages/landing'))
-  .get('/add', (req, res) => res.render('pages/addnew'))
-  
+    
   .get('/Tokimons', (req,res) => {
     var getUsersQuery = `SELECT * FROM Tokimon`;
     pool.query(getUsersQuery, (error, result) => {
