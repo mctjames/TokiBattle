@@ -32,10 +32,11 @@
         <button type="button" class="cancelbtn">Cancel</button>
 
         <div id="failed">
-          <% console.log(status) %>
-          <% if (status == 'failed') { %>
-            <p><%= status %></p>
-            <%}%>
+          <% if (typeof status !== 'undefined') { %>
+            <% if (status == 'failed') { %>
+              <p><%= status %></p>
+            <% } %>
+          <% } %>
         </div>
 
         <span class="psw">Forgot <a href="#">password?</a></span>
