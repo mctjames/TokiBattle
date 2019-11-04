@@ -4,8 +4,9 @@ const PORT = process.env.PORT || 5000
 const bodyParser = require('body-parser')
 const { Pool } = require('pg');
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true
+  // connectionString: process.env.DATABASE_URL,
+  // ssl: true
+  connectionString:'postgres:postgres:Coffee16@localhost/postgres'
 });
 
 
@@ -38,7 +39,9 @@ express()
           if(r.password != req.body["psw"]) {
             res.send('login failed');
           }
-        };
+        }
+      });
+    });
 
     var authLogon = `SELECT * FROM teams WHERE username = ${req.body["uname"]}`;
     pool.query(authLogon, (error, result) => {
@@ -46,7 +49,7 @@ express()
         res.end(error);
       var results = {'rows': result.rows };
       res.send('welcome user');
-  })
+  });
   })
 
   .post('/add', (req,res) => {
