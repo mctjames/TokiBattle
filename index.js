@@ -59,18 +59,33 @@ express()
             res.render('pages/login', results)
           }
           else {
-              var authLogon = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
-              pool.query(authLogon, (error, result) => {
-              console.log(authLogon);
-                if (error)
-                  res.end(error);
-                console.log(result);
-                var results = {'rows': result.rows };
-                console.log(result);
-               // var usernameObject = [username: r]
-
-              });
-              res.render('pages/landing', results)   
+                if(r.admin === '1') {
+                  var authLogon = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
+                  pool.query(authLogon, (error, result) => {
+                  console.log(authLogon);
+                    if (error)
+                      res.end(error);
+                    console.log(result);
+                    var results = {'rows': result.rows };
+                    console.log(result);
+                   // var usernameObject = [username: r]
+                    // req.session.user = results;
+                    res.render('pages/admin', results);
+                  });
+                }
+                else{
+                  var authLogon = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
+                  pool.query(authLogon, (error, result) => {
+                  console.log(authLogon);
+                    if (error)
+                      res.end(error);
+                    console.log(result);
+                    var results = {'rows': result.rows };
+                    console.log(result);
+                   // var usernameObject = [username: r]
+                    res.render('pages/landing', results)   
+                  });
+                }
           }
         }
       });
