@@ -11,7 +11,6 @@ const DEBUG = 0;
 pool = new Pool({
   // connectionString: process.env.DATABASE_URL,
   // ssl: true
-
   connectionString:'postgres://postgres:password@localhost/postgres'
 });
 pool.connect();
