@@ -45,7 +45,8 @@ express()
 
     pool.query(authquery, (error, result) => {
       if(result.rowCount === 0) {
-        res.render('pages/login');
+        var results = {'status': "Username does not exist"}
+        res.render('pages/login', results);
       }
       else{
 
