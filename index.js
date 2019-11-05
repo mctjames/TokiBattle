@@ -44,51 +44,54 @@ express()
     console.log(authquery);
 
     pool.query(authquery, (error, result) => {
+      if(result.rowCount === 0) {
+        res.render('pages/login');
+      }
+      else{
 
-
-
-       if (error)
-         res.end(error);
-      var results = result.rows;
-      results.forEach((r) => {
-
-        if(r.username === req.body["uname"]) {
-          if(r.password != req.body["psw"]) {
-            //res.send('login failed')
-            var results = {'status': "failed"}
-            res.render('pages/login', results)
+        if (error)
+          res.end(error);
+        var results = result.rows;
+        results.forEach((r) => {
+  
+          if(r.username === req.body["uname"]) {
+            if(r.password != req.body["psw"]) {
+              //res.send('login failed')
+              var results = {'status': "failed"}
+              res.render('pages/login', results)
+            }
+            else {
+                  if(r.admin === '1') {
+                    var authLogon = `SELECT * FROM trainer`;
+                    pool.query(authLogon, (error, result) => {
+                    console.log(authLogon);
+                      if (error)
+                        res.end(error);
+                      console.log(result);
+                      var results = {'rows': result.rows };
+                      console.log(result);
+                     // var usernameObject = [username: r]
+                      // req.session.user = results;
+                      res.render('pages/admin', results);
+                    });
+                  }
+                  else{
+                    var authLogon = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
+                    pool.query(authLogon, (error, result) => {
+                    console.log(authLogon);
+                      if (error)
+                        res.end(error);
+                      console.log(result);
+                      var results = {'rows': result.rows };
+                      console.log(result);
+                     // var usernameObject = [username: r]
+                      res.render('pages/landing', results)   
+                    });
+                  }
+            }
           }
-          else {
-                if(r.admin === '1') {
-                  var authLogon = `SELECT * FROM trainer`;
-                  pool.query(authLogon, (error, result) => {
-                  console.log(authLogon);
-                    if (error)
-                      res.end(error);
-                    console.log(result);
-                    var results = {'rows': result.rows };
-                    console.log(result);
-                   // var usernameObject = [username: r]
-                    // req.session.user = results;
-                    res.render('pages/admin', results);
-                  });
-                }
-                else{
-                  var authLogon = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
-                  pool.query(authLogon, (error, result) => {
-                  console.log(authLogon);
-                    if (error)
-                      res.end(error);
-                    console.log(result);
-                    var results = {'rows': result.rows };
-                    console.log(result);
-                   // var usernameObject = [username: r]
-                    res.render('pages/landing', results)   
-                  });
-                }
-          }
-        }
-      });
+        });
+      }
     });
 })
 
