@@ -4,11 +4,11 @@ body, html {
   }
 
   h1 {
-    margin: 0 0 5% 45%;
+    margin: 0 0 0% 45%;
   }
 
   h2 {
-    margin: 0 0 5% 35%;
+    margin: 0 0 0% 40%;
   }
   
   .pageContent {
@@ -17,7 +17,7 @@ body, html {
 
   #backgroundImage {
     
-    background-image: url("pictures/Pikachu.jpg");
+    background-image: url("landingBackground.jpg");
   
     
     height: 200%; 
