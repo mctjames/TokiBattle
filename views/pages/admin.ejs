@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>All Trainers</title>
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/tokimon.css" />
+    <script src="js/script.js"></script>
+  </head>
+  <body>
+    <div id="listPageBackgroundImage">
+      <a href="https://sheltered-thicket-38577.herokuapp.com">Home</a>
+      <p class="pageContent">All the trainers using TokiBattle</p>
+      <div class="greyPart">
+        <table class="actualTd">
+          <thead>
+            <tr>
+              <th class="actualTd">
+                Username
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% rows.forEach((r) => { %>
+              <tr>
+                <td class="actualTd">
+                    <%= r.username %>
+                </td>
+              </tr> 
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
