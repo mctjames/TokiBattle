@@ -1,3 +1,9 @@
+body{
+   background-image: url("/stylesheets/pictures/2.jpg");
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.2) 100%), url("/stylesheets/pictures/2.jpg");
+} 
+
+
 * {box-sizing: border-box}
 
 /* Add padding to containers */
@@ -49,6 +55,7 @@ a {
 
 /* Set a grey background color and center the text of the "sign in" section */
 .signin {
-  background-color: #f1f1f1;
+  
   text-align: center;
+
 }
