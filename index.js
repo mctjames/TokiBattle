@@ -60,7 +60,7 @@ express()
           }
           else {
                 if(r.admin === '1') {
-                  var authLogon = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
+                  var authLogon = `SELECT * FROM trainer`;
                   pool.query(authLogon, (error, result) => {
                   console.log(authLogon);
                     if (error)
