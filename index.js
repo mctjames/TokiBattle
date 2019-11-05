@@ -71,43 +71,10 @@ express()
 
               });
               res.render('pages/landing', results)   
-           // res.send('welcome user');
           }
         }
       });
     });
-
-
-
-    if(DEBUG) {
-
-    console.log("once again!")
-    var authLogon = `SELECT * FROM trainer WHERE username = ${req.body["uname"]}`;
-   
-   console.log("11111111111111111111")
-    setTimeout(function(){
-    pool.query(authLogon, (error, result) => {
-            console.log("test%%%%%%%%%%%%%%") 
-      if (error)
-            console.log("test$$$$$$$$$$$")
-            //console.log(result)
-        res.end(error);
-            console.log("test&&&&&&&")
-
-      var results = {'rows': result.rows };
-      console.log("here!");
-      //res.send('wrong passwprd')
-      
-  });
-    console.log("222222222222222")
-
-      res.send('welcome user');
-
-
-  console.log("333333333333333333")
-
-  }, 1000)
-  }
 })
 
 .post('/register', (req, res) => {
@@ -139,24 +106,10 @@ express()
         }
       })
       console.log(results);
-      console.log("it didnt work!")
     });
     
   })
 
-// .post('/addUser', (req,res) => {
-//     //var confirmUsername = `SELECT COUNT(*) FROM trainer WHERE username='${req.body["uname"]}'`;
-
-//     var addTokiQuery = `INSERT INTO trainer (username, password) VALUES ('${req.body["uname"]}', '${req.body["psw"]}')`;
-//     console.log(addTokiQuery);
-//     pool.query(addTokiQuery, (error, result) => {
-//       if (error)
-//         res.end(error);
-//       // var results = {'rows': result.rows };
-//       res.render('pages/login');
-//     });
-//   })
-  
 
   .post('/delete', (req,res) => { 
     var deleteTokiQuery = `DELETE FROM Tokimon WHERE id='${req.body["tokiID"]}'`;
