@@ -9,9 +9,9 @@ var pool;
 const DEBUG = 0;
 
 pool = new Pool({
-  // connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL,
   // ssl: true
-  connectionString:'postgres://postgres:password@localhost/postgres'
+  //connectionString:'postgres://postgres:password@localhost/postgres'
 });
 pool.connect();
 
