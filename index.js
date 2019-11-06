@@ -1,4 +1,6 @@
-// Declaration and Initialization of Variables
+/**
+ * Declaration and Initialization of Variables
+ */
 const DEBUG = 0;
 const express = require('express')
 const path = require('path')
@@ -14,7 +16,9 @@ pool = new Pool({
 });
 pool.connect();
 
-// Dependencies Setup and File Structure
+/** 
+ * Dependencies Setup and File Structure
+ */
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({extended : false}))
 app.use(bodyParser())
@@ -24,72 +28,69 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 var sess;
 
-// Pages
+/**
+ * Client Pages
+ */ 
 
 app.get('/', (req, res) => {
   pool.query(queryCreator("create", "trainer", "", ""), (error, result) => {
   });
-  res.render('pages/login')
+  res.render('pages/login');
 })
   
-app.get('/Tokimons', (req,res) => {
-  var getUsersQuery = `SELECT * FROM Tokimon`;
-  pool.query(getUsersQuery, (error, result) => {
-    if (error)
-      res.end(error);
-    var results = {'rows': result.rows };
-    res.render('pages/users', results)
-  });
-})  
+app.get('/login', (req,res) => {
+  var results;
+  if (sess) {
+    if (sess.status == "loginfailed") {
+      results = {'status':"Your username or password could not be verified. Please try again."};
+      res.render('pages/login', results);
+    }
+    else {
+      res.render('pages/login');
+    }
+  } 
+  else {
+    res.render('pages/login');
+  }
+})
 
+/**
+ * Authentication Page
+ * @success - If user is admin, redirect to admin page. Otherwise redirect to landing page
+ * @failure - If bad username or password, reload login page with error message
+ */
 app.post('/authenticate', (req,res) => {
   var authquery = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
-  console.log(authquery);
-
   pool.query(authquery, (error, result) => {
-
-
-
-      if (error)
-        res.end(error);
+    if (error)
+      res.end(error);
     var results = result.rows;
+    sess = req.session;
     results.forEach((r) => {
-
       if(r.username === req.body["uname"]) {
         if(r.password != req.body["psw"]) {
-          //res.send('login failed')
-          var results = {'status': "failed"}
-          res.render('pages/login', results)
+          sess.status = "loginfailed";
+          res.redirect('/login');
         }
         else {
-              if(r.admin === '1') {
-                var authLogon = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
-                pool.query(authLogon, (error, result) => {
-                console.log(authLogon);
-                  if (error)
-                    res.end(error);
-                  if (DEBUG) console.log(result);
-                  var results = {'rows': result.rows };
-                  if (DEBUG) console.log(result);
-                  // var usernameObject = [username: r]
-                  sess = req.session;
-                  sess.user = result.rows[0];
-                  res.redirect('/admin');
-                });
-              }
-              else{
-                var authLogon = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
-                pool.query(authLogon, (error, result) => {
-                console.log(authLogon);
-                  if (error)
-                    res.end(error);
-                  console.log(result);
-                  var results = {'rows': result.rows };
-                  console.log(result);
-                  // var usernameObject = [username: r]
-                  res.redirect('/landing');   
-                });
-              }
+          sess.status = "loggedin";
+          if(r.admin === '1') {
+            var authLogon = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
+            pool.query(authLogon, (error, result) => {
+              if (error)
+                res.end(error);
+              sess.admin = result.rows[0].admin;
+              res.redirect('/admin');
+            });
+          }
+          else {
+            var authLogon = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
+            pool.query(authLogon, (error, result) => {
+              if (error)
+                res.end(error);
+              res.redirect('/landing');   
+            });
+          }
         }
       }
     });
@@ -129,9 +130,10 @@ app.post('/addUser', (req,res) => {
 })
 
 /**
- * Function for administrative page
- * @renders - a page with data 
+ * Administration Pages
  */
+
+
 app.get('/admin', checkAdmin, (req, res) => {
   var query = queryCreator("select", "trainer", "true", {"*":""});
   pool.query(query, (error, result) => {
@@ -155,7 +157,7 @@ app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
  * Function to check admin privleges
  */
 function checkAdmin(req, res, next) {
-    if (sess && sess.user.admin == '1') {
+    if (sess && sess.admin == '1') {
       return next();
     } else {
       res.redirect('/');
@@ -167,7 +169,7 @@ function checkAdmin(req, res, next) {
  * @param option - enter the query command to run (create, select, insert, update, delete)
  * @param table - enter the name of the table that the query is intended to use (trainer, team, tokimon, move, sprite, movesprite)
  * @param condition - if there is a WHERE condition needed in the SQL otherwise enter ""
- * @param arguments - enter the arguments in JSON form to be created in the query other enter ""
+ * @param arguments - enter the arguments in JSON form to be created in the query
  * @returns - desired query
  */
 function queryCreator(option, table, condition, arguments) {
