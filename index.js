@@ -33,7 +33,13 @@ var sess;
  */ 
 
 app.get('/', (req, res) => {
-  pool.query(queryCreator("create", "trainer", "", ""), (error, result) => {
+  var trainerQuery = tableCreator("trainer");
+  var tokimonQuery = tableCreator("tokimon");
+  var teamQuery = tableCreator("team");
+  var moveQuery = tableCreator("move");
+  var sprite = tableCreator("sprite");
+  var movesprite = tableCreator("movesprite");
+  pool.query(trainerQuery, (error, result) => {
   });
   res.render('pages/login');
 })
@@ -135,7 +141,7 @@ app.post('/addUser', (req,res) => {
 
 
 app.get('/admin', checkAdmin, (req, res) => {
-  var query = queryCreator("select", "trainer", "true", {"*":""});
+  var query = `SELECT * FROM trainer`;
   pool.query(query, (error, result) => {
     if (error)
       res.end(error);
@@ -164,55 +170,54 @@ function checkAdmin(req, res, next) {
     }
   }
 
-/**
+/** REMOVED
  * Function to return queries as needed based on arguments specified
  * @param option - enter the query command to run (create, select, insert, update, delete)
  * @param table - enter the name of the table that the query is intended to use (trainer, team, tokimon, move, sprite, movesprite)
  * @param condition - if there is a WHERE condition needed in the SQL otherwise enter ""
- * @param arguments - enter the arguments in JSON form to be created in the query
+ * @param arguments - enter the arguments in JSON form to be created in the query other enter ""
  * @returns - desired query
- */
-function queryCreator(option, table, condition, arguments) {
-
+ 
+function queryCreator(queryObject) {
 var query = "";
 var queryColumn = "";
 var queryData = "";
-switch (option) {
+switch (queryObject.option) {
   case "create":
-    return tableCreator(table);
-  case "select":    
-    for (const [key, value] of Object.entries(arguments)) {
+    return tableCreator(queryObject.table);
+  case "select": 
+    for (const [key, value] of Object.entries(queryObject.arguments)) {
       queryColumn += `${key},`;
     }
     queryColumn = queryColumn.slice(0, -1);
-    query = `SELECT ${queryColumn} FROM ${table} WHERE ${condition}`;
+    query = `SELECT ${queryColumn} FROM ${queryObject.table} ${queryObject.condition}`;
     return query;
   case "insert":
     // iterate over the JSON to create query
-    for (const [key, value] of Object.entries(arguments)) {
+    for (const [key, value] of Object.entries(queryObject.arguments)) {
       queryColumn += `${key},`;
       queryData += `${value},`;
     }
     queryColumn = queryColumn.slice(0, -1); // remove last comma
     queryData = queryData.slice(0, -1); // remove last comma
-    query = `INSERT INTO ${table} (${queryColumn}) VALUES(${queryData})`;
+    query = `INSERT INTO ${queryObject.table} (${queryColumn}) VALUES(${queryData})`;
     return query;
   case "update":
-    query = `UPDATE ${table} SET `;
-    for (const [key, value] of Object.entries(arguments)) {
+    query = `UPDATE ${queryObject.table} SET `;
+    for (const [key, value] of Object.entries(queryObject.arguments)) {
       queryData += `${key}= ${value},`;
     }
     queryData = queryData.slice(0, -1); // remove last comma
     query += queryData;
-    query += ` WHERE ${condition}`;
+    query += ` ${queryObject.condition}`;
     return query;
   case "delete":
-    return `DELETE FROM ${table} WHERE ${condition}`;
+    return `DELETE FROM ${queryObject.table} ${queryObject.condition}`;
   default:
     return "query option entered contains some error";
   }
 }
-
+*/
 /**
  * Companion Function to return a table create query
  * @param - enter the table to create
