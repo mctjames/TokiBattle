@@ -34,7 +34,7 @@
 
         <div id="failed">
           <% if (typeof status !== 'undefined') { %>
-            <% if (status == 'failed') { %>
+            <% if (status != 'loggedin') { %>
               <p><%= status %></p>
             <% } %>
           <% } %>

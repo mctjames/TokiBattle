@@ -1,4 +1,6 @@
-// Declaration and Initialization of Variables
+/**
+ * Declaration and Initialization of Variables
+ */
 const DEBUG = 0;
 const express = require('express')
 const path = require('path')
@@ -14,7 +16,9 @@ pool = new Pool({
 });
 pool.connect();
 
-// Dependencies Setup and File Structure
+/** 
+ * Dependencies Setup and File Structure
+ */
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({extended : false}))
 app.use(bodyParser())
@@ -23,76 +27,100 @@ app.use(session({secret: 'shh'}))  // For session handling
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 var sess;
+app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
-// Pages
-  
-app.get('/Tokimons', (req,res) => {
-  var getUsersQuery = `SELECT * FROM Tokimon`;
-  pool.query(getUsersQuery, (error, result) => {
-    if (error)
-      res.end(error);
-    var results = {'rows': result.rows };
-    res.render('pages/users', results)
+/**
+ * Client Pages
+ */ 
+
+/**
+ * Main Page
+ * @query - Table creation queries as needed
+ */
+app.get('/', (req, res) => {
+  var trainerQuery = tableCreator("trainer");
+  var tokimonQuery = tableCreator("tokimon");
+  var teamQuery = tableCreator("team");
+  var moveQuery = tableCreator("move");
+  var sprite = tableCreator("sprite");
+  var movesprite = tableCreator("movesprite");
+  pool.query(trainerQuery, (error, result) => {
   });
-})  
+  res.render('pages/login');
+})
 
+/**
+ * Login Page
+ */
+app.get('/login', (req,res) => {
+  var results;
+  if (sess) {
+    if (sess.status == "loginfailed") {
+      results = {'status':"Your username or password could not be verified. Please try again."};
+      res.render('pages/login', results);
+    }
+    else {
+      res.render('pages/login');
+    }
+  } 
+  else {
+    res.render('pages/login');
+  }
+})
+
+/**
+ * Authentication Page
+ * @success - If user is admin, redirect to admin page. Otherwise redirect to landing page
+ * @failure - If bad username or password, reload login page with error message
+ */
 app.post('/authenticate', (req,res) => {
   var authquery = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
-  console.log(authquery);
-
   pool.query(authquery, (error, result) => {
-
-
-
-      if (error)
-        res.end(error);
+    if (error)
+      res.end(error);
     var results = result.rows;
+    sess = req.session;
     results.forEach((r) => {
-
       if(r.username === req.body["uname"]) {
         if(r.password != req.body["psw"]) {
-          //res.send('login failed')
-          var results = {'status': "failed"}
-          res.render('pages/login', results)
+          sess.status = "loginfailed";
+          res.redirect('/login');
         }
         else {
-              if(r.admin === '1') {
-                var authLogon = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
-                pool.query(authLogon, (error, result) => {
-                console.log(authLogon);
-                  if (error)
-                    res.end(error);
-                  if (DEBUG) console.log(result);
-                  var results = {'rows': result.rows };
-                  if (DEBUG) console.log(result);
-                  // var usernameObject = [username: r]
-                  sess = req.session;
-                  sess.user = result.rows[0];
-                  res.redirect('/admin');
-                });
-              }
-              else{
-                var authLogon = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
-                pool.query(authLogon, (error, result) => {
-                console.log(authLogon);
-                  if (error)
-                    res.end(error);
-                  console.log(result);
-                  var results = {'rows': result.rows };
-                  console.log(result);
-                  // var usernameObject = [username: r]
-                  res.redirect('/landing');   
-                });
-              }
+          sess.status = "loggedin";
+          if(r.admin === '1') {
+            var authLogon = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
+            pool.query(authLogon, (error, result) => {
+              if (error)
+                res.end(error);
+              sess.admin = result.rows[0].admin;
+              res.redirect('/admin');
+            });
+          }
+          else {
+            var authLogon = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
+            pool.query(authLogon, (error, result) => {
+              if (error)
+                res.end(error);
+              res.redirect('/landing');   
+            });
+          }
         }
       }
     });
   });
 })
 
+/**
+ * Registration Page
+ */
 app.post('/register', (req, res) => {
   res.render('pages/register.ejs')
 })
+
+/**
+ * Add Users Page
+ */
 
 app.post('/addUser', (req,res) => {
   var confirmUsername = `SELECT COUNT(*) FROM trainer WHERE username='${req.body["uname"]}'`;
@@ -119,15 +147,24 @@ app.post('/addUser', (req,res) => {
     })
     console.log(results);
   });
-  
 })
 
 /**
- * Function for administrative page
- * @renders - a page with data 
+ * Landing Page
+ */
+app.get('/landing', (req, res) => {
+  res.render('pages/landing');
+})
+
+/**
+ * Administration Pages
+ */
+
+/**
+ * Main Admin Page
  */
 app.get('/admin', checkAdmin, (req, res) => {
-  var query = queryCreator("select", "trainer", "true", {"*":""});
+  var query = `SELECT * FROM trainer`;
   pool.query(query, (error, result) => {
     if (error)
       res.end(error);
@@ -136,75 +173,121 @@ app.get('/admin', checkAdmin, (req, res) => {
   })
 });
 
-app.get('/landing', (req, res) => {
-  res.render('pages/landing');
-})
+/**
+ * Trainer Display Page
+ */
+app.get('/admin/display/trainers', checkAdmin, (req, res) => {
+  var query = `SELECT * FROM trainer`;
+  pool.query(query, (error, result) => {
+    if (error)
+      res.end(error);
+    var results = {'rows': result.rows };
+    res.render('pages/admin', results);
+  })
+});
 
+/**
+ * Team Display Page
+ */
+app.get('/admin/display/teams', checkAdmin, (req, res) => {
+  var query = `SELECT * FROM team`;
+  pool.query(query, (error, result) => {
+    if (error)
+      res.end(error);
+    var results = {'rows': result.rows };
+    res.render('pages/admin', results);
+  })
+});
 
-app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
+/**
+ * Tokimon Display Page
+ */
+app.get('/admin/display/tokimons', checkAdmin, (req, res) => {
+  var query = `SELECT * FROM tokimon`;
+  pool.query(query, (error, result) => {
+    if (error)
+      res.end(error);
+    var results = {'rows': result.rows };
+    res.render('pages/admin', results);
+  })
+});
 
-// Utility Functions
+/**
+ * Move Display Page
+ */
+app.get('/admin/display/moves', checkAdmin, (req, res) => {
+  var query = `SELECT * FROM move`;
+  pool.query(query, (error, result) => {
+    if (error)
+      res.end(error);
+    var results = {'rows': result.rows };
+    res.render('pages/admin', results);
+  })
+});
+
+/**
+ *  Utility Functions
+ */ 
 
 /**
  * Function to check admin privleges
  */
 function checkAdmin(req, res, next) {
-    if (sess && sess.user.admin == '1') {
+    if (sess && sess.admin == '1') {
       return next();
     } else {
       res.redirect('/');
     }
   }
 
-/**
+/** REMOVED
  * Function to return queries as needed based on arguments specified
  * @param option - enter the query command to run (create, select, insert, update, delete)
  * @param table - enter the name of the table that the query is intended to use (trainer, team, tokimon, move, sprite, movesprite)
  * @param condition - if there is a WHERE condition needed in the SQL otherwise enter ""
  * @param arguments - enter the arguments in JSON form to be created in the query other enter ""
  * @returns - desired query
- */
-function queryCreator(option, table, condition, arguments) {
-
+ 
+function queryCreator(queryObject) {
 var query = "";
 var queryColumn = "";
 var queryData = "";
-switch (option) {
+switch (queryObject.option) {
   case "create":
-    return tableCreator(table);
-  case "select":    
-    for (const [key, value] of Object.entries(arguments)) {
+    return tableCreator(queryObject.table);
+  case "select": 
+    for (const [key, value] of Object.entries(queryObject.arguments)) {
       queryColumn += `${key},`;
     }
     queryColumn = queryColumn.slice(0, -1);
-    query = `SELECT ${queryColumn} FROM ${table} WHERE ${condition}`;
+    query = `SELECT ${queryColumn} FROM ${queryObject.table} ${queryObject.condition}`;
     return query;
   case "insert":
     // iterate over the JSON to create query
-    for (const [key, value] of Object.entries(arguments)) {
+    for (const [key, value] of Object.entries(queryObject.arguments)) {
       queryColumn += `${key},`;
       queryData += `${value},`;
     }
     queryColumn = queryColumn.slice(0, -1); // remove last comma
     queryData = queryData.slice(0, -1); // remove last comma
-    query = `INSERT INTO ${table} (${queryColumn}) VALUES(${queryData})`;
+    query = `INSERT INTO ${queryObject.table} (${queryColumn}) VALUES(${queryData})`;
     return query;
   case "update":
-    query = `UPDATE ${table} SET `;
-    for (const [key, value] of Object.entries(arguments)) {
+    query = `UPDATE ${queryObject.table} SET `;
+    for (const [key, value] of Object.entries(queryObject.arguments)) {
       queryData += `${key}= ${value},`;
     }
     queryData = queryData.slice(0, -1); // remove last comma
     query += queryData;
-    query += ` WHERE ${condition}`;
+    query += ` ${queryObject.condition}`;
     return query;
   case "delete":
-    return `DELETE FROM ${table} WHERE ${condition}`;
+    return `DELETE FROM ${queryObject.table} ${queryObject.condition}`;
   default:
     return "query option entered contains some error";
   }
 }
-
+*/
 /**
  * Companion Function to return a table create query
  * @param - enter the table to create
