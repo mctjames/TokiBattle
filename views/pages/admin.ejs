@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>All Trainers</title>
 
-    <link rel="stylesheet" type="text/css" href="/stylesheets/tokimon.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/admin.css" />
     <script src="js/script.js"></script>
   </head>
   <body>
@@ -14,19 +14,19 @@
                 All Trainers Using TokiBattle
             </h1>
         </div>
-      <div class="greyPart">
-        <table class="actualTable">
+      <div>
+        <table>
           <thead>
             <tr>
-              <th class="actualTh">
-                Trainer
+              <th>
+                Trainers
               </th>
             </tr>
           </thead>
           <tbody>
             <% rows.forEach((r) => { %>
               <tr>
-                <td class="actualTd">
+                <td>
                     <%= r.username %>
                 </td>
               </tr> 

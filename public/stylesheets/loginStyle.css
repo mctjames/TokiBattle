@@ -2,8 +2,9 @@ body
 {
   font-family: Arial, Helvetica, sans-serif;
 
+   background-image: url("/stylesheets/pictures/4.jpg");
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.05) 100%), url("/stylesheets/pictures/4.jpg");
 
- background-image: url("background1.png");
  background-color: #cccccc;
 }
 form {border: 3px solid #f1f1f1;}

@@ -40,6 +40,14 @@
           <% } %>
         </div>
 
+        <div id="failed">
+          <% if (typeof status !== 'undefined') { %>
+            <% if (status == 'Username does not exist') { %>
+              <p><%= status %></p>
+            <% } %>
+          <% } %>
+        </div>
+
       </div>
       </div>
       

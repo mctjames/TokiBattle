@@ -25,12 +25,6 @@ app.set('view engine', 'ejs')
 var sess;
 
 // Pages
-
-app.get('/', (req, res) => {
-  pool.query(queryCreator("create", "trainer", "", ""), (error, result) => {
-  });
-  res.render('pages/login')
-})
   
 app.get('/Tokimons', (req,res) => {
   var getUsersQuery = `SELECT * FROM Tokimon`;
