@@ -27,11 +27,16 @@ app.use(session({secret: 'shh'}))  // For session handling
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 var sess;
+app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 /**
  * Client Pages
  */ 
 
+ /**
+  * Main Page
+  * @query - Table creation queries as needed
+  */
 app.get('/', (req, res) => {
   var trainerQuery = tableCreator("trainer");
   var tokimonQuery = tableCreator("tokimon");
@@ -44,8 +49,9 @@ app.get('/', (req, res) => {
   res.render('pages/login');
 })
 
-// Pages
-  
+/**
+ * Login Page
+ */
 app.get('/login', (req,res) => {
   var results;
   if (sess) {
@@ -105,9 +111,16 @@ app.post('/authenticate', (req,res) => {
   });
 })
 
+/**
+ * Registration Page
+ */
 app.post('/register', (req, res) => {
   res.render('pages/register.ejs')
 })
+
+/**
+ * Add Users Page
+ */
 
 app.post('/addUser', (req,res) => {
   var confirmUsername = `SELECT COUNT(*) FROM trainer WHERE username='${req.body["uname"]}'`;
@@ -134,14 +147,22 @@ app.post('/addUser', (req,res) => {
     })
     console.log(results);
   });
-  
+})
+
+/**
+ * Landing Page
+ */
+app.get('/landing', (req, res) => {
+  res.render('pages/landing');
 })
 
 /**
  * Administration Pages
  */
 
-
+/**
+ * Function to check admin session
+ */
 app.get('/admin', checkAdmin, (req, res) => {
   var query = `SELECT * FROM trainer`;
   pool.query(query, (error, result) => {
@@ -152,14 +173,9 @@ app.get('/admin', checkAdmin, (req, res) => {
   })
 });
 
-app.get('/landing', (req, res) => {
-  res.render('pages/landing');
-})
-
-
-app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
-
-// Utility Functions
+/**
+ *  Utility Functions
+ */ 
 
 /**
  * Function to check admin privleges
