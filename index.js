@@ -43,6 +43,8 @@ app.get('/', (req, res) => {
   });
   res.render('pages/login');
 })
+
+// Pages
   
 app.get('/login', (req,res) => {
   var results;
