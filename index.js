@@ -33,10 +33,10 @@ app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
  * Client Pages
  */ 
 
- /**
-  * Main Page
-  * @query - Table creation queries as needed
-  */
+/**
+ * Main Page
+ * @query - Table creation queries as needed
+ */
 app.get('/', (req, res) => {
   var trainerQuery = tableCreator("trainer");
   var tokimonQuery = tableCreator("tokimon");
@@ -161,10 +161,62 @@ app.get('/landing', (req, res) => {
  */
 
 /**
- * Function to check admin session
+ * Main Admin Page
  */
 app.get('/admin', checkAdmin, (req, res) => {
   var query = `SELECT * FROM trainer`;
+  pool.query(query, (error, result) => {
+    if (error)
+      res.end(error);
+    var results = {'rows': result.rows };
+    res.render('pages/admin', results);
+  })
+});
+
+/**
+ * Trainer Display Page
+ */
+app.get('/admin/display/trainers', checkAdmin, (req, res) => {
+  var query = `SELECT * FROM trainer`;
+  pool.query(query, (error, result) => {
+    if (error)
+      res.end(error);
+    var results = {'rows': result.rows };
+    res.render('pages/admin', results);
+  })
+});
+
+/**
+ * Team Display Page
+ */
+app.get('/admin/display/teams', checkAdmin, (req, res) => {
+  var query = `SELECT * FROM team`;
+  pool.query(query, (error, result) => {
+    if (error)
+      res.end(error);
+    var results = {'rows': result.rows };
+    res.render('pages/admin', results);
+  })
+});
+
+/**
+ * Tokimon Display Page
+ */
+app.get('/admin/display/tokimons', checkAdmin, (req, res) => {
+  var query = `SELECT * FROM tokimon`;
+  pool.query(query, (error, result) => {
+    if (error)
+      res.end(error);
+    var results = {'rows': result.rows };
+    res.render('pages/admin', results);
+  })
+});
+
+/**
+ * Move Display Page
+ */
+app.get('/admin/display/moves', checkAdmin, (req, res) => {
+  var query = `SELECT * FROM move`;
   pool.query(query, (error, result) => {
     if (error)
       res.end(error);
