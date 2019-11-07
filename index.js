@@ -8,6 +8,7 @@ const app = express()
 const PORT = process.env.PORT || 5000
 const bodyParser = require('body-parser')
 const session = require('express-session')
+var sess;
 const { Pool } = require('pg');
 var pool;
 pool = new Pool({
@@ -15,6 +16,10 @@ pool = new Pool({
   connectionString:'postgres://postgres:password@localhost/postgres'
 });
 pool.connect();
+const socketIO = require('socket.io');
+var http = require('http').Server(app);
+var io = socketIO(http); //create a socketIO server
+
 
 /** 
  * Dependencies Setup and File Structure
@@ -26,8 +31,8 @@ app.use(express.json())
 app.use(session({secret: 'shh'}))  // For session handling
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
-var sess;
-app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
+http.listen(PORT, "127.0.0.1");
+//app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 /**
  * Client Pages
@@ -147,14 +152,14 @@ app.post('/addUser', (req,res) => {
     })
     console.log(results);
   });
-})
+});
 
 /**
  * Landing Page
  */
-app.get('/landing', (req, res) => {
+app.get('/landing', checkLoggedIn, (req, res) => {
   res.render('pages/landing');
-})
+});
 
 /**
  * Administration Pages
@@ -226,6 +231,15 @@ app.get('/admin/display/moves', checkAdmin, (req, res) => {
 });
 
 /**
+ * SocketIO Functions
+ */
+
+io.on('connection', (socket) => { //listening for events
+	console.log('Client connected');
+	socket.on('disconnect', () => console.log('Client disconnected'));
+});
+
+/**
  *  Utility Functions
  */ 
 
@@ -233,12 +247,23 @@ app.get('/admin/display/moves', checkAdmin, (req, res) => {
  * Function to check admin privleges
  */
 function checkAdmin(req, res, next) {
-    if (sess && sess.admin == '1') {
-      return next();
-    } else {
-      res.redirect('/');
-    }
+  if (sess && sess.admin == '1') {
+    return next();
+  } else {
+    res.redirect('/');
   }
+}
+
+/**
+ * Func to check if user is logged in
+ */
+function checkLoggedIn(req, res, next) {
+  if (sess && sess.status == 'loggedin') {
+    return next();
+  } else {
+    res.redirect('/');
+  }
+}
 
 /** REMOVED
  * Function to return queries as needed based on arguments specified
