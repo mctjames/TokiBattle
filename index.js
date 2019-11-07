@@ -1,6 +1,6 @@
-/**
- * Declaration and Initialization of Variables
- */
+/***********************************************
+ * Declaration and Initialization of Variables *
+ **********************************************/
 const DEBUG = 0;
 const express = require('express')
 const path = require('path')
@@ -21,9 +21,9 @@ var http = require('http').Server(app);
 var io = socketIO(http); //create a socketIO server
 
 
-/** 
- * Dependencies Setup and File Structure
- */
+/*****************************************
+ * Dependencies Setup and File Structure *
+ ****************************************/
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({extended : false}))
 app.use(bodyParser())
@@ -34,9 +34,9 @@ app.set('view engine', 'ejs')
 http.listen(PORT, "127.0.0.1");
 //app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
-/**
- * Client Pages
- */ 
+/****************
+ * Client Pages *
+ ***************/ 
 
 /**
  * Main Page
@@ -161,9 +161,9 @@ app.get('/landing', checkLoggedIn, (req, res) => {
   res.render('pages/landing');
 });
 
-/**
- * Administration Pages
- */
+/************************
+ * Administration Pages *
+ ***********************/
 
 /**
  * Main Admin Page
@@ -230,18 +230,21 @@ app.get('/admin/display/moves', checkAdmin, (req, res) => {
   })
 });
 
-/**
- * SocketIO Functions
- */
+/**********************
+ * SocketIO Functions *
+ *********************/
 
+ /**
+  * Function for listening to connections
+  */
 io.on('connection', (socket) => { //listening for events
 	console.log('Client connected');
 	socket.on('disconnect', () => console.log('Client disconnected'));
 });
 
-/**
- *  Utility Functions
- */ 
+/*********************
+ * Utility Functions *
+ ********************/
 
 /**
  * Function to check admin privleges
@@ -265,56 +268,8 @@ function checkLoggedIn(req, res, next) {
   }
 }
 
-/** REMOVED
- * Function to return queries as needed based on arguments specified
- * @param option - enter the query command to run (create, select, insert, update, delete)
- * @param table - enter the name of the table that the query is intended to use (trainer, team, tokimon, move, sprite, movesprite)
- * @param condition - if there is a WHERE condition needed in the SQL otherwise enter ""
- * @param arguments - enter the arguments in JSON form to be created in the query other enter ""
- * @returns - desired query
- 
-function queryCreator(queryObject) {
-var query = "";
-var queryColumn = "";
-var queryData = "";
-switch (queryObject.option) {
-  case "create":
-    return tableCreator(queryObject.table);
-  case "select": 
-    for (const [key, value] of Object.entries(queryObject.arguments)) {
-      queryColumn += `${key},`;
-    }
-    queryColumn = queryColumn.slice(0, -1);
-    query = `SELECT ${queryColumn} FROM ${queryObject.table} ${queryObject.condition}`;
-    return query;
-  case "insert":
-    // iterate over the JSON to create query
-    for (const [key, value] of Object.entries(queryObject.arguments)) {
-      queryColumn += `${key},`;
-      queryData += `${value},`;
-    }
-    queryColumn = queryColumn.slice(0, -1); // remove last comma
-    queryData = queryData.slice(0, -1); // remove last comma
-    query = `INSERT INTO ${queryObject.table} (${queryColumn}) VALUES(${queryData})`;
-    return query;
-  case "update":
-    query = `UPDATE ${queryObject.table} SET `;
-    for (const [key, value] of Object.entries(queryObject.arguments)) {
-      queryData += `${key}= ${value},`;
-    }
-    queryData = queryData.slice(0, -1); // remove last comma
-    query += queryData;
-    query += ` ${queryObject.condition}`;
-    return query;
-  case "delete":
-    return `DELETE FROM ${queryObject.table} ${queryObject.condition}`;
-  default:
-    return "query option entered contains some error";
-  }
-}
-*/
 /**
- * Companion Function to return a table create query
+ * Function to return a table create query
  * @param - enter the table to create
  * @returns - the table creation query as needed
  */
@@ -372,3 +327,52 @@ switch (table) {
     return "bad create table entered";
   }
 }
+
+/** REMOVED
+ * Function to return queries as needed based on arguments specified
+ * @param option - enter the query command to run (create, select, insert, update, delete)
+ * @param table - enter the name of the table that the query is intended to use (trainer, team, tokimon, move, sprite, movesprite)
+ * @param condition - if there is a WHERE condition needed in the SQL otherwise enter ""
+ * @param arguments - enter the arguments in JSON form to be created in the query other enter ""
+ * @returns - desired query
+ 
+function queryCreator(queryObject) {
+var query = "";
+var queryColumn = "";
+var queryData = "";
+switch (queryObject.option) {
+  case "create":
+    return tableCreator(queryObject.table);
+  case "select": 
+    for (const [key, value] of Object.entries(queryObject.arguments)) {
+      queryColumn += `${key},`;
+    }
+    queryColumn = queryColumn.slice(0, -1);
+    query = `SELECT ${queryColumn} FROM ${queryObject.table} ${queryObject.condition}`;
+    return query;
+  case "insert":
+    // iterate over the JSON to create query
+    for (const [key, value] of Object.entries(queryObject.arguments)) {
+      queryColumn += `${key},`;
+      queryData += `${value},`;
+    }
+    queryColumn = queryColumn.slice(0, -1); // remove last comma
+    queryData = queryData.slice(0, -1); // remove last comma
+    query = `INSERT INTO ${queryObject.table} (${queryColumn}) VALUES(${queryData})`;
+    return query;
+  case "update":
+    query = `UPDATE ${queryObject.table} SET `;
+    for (const [key, value] of Object.entries(queryObject.arguments)) {
+      queryData += `${key}= ${value},`;
+    }
+    queryData = queryData.slice(0, -1); // remove last comma
+    query += queryData;
+    query += ` ${queryObject.condition}`;
+    return query;
+  case "delete":
+    return `DELETE FROM ${queryObject.table} ${queryObject.condition}`;
+  default:
+    return "query option entered contains some error";
+  }
+}
+*/
