@@ -2,36 +2,54 @@
  * Declaration and Initialization of Variables *
  **********************************************/
 const DEBUG = 0;
-const express = require('express')
-const path = require('path')
-const app = express()
-const PORT = process.env.PORT || 5000
-const bodyParser = require('body-parser')
-const session = require('express-session')
-var sess;
-const { Pool } = require('pg');
+
+// Global Constant Variables
+const express     =   require('express')
+const path        =   require('path')
+const app         =   express()
+const bodyParser  =   require('body-parser')
+const session     =   require('express-session')
+const { Pool }    =   require('pg')
+const redis       =   require('redis')
+const redisStore  =   require('connect-redis')(session)
+const adapter     =   require('socket.io-adapter')
+const client      =   require('socket.io-client')
+const parser      =   require('socket.io-parser')
+const http        =   require('http').Server(app)
+const io          =   require('socket.io')(http)
+const PORT        =   process.env.PORT || 5000
+
+// Other specific use variables
 var pool;
 pool = new Pool({
   // connectionString: process.env.DATABASE_URL
   connectionString:'postgres://postgres:password@localhost/postgres'
 });
-pool.connect();
-const socketIO = require('socket.io');
-var http = require('http').Server(app);
-var io = socketIO(http); //create a socketIO server
+pool.connect()
+app.use(session({
+  secret: 'ssshhhhh',
+  store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
+  saveUninitialized: false,
+  resave: false
+}));
+//app.use(cookieParser("secretSign#143_!223"));
+var sess;
 
+//Redis Clients
+var redisClient = redis.createClient()
+var publish = redis.createClient()
+var subscribe = redis.createClient()
 
 /*****************************************
  * Dependencies Setup and File Structure *
  ****************************************/
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({extended : false}))
-app.use(bodyParser())
 app.use(express.json())
-app.use(session({secret: 'shh'}))  // For session handling
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 http.listen(PORT, "127.0.0.1");
+//app.use(json.bodyParser())
 //app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 /****************
@@ -43,12 +61,17 @@ http.listen(PORT, "127.0.0.1");
  * @query - Table creation queries as needed
  */
 app.get('/', (req, res) => {
+  sess = req.session;
   var trainerQuery = tableCreator("trainer");
   var tokimonQuery = tableCreator("tokimon");
   var teamQuery = tableCreator("team");
   var moveQuery = tableCreator("move");
   var sprite = tableCreator("sprite");
   var movesprite = tableCreator("movesprite");
+  redisClient.set('testkey', 'testvalue', function(err, reply) {
+    if (err) console.log(err);
+    console.log(reply);
+  });
   pool.query(trainerQuery, (error, result) => {
   });
   res.render('pages/login');
@@ -79,34 +102,36 @@ app.get('/login', (req,res) => {
  * @failure - If bad username or password, reload login page with error message
  */
 app.post('/authenticate', (req,res) => {
-  var authquery = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
+  var authquery = `SELECT * FROM trainer WHERE username = '${req.body.uname}'`;
   pool.query(authquery, (error, result) => {
     if (error)
       res.end(error);
     var results = result.rows;
-    sess = req.session;
     results.forEach((r) => {
-      if(r.username === req.body["uname"]) {
-        if(r.password != req.body["psw"]) {
+      if(r.username === req.body.uname) {
+        if(r.password != req.body.psw) {
           sess.status = "loginfailed";
           res.redirect('/login');
         }
         else {
           sess.status = "loggedin";
           if(r.admin === '1') {
-            var authLogon = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
+            var authLogon = `SELECT * FROM trainer WHERE username = '${req.body.uname}'`;
             pool.query(authLogon, (error, result) => {
               if (error)
                 res.end(error);
               sess.admin = result.rows[0].admin;
+              sess.username = result.rows[0].username;
               res.redirect('/admin');
             });
           }
           else {
-            var authLogon = `SELECT * FROM trainer WHERE username = '${req.body["uname"]}'`;
+            var authLogon = `SELECT * FROM trainer WHERE username = '${req.body.uname}'`;
             pool.query(authLogon, (error, result) => {
               if (error)
                 res.end(error);
+              sess.admin = result.rows[0].admin;
+              sess.username = result.rows[0].username;
               res.redirect('/landing');   
             });
           }
@@ -128,7 +153,7 @@ app.post('/register', (req, res) => {
  */
 
 app.post('/addUser', (req,res) => {
-  var confirmUsername = `SELECT COUNT(*) FROM trainer WHERE username='${req.body["uname"]}'`;
+  var confirmUsername = `SELECT COUNT(*) FROM trainer WHERE username='${req.body.uname}'`;
   console.log(confirmUsername);
   
   pool.query(confirmUsername, (error, result) => {
@@ -137,7 +162,7 @@ app.post('/addUser', (req,res) => {
     var results = result.rows;
     results.forEach((r) => {
       if(parseInt(r.count) ===0 ) {
-        var addTokiQuery = `INSERT INTO trainer (username, password) VALUES ('${req.body["uname"]}', '${req.body["psw"]}')`;
+        var addTokiQuery = `INSERT INTO trainer (username, password) VALUES ('${req.body.uname}', '${req.body.psw}')`;
         console.log(addTokiQuery);
         pool.query(addTokiQuery, (error, result) => {
         if (error)
@@ -159,6 +184,18 @@ app.post('/addUser', (req,res) => {
  */
 app.get('/landing', checkLoggedIn, (req, res) => {
   res.render('pages/landing');
+});
+
+/**
+ * Logout Page
+ */
+app.get('/logout',(req,res) => {
+  req.session.destroy((err) => {
+      if(err) {
+          return console.log(err);
+      }
+      res.redirect('/');
+  });
 });
 
 /************************
@@ -230,16 +267,22 @@ app.get('/admin/display/moves', checkAdmin, (req, res) => {
   })
 });
 
-/**********************
- * SocketIO Functions *
- *********************/
+/********************************
+ * SocketIO and Redis Functions *
+ *******************************/
 
  /**
   * Function for listening to connections
   */
 io.on('connection', (socket) => { //listening for events
 	console.log('Client connected');
-	socket.on('disconnect', () => console.log('Client disconnected'));
+	socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  })
+});
+
+redisClient.on('connect', function(){
+  console.log('Redis Connection Successful');
 });
 
 /*********************
@@ -375,4 +418,33 @@ switch (queryObject.option) {
     return "query option entered contains some error";
   }
 }
+*/
+
+/***************************************
+ * List of All Resources/Websites Used *
+ **************************************/
+/* Socket.IO
+
+Socket.IO Homepage
+https://www.npmjs.com/package/socket.io
+@comments - original documentation of dependency, basic info nothing about redis
+*/
+
+ /* Redis
+
+Redis Homepage
+http://redis.js.org/
+@comments - original documentation of dependency, seems confusing for a beginner
+
+Redis Tutorial
+http://programmerblog.net/nodejs-redis-tutorial/
+@comments - basic redis adding/removing, contains nothing about cookies
+
+Redis Tutorial
+https://ciphertrick.com/nodejs-redis-tutorial/
+@comments - basic redis, contains a little tiny bit about cookies (expiring)
+
+Redis Tutorial
+https://codeforgeek.com/using-redis-to-handle-session-in-node-js/
+@comments - intermediate, useful for cookies
 */
