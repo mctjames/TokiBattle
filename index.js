@@ -23,8 +23,8 @@ const PORT        =   process.env.PORT || 5000
 var pool;
 pool = new Pool({
   // connectionString: process.env.DATABASE_URL
-  // connectionString:'postgres://postgres:password@localhost/postgres'
-  connectionString:'postgres://postgres:postgres@localhost/postgres'
+  connectionString:'postgres://postgres:password@localhost/postgres'
+ // connectionString:'postgres://postgres:postgres@localhost/postgres'
 });
 pool.connect()
 app.use(session({
@@ -190,10 +190,14 @@ app.get('/landing', checkLoggedIn, (req, res) => {
 /**
  * victory Page
  */
+
+// it now prints out the variable testValue - Next we need to make it print the user 
 app.get('/victory', (req, res) => {
   res.render('pages/victory');
+
+  var testValue = "Name of user!"
   // this sends a tweet to our twitter account
-  T.post('statuses/update', { status: 'Moment of Truth!' }, function(err, data, response) {
+  T.post('statuses/update', {status: `Hello ${testValue} you won!` }, function(err, data, response) {
   })
 });
 
