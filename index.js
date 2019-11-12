@@ -23,7 +23,8 @@ const PORT        =   process.env.PORT || 5000
 var pool;
 pool = new Pool({
   // connectionString: process.env.DATABASE_URL
-  connectionString:'postgres://postgres:password@localhost/postgres'
+  // connectionString:'postgres://postgres:password@localhost/postgres'
+  connectionString:'postgres://postgres:postgres@localhost/postgres'
 });
 pool.connect()
 app.use(session({
@@ -146,6 +147,9 @@ app.post('/authenticate', (req,res) => {
  */
 app.post('/register', (req, res) => {
   res.render('pages/register.ejs')
+  // T.post('statuses/update', { status: 'Bobby world!' }, function(err, data, response) {
+  // })
+  //above code for automatic Tweet
 })
 
 /**
@@ -184,6 +188,16 @@ app.post('/addUser', (req,res) => {
  */
 app.get('/landing', checkLoggedIn, (req, res) => {
   res.render('pages/landing');
+});
+
+app.get('/victory', (req, res) => {
+  res.render('pages/victory');
+  T.post('statuses/update', { status: 'Moment of Truth!' }, function(err, data, response) {
+  })
+});
+
+app.get('/loser', (req, res) => {
+  res.render('pages/loser');
 });
 
 /**
@@ -370,6 +384,21 @@ switch (table) {
     return "bad create table entered";
   }
 }
+
+//API Section. Proceed with caution
+
+var Twit = require('twit')
+
+var T = new Twit({
+  consumer_key:         'fUQDXW479q8xYCk3gWPsx0WbL',
+  consumer_secret:      'hohfYIwnRBQdzYkNOMvmlGxSVgZl93mLc4mopLnyzB8saWI183',
+  access_token:         '1193989007530610689-lmxbjSVscDQDNmAfZpd1WhORdX3HMA',
+  access_token_secret:  'YztB5mHP356SNKSyNPTJkqcfisZOO3cpITa1MeBwQRCod',
+})
+
+//
+//  tweet 'hello world!'
+//
 
 /** REMOVED
  * Function to return queries as needed based on arguments specified
