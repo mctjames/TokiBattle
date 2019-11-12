@@ -147,9 +147,6 @@ app.post('/authenticate', (req,res) => {
  */
 app.post('/register', (req, res) => {
   res.render('pages/register.ejs')
-  // T.post('statuses/update', { status: 'Bobby world!' }, function(err, data, response) {
-  // })
-  //above code for automatic Tweet
 })
 
 /**
@@ -190,12 +187,19 @@ app.get('/landing', checkLoggedIn, (req, res) => {
   res.render('pages/landing');
 });
 
+/**
+ * victory Page
+ */
 app.get('/victory', (req, res) => {
   res.render('pages/victory');
+  // this sends a tweet to our twitter account
   T.post('statuses/update', { status: 'Moment of Truth!' }, function(err, data, response) {
   })
 });
 
+/**
+ * loser Page
+ */
 app.get('/loser', (req, res) => {
   res.render('pages/loser');
 });
@@ -385,7 +389,9 @@ switch (table) {
   }
 }
 
-//API Section. Proceed with caution
+/*********************
+ * Twitter API *
+ ********************/
 
 var Twit = require('twit')
 
