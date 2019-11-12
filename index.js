@@ -206,6 +206,12 @@ app.get('/victory', (req, res) => {
  */
 app.get('/loser', (req, res) => {
   res.render('pages/loser');
+
+
+  var testValue = "Test User!"
+  // this sends a tweet to our twitter account
+  T.post('statuses/update', {status: `You lost badly ${testValue}!` }, function(err, data, response) {
+  })
 });
 
 /**
