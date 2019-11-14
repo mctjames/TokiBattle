@@ -23,8 +23,8 @@ const PORT        =   process.env.PORT || 5000
 var pool;
 pool = new Pool({
   // connectionString: process.env.DATABASE_URL
-  connectionString:'postgres://postgres:password@localhost/postgres'
- // connectionString:'postgres://postgres:postgres@localhost/postgres'
+  // connectionString:'postgres://postgres:password@localhost/postgres'
+ connectionString:'postgres://postgres:postgres@localhost/postgres'
 });
 pool.connect()
 app.use(session({
@@ -192,25 +192,23 @@ app.get('/landing', checkLoggedIn, (req, res) => {
  */
 
 // it now prints out the variable testValue - Next we need to make it print the user 
-app.get('/victory', (req, res) => {
-  res.render('pages/victory');
+app.get('/victory', checkLoggedIn, (req, res) => {
+  var winning_trainer = sess.username;
+  var timestamp = new Date();
+  var results = {'status': winning_trainer}
+  res.render('pages/victory', results);
+  T.post('statuses/update', {status: `${winning_trainer} won the battle on ${timestamp}!` }, function(err, data, response) {
 
-  var testValue = "Name of user!"
-  // this sends a tweet to our twitter account
-  T.post('statuses/update', {status: `Hello ${testValue} you won!` }, function(err, data, response) {
   })
 });
 
 /**
  * loser Page
  */
-app.get('/loser', (req, res) => {
+app.get('/loser', checkLoggedIn, (req, res) => {
+  var losing_trainer = sess.username;
   res.render('pages/loser');
-
-
-  var testValue = "Test User!"
-  // this sends a tweet to our twitter account
-  T.post('statuses/update', {status: `You lost badly ${testValue}!` }, function(err, data, response) {
+  T.post('statuses/update', {status: `${losing_trainer} lost the battle because they didn't raise their Tokimon with love and care.` }, function(err, data, response) {
   })
 });
 
