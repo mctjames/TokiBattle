@@ -23,8 +23,8 @@ const PORT        =   process.env.PORT || 5000
 var pool;
 pool = new Pool({
   // connectionString: process.env.DATABASE_URL
-  // connectionString:'postgres://postgres:password@localhost/postgres'
- connectionString:'postgres://postgres:postgres@localhost/postgres'
+   connectionString:'postgres://postgres:password@localhost/postgres'
+ //connectionString:'postgres://postgres:postgres@localhost/postgres'
 });
 pool.connect()
 app.use(session({
@@ -197,6 +197,9 @@ app.get('/landing', checkLoggedIn, (req, res) => {
 app.get('/victory', checkLoggedIn, (req, res) => {
   var winning_trainer = sess.username;
   var timestamp = new Date();
+
+
+
   var results = {'status': winning_trainer}
   res.render('pages/victory', results);
   T.post('statuses/update', {status: `${winning_trainer} won the battle on ${timestamp}!` }, function(err, data, response) {
@@ -211,7 +214,9 @@ app.get('/loser', checkLoggedIn, (req, res) => {
   var losing_trainer = sess.username;
   var date = new Date();
 
-  res.render('pages/loser');
+  var results = {'status': losing_trainer}
+  res.render('pages/loser', results);
+
   T.post('statuses/update', {status: `${losing_trainer} lost the battle on ${date} because they didn't raise their Tokimon with love and care.` }, function(err, data, response) {
   })
 });
