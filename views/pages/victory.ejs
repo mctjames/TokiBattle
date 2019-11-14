@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Background CSS Example </title>
+		<title>You Won!</title>
 
 		<link href="/stylesheets/victory.css" rel="stylesheet" type="text/css" media="all">
 	</head>
@@ -13,9 +13,23 @@
 		<div id="main">
 			<div id="first"></div>
 			<div id="second">
-				<p id="container">
-					You Win!
-				</p>
+				
+
+				<p id="container">You Win!</p>
+
+
+		      <div id="failed">
+		          <% if (typeof status !== 'undefined') { %>
+
+		              <p><%= status %></p>
+
+		          <% } %>
+		      </div>
+
+
+
+
+
 				<p id="container2"> Thomas Lost!</p>
 				<p id="invisitext">invisible</p>
 				<p id="invisitext">invisible</p>

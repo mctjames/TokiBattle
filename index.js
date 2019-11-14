@@ -187,30 +187,32 @@ app.get('/landing', checkLoggedIn, (req, res) => {
   res.render('pages/landing');
 });
 
+
 /**
  * victory Page
  */
 
-// it now prints out the variable testValue - Next we need to make it print the user 
-app.get('/victory', (req, res) => {
-  res.render('pages/victory');
+app.get('/victory', checkLoggedIn, (req, res) => {
+  var username = sess.username;
+  var date = new Date();
 
-  var testValue = "Name of user!"
+  res.render('pages/victory', results);
+
   // this sends a tweet to our twitter account
-  T.post('statuses/update', {status: `Hello ${testValue} you won!` }, function(err, data, response) {
+  T.post('statuses/update', {status: `Hello ${username} you won on ${date}!` }, function(err, data, response) {
   })
 });
 
 /**
  * loser Page
  */
-app.get('/loser', (req, res) => {
+app.get('/loser', checkLoggedIn, (req, res) => {
   res.render('pages/loser');
 
-
-  var testValue = "Test User!"
+  var username = sess.username;
+  var date = new Date();
   // this sends a tweet to our twitter account
-  T.post('statuses/update', {status: `You lost badly ${testValue}!` }, function(err, data, response) {
+  T.post('statuses/update', {status: `${username} you lost badly on ${date}!` }, function(err, data, response) {
   })
 });
 
@@ -338,6 +340,8 @@ function checkLoggedIn(req, res, next) {
     res.redirect('/');
   }
 }
+
+
 
 /**
  * Function to return a table create query
