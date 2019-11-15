@@ -148,6 +148,14 @@ app.post('/register', (req, res) => {
   res.render('pages/register.ejs')
 })
 
+
+/**
+ * loadingBattle Page
+ */
+app.get('/loadingBattle', (req, res) => {
+  res.render('pages/loadingBattle.ejs')
+})
+
 /**
  * Add Users Page
  */
