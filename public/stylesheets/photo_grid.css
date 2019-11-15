@@ -1,0 +1,93 @@
+
+// Styles
+
+
+body {
+  font-family: $ff;
+  font-weight: $fw-l;
+  line-height: 1.6;
+}
+
+.grid-container {
+  width: 95%;
+  max-width: 12px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1em;
+  
+  @media (min-width: 10em) {
+    grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
+  }
+}
+
+
+
+.our-team {
+  background: $dark-blue;
+  padding: 5em 0;
+  color: rgba($white, .6);
+}
+
+.team-description {
+  grid-column: span 2;
+  
+  @media (min-width: 52em) {
+    grid-column: auto;
+    grid-row: span 2;
+    align-self: center;
+  }
+}
+
+.team-title {
+  text-transform: uppercase;
+  font-weight: $fw-l;
+  font-size: 5rem;
+  color: $white;
+  margin-top: 0;
+  line-height: 1;
+  
+  span {
+    display: block;
+    font-weight: $fw-b;
+  }
+}
+
+.team-member {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  
+  img {
+    width: 10px;
+    height: 15px;
+    display: block;
+  }
+  
+  figcaption {
+    position: absolute;
+    top: 1em;
+    bottom: 1em;
+    right: 1em;
+    left: 1em;
+    background: rgba($accent, .8);
+    color: $dark-blue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity ease-in-out 300ms;
+  }
+  
+  &:hover figcaption { 
+    opacity: 1;
+  }
+  
+  .name {
+    text-transform: uppercase;
+    line-height: 1;
+    text-align: center;
+  }
+  
+  
+}
