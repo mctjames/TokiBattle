@@ -8,17 +8,16 @@
 
       <div id="b"> 
               <div class="column">
-                  <button class="btn item1"><img id="toki1" src="/stylesheets/pictures/squirt.png" style="width:80%"
-                  onclick="changeImage()">
+                  <button class="btn item1"><img id="toki1" src="/stylesheets/pictures/squirt.png" style="width:80%" onclick="changeImage(id)">
                   </button>
-                  <button class="btn item2"><img id="toki2" src="/stylesheets/pictures/squirt.png" style="width:80%"></button>
-                  <button class="btn item3"><img id="toki3" src="/stylesheets/pictures/squirt.png" style="width:80%"></button>
+                  <button class="btn item2"><img id="toki2" src="/stylesheets/pictures/squirt2.png" style="width:80%" onclick="changeImage(id)"></button>
+                  <button class="btn item3"><img id="toki3" src="/stylesheets/pictures/squirt3.png" style="width:80%" onclick="changeImage(id)"></button>
 
               </div>
               <div class="column2">
-                  <button class="btn item4"><img id="toki4" src="/stylesheets/pictures/squirt.png" style="width:80%"></button>
-                  <button class="btn item5"><img id="toki5" src="/stylesheets/pictures/squirt.png" style="width:80%"></button>
-                  <button class="btn item6"><img id="toki6" src="/stylesheets/pictures/squirt.png" style="width:80%"></button>
+                  <button class="btn item4"><img id="toki4" src="/stylesheets/pictures/squirt4.png" style="width:80%" onclick="changeImage(id)"></button>
+                  <button class="btn item5"><img id="toki5" src="/stylesheets/pictures/squirt5.png" style="width:80%" onclick="changeImage(id)"></button>
+                  <button class="btn item6"><img id="toki6" src="/stylesheets/pictures/squirt6.png" style="width:80%" onclick="changeImage(id)"></button>
               </div>
               <style>
                   .btn {
@@ -46,22 +45,12 @@
         </div>
 
       <div id ="battlePosition1">
-        <img id = "tokimonLeft" src="/stylesheets/pictures/squirt.png" style="width:15%">
         <img id = "tokimonRight" src="/stylesheets/pictures/squirt.png" style="width:15%">
       </div>
 
 <script language="javascript">
-  function changeImage(){
-    console.log("clicked it!!!!!!!!!!!!!!!!!")
-
-     if (document.getElementById("toki1").src == "/stylesheets/pictures/squirt.png") 
-        {
-            document.getElementById("tokimonRight").src = "/stylesheets/pictures/1.jpg";
-        }
-        else 
-        {
-            document.getElementById("tokimonRight").src = "/stylesheets/pictures/2.jpg";
-        }
+  function changeImage(input){
+    document.getElementById("tokimonRight").src = document.getElementById(input).src;
   }
 </script>
 
