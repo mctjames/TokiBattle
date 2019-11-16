@@ -146,10 +146,6 @@ app.post('/authenticate', (req,res) => {
  */
 app.post('/register', (req, res) => {
   res.render('pages/register.ejs')
-  setTimeout(function() {
-     res.redirect('pages/battlepage_2');  
-   }, 8.5);
-
 })
 
 
@@ -159,17 +155,30 @@ app.post('/register', (req, res) => {
 app.get('/loadingBattle', (req, res) => {
   res.render('pages/loadingBattle.ejs')
 
+// res.redirect('/battlepage_2'); 
+// return;
+
+  // var timoutObj = setTimeout(() => {
+  //   console.log('timout battle video');
+  //    res.redirect('/pages/login'); 
+
+  // }, 1500);
+ 
+
 })
 
 
 /**
- * loadingBattle Page
+ * battlepage_2 Page
  */
 app.get('/battlepage_2', (req, res) => {
   res.render('pages/battlepage_2.ejs')
 })
 
 
+/**
+ * photo_grid 
+ */
 app.get('/photo_grid', (req, res) => {
   res.render('pages/photo_grid.ejs')
 })
