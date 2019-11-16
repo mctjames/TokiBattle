@@ -13,44 +13,40 @@ h1{
 
 #b{
     background-size: cover;
+    background-color: rgb(86, 65, 204);
     position: relative;
     height: 600px;
     width: 450px;
-    border: 5px solid blue;
+    border: 5px solid rgb(49, 49, 230);
     right: -1300px;
     border-radius: 5px;
 
 }
 
-#toki_1:hover{
-    opacity: 0.5;
-    filter: alpha(opacity = 50);
-}
+/* Create two equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 49.9999999999999999%;
 
-.photo-img-1{
-    background:
-        linear-gradient(
-            rgba(0, 0, 0, 0.50),
-            rgba(0, 0, 0, 0.10)
-        ),
-        /* bottom, image */
-        url("squirt.png");
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
+  }
+  .column2 {
+    float: right;
+    width: 49.9999999999999999%;
 
-}
+  }
+  
+  .column2 img {
+    align-items: top;
+  }
+  
+  img{
+      padding: 10px;
+      display: inline-block;
+  }
 
-#toki_1 hover ~ #b{
-    background:
-    linear-gradient(
-        rgba(0, 0, 0, 0.50),
-        rgba(0, 0, 0, 0.10)
-    ),
-    /* bottom, image */
-    url("squirt.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+  .ready{
+      background-color: crimson;
+      padding: 30px;
+      align-items: baseline;
+  }
 
-}

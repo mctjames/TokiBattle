@@ -5,28 +5,42 @@
   <link rel="stylesheet" href="/stylesheets/battlepage_2.css" type="text/css" media="all">
 </head>
 <body>
-  <div class = "photo-selection">
-    <ul class = "photo-grid">
-      <li id = "toki_1">
-        <div class = "photo-img-1"></div>
-      </li>
-      <li id = "toki_2">
-          <div class = "photo-box photo-img-2"></div>
-      </li>
-      <li id = "toki_3">
-          <div class = "photo-box photo-img-3"></div>
-      </li>
-      <li id = "toki_4">
-          <div class = "photo-box photo-img-4"></div>
-      </li>
-      <li id = "toki_5">
-          <div class = "photo-box photo-img-5"></div>
-      </li>
-      <li id = "toki_6">
-          <div class = "photo-box photo-img-6"></div>
-      </li>
-      <div id="b"> <div> </div> <p> </p> </div>
-    </ul>
-  </div>
+
+      <div id="b"> 
+              <div class="column">
+                  <button class="btn item1"><img src="/stylesheets/pictures/squirt.png" style="width:80%"></button>
+                  <button class="btn item2"><img src="/stylesheets/pictures/squirt.png" style="width:80%"></button>
+                  <button class="btn item3"><img src="/stylesheets/pictures/squirt.png" style="width:80%"></button>
+
+              </div>
+              <div class="column2">
+                  <button class="btn item4"><img src="/stylesheets/pictures/squirt.png" style="width:80%"></button>
+                  <button class="btn item5"><img src="/stylesheets/pictures/squirt.png" style="width:80%"></button>
+                  <button class="btn item6"><img src="/stylesheets/pictures/squirt.png" style="width:80%"></button>
+              </div>
+              <style>
+                  .btn {
+                    border: none;
+                    background-color: inherit;
+                    padding: 14px 28px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    display: inline-block;
+                  }
+                  
+                  .btn:hover {background: #eee;}
+                  
+                  .item1 {color: green;}
+                  .item2 {color: green;}
+                  .item3 {color: green;}
+                  .item4 {color: green;}
+                  .item5 {color: green;}
+                  .item6 {color: green;}
+
+                  </style>
+                  <div>
+                   <button class="ready">READY!</button>
+                  </div>
+        </div>
 </body> 
 </html>
