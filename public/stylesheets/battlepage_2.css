@@ -20,7 +20,20 @@ h1{
     border: 5px solid rgb(49, 49, 230);
     right: -1300px;
     border-radius: 5px;
+}
 
+#battlePosition1{
+      border: 5px solid rgb(200, 49, 230);
+      border-radius: 5px;
+      width: 65%;
+}
+
+#tokimonLeft{
+  margin-left: 15%;
+}
+
+#tokimonRight{
+  margin-left: 45%;
 }
 
 /* Create two equal columns that floats next to each other */
