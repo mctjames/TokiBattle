@@ -13,12 +13,12 @@ h1{
 
 #b{
     background-size: cover;
-    background-color: rgb(86, 65, 204);
+    background-color: rgb(255, 108, 71);
     position: relative;
-    height: 600px;
+    height: 420px;
     width: 450px;
-    border: 5px solid rgb(49, 49, 230);
-    right: -1300px;
+    border: 5px solid rgb(230, 212, 49);
+    right: -1300px; 
     border-radius: 5px;
 }
 
@@ -30,10 +30,12 @@ h1{
 
 #tokimonLeft{
   margin-left: 15%;
+  margin-bottom: 50%;
 }
 
-#tokimonRight{
-  margin-left: 45%;
+.giphy-embed{
+  margin-left: 30%;
+  margin-bottom: 50%;
 }
 
 /* Create two equal columns that floats next to each other */
@@ -47,19 +49,55 @@ h1{
     width: 49.9999999999999999%;
 
   }
+
+  #gif1{
+    width: 400px;
+    height: 300px;
+    margin-left: 50%;
+  }
+
+  #gif2{
+    width: 300px;
+    height: 300px;
+    margin-left: 50%;
+  }
+  #gif3{
+    width: 300px;
+    height: 200px;
+    margin-left: 50%;
+  }
+  #gif4{
+    width: 400px;
+    height: 300px;
+    margin-left: 50%;
+  }
+  #gif5{
+    width: 400px;
+    height: 300px;
+    margin-left: 50%;
+  }
+  #gif6{
+    width: 400px;
+    height: 300px;
+    margin-left: 50%;
+  }
   
   .column2 img {
     align-items: top;
   }
   
   img{
-      padding: 10px;
+      padding: 3px;
       display: inline-block;
+      height: 85px;
+      width: 10px;
   }
 
   .ready{
       background-color: crimson;
-      padding: 30px;
+      padding: 20px;
       align-items: baseline;
+      color: white;
+
   }
 
