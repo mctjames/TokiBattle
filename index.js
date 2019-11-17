@@ -239,7 +239,7 @@ app.get('/landing', checkLoggedIn, (req, res, next) => {
 
 // it now prints out the variable testValue - Next we need to make it print the user 
 app.get('/victory', checkLoggedIn, (req, res) => {
-  var winning_trainer = sess.username;
+  var winning_trainer = req.cookies.data.username;
   // gets the date and chops out unwanted portions of information for posting to twitter  
   var timestamp = new Date();
   timestamp = timestamp.toString();
@@ -258,7 +258,7 @@ app.get('/victory', checkLoggedIn, (req, res) => {
  * loser Page
  */
 app.get('/loser', checkLoggedIn, (req, res) => {
-  var losing_trainer = sess.username;
+  var losing_trainer = req.cookies.data.username;
   var timestamp = new Date();
   timestamp = timestamp.toString();
   gmt_pos = timestamp.indexOf("GMT");
