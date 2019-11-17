@@ -105,6 +105,7 @@ app.post('/authenticate', (req,res) => {
       if (DEBUG) console.log(error)
       res.end(error);
     }
+    var found = false
     var results = result.rows;
     results.forEach((r) => {
       if(r.username === req.body.uname) {
@@ -112,6 +113,7 @@ app.post('/authenticate', (req,res) => {
           res.redirect('/login');
         }
         else {
+          found = true
           var cookieData = {
             username: r.username,
             status: "loggedin",
@@ -140,7 +142,8 @@ app.post('/authenticate', (req,res) => {
         }
       }
     });
-    res.redirect('login');
+    if (!found)
+      res.redirect('login');
   });
 })
 
@@ -166,8 +169,8 @@ app.post('/addUser', (req,res) => {
       res.end(error);
     var results = result.rows;
     results.forEach((r) => {
-      if(parseInt(r.count) ===0 ) {
-        var addTokiQuery = `INSERT INTO trainer (username, password) VALUES ('${req.body.uname}', '${req.body.psw}')`;
+      if(parseInt(r.count) == 0 ) {
+        var addTokiQuery = `INSERT INTO trainer (username, password, admin) VALUES ('${req.body.uname}', '${req.body.psw}', '0')`;
         console.log(addTokiQuery);
         pool.query(addTokiQuery, (error, result) => {
         if (error)
