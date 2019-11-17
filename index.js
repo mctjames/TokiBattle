@@ -107,6 +107,7 @@ app.post('/authenticate', (req,res) => {
       res.end(error);
     }
     var results = result.rows;
+    var found = false
     results.forEach((r) => {
       if(r.username === req.body.uname) {
         if(r.password != req.body.psw) {
@@ -123,14 +124,16 @@ app.post('/authenticate', (req,res) => {
             if (err) console.log("authenticate error:", err);
             console.log("authenticate reply:", reply);
           });
-          if(r.admin === '1') {
+          if(r.admin == '1') {
             var authLogon = `SELECT * FROM trainer WHERE username = '${req.body.uname}'`;
+            found = true
             pool.query(authLogon, (error, result) => {
               if (error) res.end(error);
               res.redirect('/admin');
             });
           }
           else {
+            found = true
             var authLogon = `SELECT * FROM trainer WHERE username = '${req.body.uname}'`;
             pool.query(authLogon, (error, result) => {
               if (error) res.end(error);
@@ -141,7 +144,8 @@ app.post('/authenticate', (req,res) => {
         }
       }
     });
-    res.redirect('login');
+    if (!found)
+      res.redirect('login');
   });
 })
 
@@ -202,8 +206,8 @@ app.post('/addUser', (req,res) => {
       res.end(error);
     var results = result.rows;
     results.forEach((r) => {
-      if(parseInt(r.count) ===0 ) {
-        var addTokiQuery = `INSERT INTO trainer (username, password) VALUES ('${req.body.uname}', '${req.body.psw}')`;
+      if(parseInt(r.count) === 0 ) {
+        var addTokiQuery = `INSERT INTO trainer (username, password, admin) VALUES ('${req.body.uname}', '${req.body.psw}', '0')`;
         console.log(addTokiQuery);
         pool.query(addTokiQuery, (error, result) => {
         if (error)
