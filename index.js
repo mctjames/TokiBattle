@@ -120,7 +120,7 @@ app.post('/authenticate', (req,res) => {
             admin: r.admin
           }
           res.cookie("data",cookieData,{maxAge: 90000000, httpOnly: true, secure: false, overwrite: true});
-          redisClient.hmset(`${r.username}`, data, function(err, reply) {
+          redisClient.hmset(`${r.username}`, cookieData, function(err, reply) {
             if (err) console.log("authenticate error:", err);
             console.log("authenticate reply:", reply);
           });
@@ -305,7 +305,7 @@ redisClient.on('connect', function(){
  * Function to check admin privleges
  */
 function checkAdmin(req, res, next) {
-  if (!req.cookies.data || req.cookies.data.admin == 0) {
+  if (!req.cookies.data || req.cookies.data.admin == '0') {
     res.redirect('/login');
   }
   else {
