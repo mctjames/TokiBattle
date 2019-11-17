@@ -1,39 +1,37 @@
 /***********************************************
  * Declaration and Initialization of Variables *
  **********************************************/
-const DEBUG = 0;
+const DEBUG = 1;
 
 // Global Constant Variables
-const express     =   require('express')
-const path        =   require('path')
-const app         =   express()
-const bodyParser  =   require('body-parser')
-const session     =   require('express-session')
-const { Pool }    =   require('pg')
-const redis       =   require('redis')
-const redisStore  =   require('connect-redis')(session)
-const adapter     =   require('socket.io-adapter')
-const client      =   require('socket.io-client')
-const parser      =   require('socket.io-parser')
-const http        =   require('http').Server(app)
-const io          =   require('socket.io')(http)
-const PORT        =   process.env.PORT || 5000
+const express       =   require('express')
+const path          =   require('path')
+const app           =   express()
+const bodyParser    =   require('body-parser')
+const session       =   require('express-session')
+const { Pool }      =   require('pg')
+const redis         =   require('redis')
+const cookieParser  =   require('cookie-parser');
+const redisStore    =   require('connect-redis')(session)
+const adapter       =   require('socket.io-adapter')
+const client        =   require('socket.io-client')
+const parser        =   require('socket.io-parser')
+const http          =   require('http').Server(app)
+const io            =   require('socket.io')(http)
+const PORT          =   process.env.PORT || 5000
 
 // Other specific use variables
 var pool;
 pool = new Pool({
   // connectionString: process.env.DATABASE_URL
-  connectionString:'postgres://postgres:password@localhost/postgres'
+    connectionString:'postgres://postgres:password@localhost/postgres'
+ //connectionString:'postgres://postgres:postgres@localhost/postgres'
 });
 pool.connect()
-app.use(session({
-  secret: 'ssshhhhh',
-  store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
-  saveUninitialized: false,
-  resave: false
-}));
+
 //app.use(cookieParser("secretSign#143_!223"));
 var sess;
+var user;
 
 //Redis Clients
 var redisClient = redis.createClient()
@@ -46,6 +44,14 @@ var subscribe = redis.createClient()
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({extended : false}))
 app.use(express.json())
+app.use(cookieParser());
+app.use(session({
+  secret: 'ssshhhhh',
+  store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
+  cookie: { secure: true, maxAge:86400000 },
+  saveUninitialized: false,
+  resave: false
+}));
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 http.listen(PORT, "127.0.0.1");
@@ -60,18 +66,14 @@ http.listen(PORT, "127.0.0.1");
  * Main Page
  * @query - Table creation queries as needed
  */
-app.get('/', (req, res) => {
-  sess = req.session;
+app.all('/', (req, res) => {
   var trainerQuery = tableCreator("trainer");
   var tokimonQuery = tableCreator("tokimon");
   var teamQuery = tableCreator("team");
   var moveQuery = tableCreator("move");
   var sprite = tableCreator("sprite");
   var movesprite = tableCreator("movesprite");
-  redisClient.set('testkey', 'testvalue', function(err, reply) {
-    if (err) console.log(err);
-    console.log(reply);
-  });
+  console.log(req.cookies)
   pool.query(trainerQuery, (error, result) => {
   });
   res.render('pages/login');
@@ -82,18 +84,13 @@ app.get('/', (req, res) => {
  */
 app.get('/login', (req,res) => {
   var results;
-  if (sess) {
-    if (sess.status == "loginfailed") {
+  if (req.cookies.data) {
+    if (req.cookies.data.status == "notloggedin") {
       results = {'status':"Your username or password could not be verified. Please try again."};
       res.render('pages/login', results);
     }
-    else {
-      res.render('pages/login');
-    }
-  } 
-  else {
-    res.render('pages/login');
   }
+  res.render('pages/login');
 })
 
 /**
@@ -102,42 +99,53 @@ app.get('/login', (req,res) => {
  * @failure - If bad username or password, reload login page with error message
  */
 app.post('/authenticate', (req,res) => {
+  if (DEBUG) console.log("sessionID at /authenticate:", req.sessionID)
   var authquery = `SELECT * FROM trainer WHERE username = '${req.body.uname}'`;
   pool.query(authquery, (error, result) => {
-    if (error)
+    if (error) {
+      if (DEBUG) console.log(error)
       res.end(error);
+    }
     var results = result.rows;
+    var found = false
     results.forEach((r) => {
       if(r.username === req.body.uname) {
         if(r.password != req.body.psw) {
-          sess.status = "loginfailed";
           res.redirect('/login');
         }
         else {
-          sess.status = "loggedin";
-          if(r.admin === '1') {
+          var cookieData = {
+            username: r.username,
+            status: "loggedin",
+            admin: r.admin
+          }
+          res.cookie("data",cookieData,{maxAge: 90000000, httpOnly: true, secure: false, overwrite: true});
+          redisClient.hmset(`${r.username}`, cookieData, function(err, reply) {
+            if (err) console.log("authenticate error:", err);
+            console.log("authenticate reply:", reply);
+          });
+          if(r.admin == '1') {
             var authLogon = `SELECT * FROM trainer WHERE username = '${req.body.uname}'`;
+            found = true
             pool.query(authLogon, (error, result) => {
-              if (error)
-                res.end(error);
-              sess.admin = result.rows[0].admin;
-              sess.username = result.rows[0].username;
+              if (error) res.end(error);
               res.redirect('/admin');
             });
           }
           else {
+            found = true
             var authLogon = `SELECT * FROM trainer WHERE username = '${req.body.uname}'`;
             pool.query(authLogon, (error, result) => {
-              if (error)
-                res.end(error);
-              sess.admin = result.rows[0].admin;
-              sess.username = result.rows[0].username;
-              res.redirect('/landing');   
+              if (error) res.end(error);
+              //res.render('pages/landing');
+              res.redirect('/landing');
             });
           }
         }
       }
     });
+    if (!found)
+      res.redirect('login');
   });
 })
 
@@ -145,6 +153,7 @@ app.post('/authenticate', (req,res) => {
  * Registration Page
  */
 app.post('/register', (req, res) => {
+  if (DEBUG) console.log("sessionID at /register:", req.sessionID)
   res.render('pages/register.ejs')
 })
 
@@ -188,6 +197,7 @@ app.get('/photo_grid', (req, res) => {
  */
 
 app.post('/addUser', (req,res) => {
+  if (DEBUG) console.log("sessionID at /addUser:", req.sessionID)
   var confirmUsername = `SELECT COUNT(*) FROM trainer WHERE username='${req.body.uname}'`;
   console.log(confirmUsername);
   
@@ -196,8 +206,8 @@ app.post('/addUser', (req,res) => {
       res.end(error);
     var results = result.rows;
     results.forEach((r) => {
-      if(parseInt(r.count) ===0 ) {
-        var addTokiQuery = `INSERT INTO trainer (username, password) VALUES ('${req.body.uname}', '${req.body.psw}')`;
+      if(parseInt(r.count) === 0 ) {
+        var addTokiQuery = `INSERT INTO trainer (username, password, admin) VALUES ('${req.body.uname}', '${req.body.psw}', '0')`;
         console.log(addTokiQuery);
         pool.query(addTokiQuery, (error, result) => {
         if (error)
@@ -217,14 +227,55 @@ app.post('/addUser', (req,res) => {
 /**
  * Landing Page
  */
-app.get('/landing', checkLoggedIn, (req, res) => {
+app.get('/landing', checkLoggedIn, (req, res, next) => {
   res.render('pages/landing');
+});
+
+
+/**
+ * victory Page
+ */
+
+
+// it now prints out the variable testValue - Next we need to make it print the user 
+app.get('/victory', checkLoggedIn, (req, res) => {
+  var winning_trainer = req.cookies.data.username;
+  // gets the date and chops out unwanted portions of information for posting to twitter  
+  var timestamp = new Date();
+  timestamp = timestamp.toString();
+  gmt_pos = timestamp.indexOf("GMT");
+  timestamp = timestamp.slice(0, gmt_pos - 1);
+  // assigns values used on ejs page to display the winning user
+  var results = {'status': winning_trainer}
+  // creates the victory page and also passes the winning user to the ejs. (second variable)
+  res.render('pages/victory', results);
+  // twitter API - This tweets out the winner and when the victory happened. 
+  T.post('statuses/update', {status: `${winning_trainer} won the battle on ${timestamp}!` }, function(err, data, response) {
+  })
+});
+
+/**
+ * loser Page
+ */
+app.get('/loser', checkLoggedIn, (req, res) => {
+  var losing_trainer = req.cookies.data.username;
+  var timestamp = new Date();
+  timestamp = timestamp.toString();
+  gmt_pos = timestamp.indexOf("GMT");
+  timestamp = timestamp.slice(0, gmt_pos - 1);
+  var results = {'status': losing_trainer}
+  // renders the loser page. 
+  res.render('pages/loser', results);
+  // Twitter API - tweets out loser info
+  T.post('statuses/update', {status: `${losing_trainer} lost the battle on ${timestamp} because they didn't raise their Tokimon with love and care.` }, function(err, data, response) {
+  })
 });
 
 /**
  * Logout Page
  */
 app.get('/logout',(req,res) => {
+  if (DEBUG) console.log("sessionID at /logout:", req.sessionID)
   req.session.destroy((err) => {
       if(err) {
           return console.log(err);
@@ -253,7 +304,7 @@ app.get('/admin', checkAdmin, (req, res) => {
 /**
  * Trainer Display Page
  */
-app.get('/admin/display/trainers', checkAdmin, (req, res) => {
+app.get('/admin/trainers', checkAdmin, (req, res) => {
   var query = `SELECT * FROM trainer`;
   pool.query(query, (error, result) => {
     if (error)
@@ -266,7 +317,7 @@ app.get('/admin/display/trainers', checkAdmin, (req, res) => {
 /**
  * Team Display Page
  */
-app.get('/admin/display/teams', checkAdmin, (req, res) => {
+app.get('/admin/teams', checkAdmin, (req, res) => {
   var query = `SELECT * FROM team`;
   pool.query(query, (error, result) => {
     if (error)
@@ -279,7 +330,7 @@ app.get('/admin/display/teams', checkAdmin, (req, res) => {
 /**
  * Tokimon Display Page
  */
-app.get('/admin/display/tokimons', checkAdmin, (req, res) => {
+app.get('/admin/tokimons', checkAdmin, (req, res) => {
   var query = `SELECT * FROM tokimon`;
   pool.query(query, (error, result) => {
     if (error)
@@ -292,7 +343,7 @@ app.get('/admin/display/tokimons', checkAdmin, (req, res) => {
 /**
  * Move Display Page
  */
-app.get('/admin/display/moves', checkAdmin, (req, res) => {
+app.get('/admin/moves', checkAdmin, (req, res) => {
   var query = `SELECT * FROM move`;
   pool.query(query, (error, result) => {
     if (error)
@@ -310,11 +361,14 @@ app.get('/admin/display/moves', checkAdmin, (req, res) => {
   * Function for listening to connections
   */
 io.on('connection', (socket) => { //listening for events
-	console.log('Client connected');
+  console.log('Client connected');
 	socket.on('disconnect', () => {
     console.log('Client disconnected');
   })
 });
+
+io.use(function(socket, next) {
+})
 
 redisClient.on('connect', function(){
   console.log('Redis Connection Successful');
@@ -328,10 +382,17 @@ redisClient.on('connect', function(){
  * Function to check admin privleges
  */
 function checkAdmin(req, res, next) {
-  if (sess && sess.admin == '1') {
-    return next();
-  } else {
-    res.redirect('/');
+  if (!req.cookies.data || req.cookies.data.admin == 0) {
+    res.redirect('/login');
+  }
+  else {
+    var user = req.cookies.data.username;
+    redisClient.hgetall(user, function(err, reply) {
+      if (err) console.log("There is an error when checking for username in cookie and in redis during checkAdmin", err);
+      if (user == reply.username) {
+        return next();
+      }
+    });
   }
 }
 
@@ -339,12 +400,21 @@ function checkAdmin(req, res, next) {
  * Func to check if user is logged in
  */
 function checkLoggedIn(req, res, next) {
-  if (sess && sess.status == 'loggedin') {
-    return next();
-  } else {
-    res.redirect('/');
+  if (!req.cookies.data.username) {
+    res.redirect('/login');
+  }
+  else {
+    var user = req.cookies.data.username
+    redisClient.hgetall(user, function(err, reply) {
+      if (err) console.log("There is an error when checking for username in cookie and in redis during checkLoggedIn", err);
+      if (user == reply.username) {
+        return next();
+      }
+    });
   }
 }
+
+
 
 /**
  * Function to return a table create query
@@ -405,6 +475,23 @@ switch (table) {
     return "bad create table entered";
   }
 }
+
+/*********************
+ * Twitter API *
+ ********************/
+
+var Twit = require('twit')
+
+var T = new Twit({
+  consumer_key:         'fUQDXW479q8xYCk3gWPsx0WbL',
+  consumer_secret:      'hohfYIwnRBQdzYkNOMvmlGxSVgZl93mLc4mopLnyzB8saWI183',
+  access_token:         '1193989007530610689-lmxbjSVscDQDNmAfZpd1WhORdX3HMA',
+  access_token_secret:  'YztB5mHP356SNKSyNPTJkqcfisZOO3cpITa1MeBwQRCod',
+})
+
+//
+//  tweet 'hello world!'
+//
 
 /** REMOVED
  * Function to return queries as needed based on arguments specified
