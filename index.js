@@ -140,7 +140,6 @@ app.post('/authenticate', (req,res) => {
         }
       }
     });
-    req.cookies.data.status = "notloggedin"
     res.redirect('login');
   });
 })
