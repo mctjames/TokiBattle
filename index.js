@@ -82,13 +82,9 @@ app.all('/', (req, res) => {
  * Login Page
  */
 app.get('/login', (req,res) => {
-  // if (DEBUG) {
-  //   req.session.name = 'Flavio'
-  //   console.log(req.session.name) // 'Flavio'
-  // }
   var results;
   if (req.cookies.data) {
-    if (req.cookies.data.status != "loggedin") {
+    if (req.cookies.data.status == "notloggedin") {
       results = {'status':"Your username or password could not be verified. Please try again."};
       res.render('pages/login', results);
     }
@@ -105,8 +101,10 @@ app.post('/authenticate', (req,res) => {
   if (DEBUG) console.log("sessionID at /authenticate:", req.sessionID)
   var authquery = `SELECT * FROM trainer WHERE username = '${req.body.uname}'`;
   pool.query(authquery, (error, result) => {
-    if (error)
+    if (error) {
+      if (DEBUG) console.log(error)
       res.end(error);
+    }
     var results = result.rows;
     results.forEach((r) => {
       if(r.username === req.body.uname) {
@@ -114,13 +112,12 @@ app.post('/authenticate', (req,res) => {
           res.redirect('/login');
         }
         else {
-          user = req.body.uname;
-          var data = {
+          var cookieData = {
             username: r.username,
             status: "loggedin",
             admin: r.admin
           }
-          res.cookie("data",data,{maxAge: 90000000, httpOnly: true, secure: false, overwrite: true});
+          res.cookie("data",cookieData,{maxAge: 90000000, httpOnly: true, secure: false, overwrite: true});
           redisClient.hmset(`${r.username}`, data, function(err, reply) {
             if (err) console.log("authenticate error:", err);
             console.log("authenticate reply:", reply);
@@ -129,7 +126,7 @@ app.post('/authenticate', (req,res) => {
             var authLogon = `SELECT * FROM trainer WHERE username = '${req.body.uname}'`;
             pool.query(authLogon, (error, result) => {
               if (error) res.end(error);
-              res.redirect('/admin/display');
+              res.redirect('/admin');
             });
           }
           else {
@@ -143,6 +140,8 @@ app.post('/authenticate', (req,res) => {
         }
       }
     });
+    req.cookies.data.status = "notloggedin"
+    res.redirect('login');
   });
 })
 
@@ -213,7 +212,7 @@ app.get('/logout',(req,res) => {
 /**
  * Main Admin Page
  */
-app.get('/admin/display', checkAdmin, (req, res) => {
+app.get('/admin', checkAdmin, (req, res) => {
   var query = `SELECT * FROM trainer`;
   pool.query(query, (error, result) => {
     if (error)
@@ -226,7 +225,7 @@ app.get('/admin/display', checkAdmin, (req, res) => {
 /**
  * Trainer Display Page
  */
-app.get('/admin/display/trainers', checkAdmin, (req, res) => {
+app.get('/admin/trainers', checkAdmin, (req, res) => {
   var query = `SELECT * FROM trainer`;
   pool.query(query, (error, result) => {
     if (error)
@@ -239,7 +238,7 @@ app.get('/admin/display/trainers', checkAdmin, (req, res) => {
 /**
  * Team Display Page
  */
-app.get('/admin/display/teams', checkAdmin, (req, res) => {
+app.get('/admin/teams', checkAdmin, (req, res) => {
   var query = `SELECT * FROM team`;
   pool.query(query, (error, result) => {
     if (error)
@@ -252,7 +251,7 @@ app.get('/admin/display/teams', checkAdmin, (req, res) => {
 /**
  * Tokimon Display Page
  */
-app.get('/admin/display/tokimons', checkAdmin, (req, res) => {
+app.get('/admin/tokimons', checkAdmin, (req, res) => {
   var query = `SELECT * FROM tokimon`;
   pool.query(query, (error, result) => {
     if (error)
@@ -265,7 +264,7 @@ app.get('/admin/display/tokimons', checkAdmin, (req, res) => {
 /**
  * Move Display Page
  */
-app.get('/admin/display/moves', checkAdmin, (req, res) => {
+app.get('/admin/moves', checkAdmin, (req, res) => {
   var query = `SELECT * FROM move`;
   pool.query(query, (error, result) => {
     if (error)
@@ -304,16 +303,18 @@ redisClient.on('connect', function(){
  * Function to check admin privleges
  */
 function checkAdmin(req, res, next) {
-  if (!req.cookies.data || req.cookies.data.admin) {
+  if (!req.cookies.data || req.cookies.data.admin == 0) {
     res.redirect('/login');
   }
-  var user = req.cookies.data.username;
-  redisClient.hgetall(user, function(err, reply) {
-    if (err) console.log("There is an error when checking for username in cookie and in redis during checkAdmin", err);
-    if (user == reply.username) {
-      return next();
-    }
-  });
+  else {
+    var user = req.cookies.data.username;
+    redisClient.hgetall(user, function(err, reply) {
+      if (err) console.log("There is an error when checking for username in cookie and in redis during checkAdmin", err);
+      if (user == reply.username) {
+        return next();
+      }
+    });
+  }
 }
 
 /**
@@ -323,13 +324,15 @@ function checkLoggedIn(req, res, next) {
   if (!req.cookies.data.username) {
     res.redirect('/login');
   }
-  var user = req.cookies.data.username
-  redisClient.hgetall(user, function(err, reply) {
-    if (err) console.log("There is an error when checking for username in cookie and in redis during checkLoggedIn", err);
-    if (user == reply.username) {
-      return next();
-    }
-  });
+  else {
+    var user = req.cookies.data.username
+    redisClient.hgetall(user, function(err, reply) {
+      if (err) console.log("There is an error when checking for username in cookie and in redis during checkLoggedIn", err);
+      if (user == reply.username) {
+        return next();
+      }
+    });
+  }
 }
 
 /**
