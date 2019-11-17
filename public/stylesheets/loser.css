@@ -1,0 +1,22 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    background-image: url("/stylesheets/pictures/hall_of_fame.jpg");
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+h1, h2 {
+    margin: 0 0 0% 0%;
+    text-align: center;
+}
+
+.pageContent {
+  margin: 10% 10% 10% 10%;
+}
+
+#header {
+  font: normal 100% Arial, Georgia, "Times New Roman", Times, serif;
+}
