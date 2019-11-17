@@ -119,7 +119,7 @@ app.post('/authenticate', (req,res) => {
             admin: r.admin
           }
           res.cookie("data",cookieData,{maxAge: 90000000, httpOnly: true, secure: false, overwrite: true});
-          redisClient.hmset(`${r.username}`, data, function(err, reply) {
+          redisClient.hmset(`${r.username}`, cookieData, function(err, reply) {
             if (err) console.log("authenticate error:", err);
             console.log("authenticate reply:", reply);
           });
@@ -141,7 +141,6 @@ app.post('/authenticate', (req,res) => {
         }
       }
     });
-    req.cookies.data.status = "notloggedin"
     res.redirect('login');
   });
 })
