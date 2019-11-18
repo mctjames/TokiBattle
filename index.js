@@ -93,13 +93,14 @@ app.get('/login', (req,res) => {
       }
       res.cookie("data",cookieData,{maxAge: 90000000, httpOnly: true, secure: false, overwrite: true});
     }
-  } 
+  
   //used for logging in 
     else {
       if (req.cookies.data.status == "notloggedin") {
         results = {'status':"Your username or password could not be verified. Please try again."};
         res.render('pages/login', results);
       }
+    }
   }
   res.render('pages/login');
 })
