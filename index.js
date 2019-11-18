@@ -334,7 +334,9 @@ app.post('/addTeam/:id', (req, res) => {
           res.redirect(`/addTokimon/${req.body.teamName}`);
         })
       }
-    res.redirect(`/landing/${req.params.id}`);
+      else{
+        res.redirect(`/landing/${req.params.id}`);
+      }
   })
 });
 });
