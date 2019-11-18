@@ -111,6 +111,7 @@ app.post('/authenticate', (req,res) => {
     results.forEach((r) => {
       if(r.username === req.body.uname) {
         if(r.password != req.body.psw) {
+          found = true
           res.redirect('/login');
         }
         else {
@@ -146,6 +147,7 @@ app.post('/authenticate', (req,res) => {
     });
     if (!found)
       res.redirect('login');
+      
   });
 })
 
@@ -305,9 +307,12 @@ app.get('/logout',(req,res) => {
 app.get('/admin', checkAdmin, (req, res) => {
   var query = `SELECT * FROM trainer`;
   pool.query(query, (error, result) => {
-    if (error)
+    if (error){
+    console.log(error);
       res.end(error);
+    }
     var results = {'rows': result.rows };
+    console.log(results);
     res.render('pages/admin', results);
   })
 });

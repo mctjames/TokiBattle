@@ -33,12 +33,13 @@
             </tr>
           </thead>
           <tbody>
-
+            <% rows.forEach((r) => { %>
               <tr>
                 <td>
-                    <%= username %>
+                    <%= r.username %>
                 </td>
               </tr> 
+              <% }): %>
   
           </tbody>
         </table>

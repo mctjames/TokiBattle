@@ -2,11 +2,11 @@
   <head> 
       <meta charset="utf-8">
       <script src="js/script.js"></script>
-      <link rel="stylesheet" href="/stylesheets/register.css" type="text/css" media="all">
+      <link rel="stylesheet" href="/stylesheets/register_update.css" type="text/css" media="all">
 
   </head>
   <body>
-
+        <div id="b"> 
 <form action="/addUser" onsubmit="return check()" method="POST">
     <div class="container">
       <h1>Register</h1>
@@ -14,10 +14,10 @@
       <hr>
       <label for="email"><b>Username</b></label>
       <input type="text" placeholder="Enter Username" name="uname" required>
-  
+        <br><br>
       <label for="psw"><b>Password</b></label>
       <input type="password" id="psw" value="" placeholder="Enter Password" name="psw" required>
-  
+<br><br>
       <label for="psw-repeat"><b>Repeat Password</b></label>
       <input type="password" id="psw-repeat" value="" placeholder="Repeat Password" name="psw-repeat" required>
       <hr>
@@ -38,5 +38,6 @@
       <p>Already have an account? <a href="../">Sign in</a>.</p>
     </div>
   </form>
+  </div>
   </body>
   </html>

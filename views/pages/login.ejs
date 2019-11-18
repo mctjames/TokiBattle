@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/loginStyle.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/login_update.css">
     <script src="/socket.io/socket.io.js"></script>
     <script>
       var socket = io();
@@ -10,41 +10,33 @@
   </head>
 
   <body>
+
+    <div id="b"> 
     <div id="navigationBar">
-      <ul>
-          <li> 
-              <button type="button" class="navigationButton" id="homeButton">
-              <a class="nagivationLink" id="navigationHome" href="/"> <h6>Home</h6> </a>
-              </button>
-          </li>
-          <li> 
-              <button type="button" class="navigationButton" id="homeButton">
-              <a class="nagivationLink" id="navigationHome" href="/admin"> <h6>Admin</h6> </a>
-              </button>
-          </li>
-      </ul>
+
     </div>
 
-    <h2>Login Form</h2>
+    <h2 id = "headLogin">Login To Battle!</h2>
 
     <form action="/authenticate" method="post">
-
+      <hr>
       <div class="container">
-        <h2> To log in as an admin use <br>
+        <h2 id = "adminLogin"> To log in as an admin use <br><br>
           Login: admin  <br> 
           Password: password 
-        <h2>
+        </h2>
       
-      
+      <hr>
         <label for="uname"><b>Username</b></label>
         <input type="text" placeholder="Enter Username" name="uname" required>
 
-        <br></br>
+        <br><br>
 
         <label for="psw"><b>Password</b></label>
         <input type="password" placeholder="Enter Password" name="psw" required>
-            
-        <button type="submit">Login</button>
+        <br>  
+        <br>   
+        <button class = "loginB" type="submit">Login</button>
 
       </div>
       
@@ -67,11 +59,16 @@
         </div>
 
       </div>
-      </div>
+      
       
     </form>
           <form action="/register" method="post">
+            <br>
         <button type="submit" class="registerbtn">Register a new account</button>
-      </form>
+         </form>
+        </div>
+</div>
+
+
   </body>
 </html>
