@@ -65,9 +65,9 @@
                <th class="actualTh">
                    Picture
                 </th>
-                <th class="actualTh">
+                <!-- <th class="actualTh">
                 See Info
-                </th>
+                </th> -->
                <th  class="actualTh"> 
                 Add to Team
                </th>
@@ -124,12 +124,12 @@
                 <td class="actualTd">
                     <img src= "<%= r.piclink %>"/>
                 </td>
-                <td class="actualTd">
+                <!-- <td class="actualTd">
                     <form action="/moreinfo" method="POST">
                         <input class="ToBeHidden" type="text" name="tokiID" id="tokiID" value=<%= r.id %>>
                         <input type="submit" value="More Info">
                     </form><br>
-                </td>
+                </td> -->
                 <td class="actualTd">
                   <form action="/addToTeam/<%= teamName %>" method="POST">  <!--create add to team POST method which will return to the same page such that the added Tokimon is not shown -->
                     <input class="ToBeHidden" type="text" name="uid" id="tokiID" value=<%= teamName %>>
