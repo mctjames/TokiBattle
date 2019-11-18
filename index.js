@@ -188,9 +188,7 @@ app.get('/battlepage_2', (req, res) => {
 /**
  * photo_grid 
  */
-app.get('/photo_grid', (req, res) => {
-  res.render('pages/photo_grid.ejs')
-})
+
 
 /**
  * Add Users Page
@@ -231,6 +229,9 @@ app.get('/landing', checkLoggedIn, (req, res, next) => {
   res.render('pages/landing');
 });
 
+app.get('/login_update', (req, res) => {
+  res.render('pages/login_update.ejs')
+})
 
 /**
  * victory Page
