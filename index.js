@@ -76,7 +76,7 @@ app.all('/', (req, res) => {
   console.log(req.cookies)
   pool.query(trainerQuery, (error, result) => {
   });
-  res.render('pages/login');
+  res.redirect('/login');
 })
 
 /**
@@ -85,10 +85,21 @@ app.all('/', (req, res) => {
 app.get('/login', (req,res) => {
   var results;
   if (req.cookies.data) {
-    if (req.cookies.data.status == "notloggedin") {
-      results = {'status':"Your username or password could not be verified. Please try again."};
-      res.render('pages/login', results);
+    //used in the logout process
+    if (req.cookies.data.status == "loggedin")
+    {
+      var cookieData = {
+        status: "notloggedin",
+      }
+      res.cookie("data",cookieData,{maxAge: 90000000, httpOnly: true, secure: false, overwrite: true});
     }
+  } 
+  //used for logging in 
+    else {
+      if (req.cookies.data.status == "notloggedin") {
+        results = {'status':"Your username or password could not be verified. Please try again."};
+        res.render('pages/login', results);
+      }
   }
   res.render('pages/login');
 })
@@ -158,21 +169,14 @@ app.post('/register', (req, res) => {
 })
 
 
+
+
+
 /**
  * loadingBattle Page
  */
-app.get('/loadingBattle', (req, res) => {
+app.get('/loadingBattle', checkLoggedIn, (req, res) => {
   res.render('pages/loadingBattle.ejs')
-
-// res.redirect('/battlepage_2'); 
-// return;
-
-  // var timoutObj = setTimeout(() => {
-  //   console.log('timout battle video');
-  //    res.redirect('/pages/login'); 
-
-  // }, 1500);
- 
 
 })
 
@@ -180,7 +184,7 @@ app.get('/loadingBattle', (req, res) => {
 /**
  * battlepage_2 Page
  */
-app.get('/battlepage_2', (req, res) => {
+app.get('/battlepage_2', checkLoggedIn, (req, res) => {
   res.render('pages/battlepage_2.ejs')
 })
 
@@ -401,7 +405,8 @@ function checkAdmin(req, res, next) {
  * Func to check if user is logged in
  */
 function checkLoggedIn(req, res, next) {
-  if (!req.cookies.data.username) {
+  if (!req.cookies.data || req.cookies.data.status == "notloggedin") {
+          console.log("/checkedloggedin", req.cookies.data);
     res.redirect('/login');
   }
   else {
