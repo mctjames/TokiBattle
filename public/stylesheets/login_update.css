@@ -1,15 +1,32 @@
+    body{
+        background-image: url("/stylesheets/pictures/loginBack3.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+         
+      } 
+      
 
+#adminLogin{
+    font-size: 16pt;
+}
+
+#headLogin{
+    font-size: 18pt;
+}
 
 #b{
     background-size: cover;
-    background-color: rgb(255, 108, 71);
+    background-color: rgb(152, 223, 71);
     position: relative;
     height: 420px;
     width: 450px;
     border: 5px solid rgb(230, 212, 49);
     right: -500px; 
+    top: 200px;
     border-radius: 5px;
     align-self: center;
+    text-align: center;
+    display: inline-block;
 }
 
 section{
@@ -36,3 +53,34 @@ section{
   margin-left: 110px;
   }
   
+  .registerbtn{
+      block-size: 30px;
+      background-color: rgb(253, 92, 63);
+      font-size: 10pt;
+      border-color: rgb(255, 230, 0);
+
+  }
+
+  .loginB{
+    block-size: 25px;
+    background-color: rgb(255, 230, 0);
+    border-color: red;
+
+    font-size: 10pt;
+  }
+
+  input{
+
+        padding: 12px;
+        width: 35% ;
+          margin: 3px 0px 3px 0px;
+          box-sizing: border-box;
+          border-radius: 3px;
+        border: 1px solid #c4c4c4;
+        padding-right: 10px;
+        
+  }
+
+  label{
+      font-size: 14pt;
+  }

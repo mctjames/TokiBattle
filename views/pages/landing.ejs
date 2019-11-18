@@ -24,6 +24,42 @@
               <a class="nagivationLink" id="navigationHome" href="/loser"> <h6>Simulate a loss</h6> </a>
               </button>
           </li>
+          <form action="/addTeam/<%= id %>" method="POST">
+            Name of Team:<br>
+            <input type="text" name="teamName" value="">
+             <br>
+            <button type="submit">Build Team</button>
+        </form>
+
+        <div>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>
+                        Teams
+                      </th>
+                      <th>
+                        Edit/More Info
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% rows.forEach((r) => { %>
+                      <tr>
+                        <td>
+                            <%= r.team_name %>
+                        </td>
+                        <!-- <td>
+                            <form action="/moreinfoOfTeam/<%= r.team_name %>" method="GET">
+                                <input class="ToBeHidden" type="text" name="teamName" id="tokiID" value=<%= r.team_name %>>
+                                <input type="submit" value="More Info">
+                            </form><br>
+                        </td> -->
+                      </tr> 
+                    <% }); %>
+                  </tbody>
+                </table>
+              </div>
 
 
            <li> 

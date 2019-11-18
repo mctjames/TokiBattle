@@ -149,7 +149,7 @@ app.post('/authenticate', (req,res) => {
             pool.query(authLogon, (error, result) => {
               if (error) res.end(error);
               //res.render('pages/landing');
-              res.redirect('/landing');
+              res.redirect(`/landing/${req.body.uname}`);
             });
           }
         }
@@ -188,6 +188,13 @@ app.get('/battlepage_2', checkLoggedIn, (req, res) => {
   res.render('pages/battlepage_2.ejs')
 })
 
+app.get('/login_update', (req, res) => {
+  res.render('pages/login_update.ejs')
+})
+
+app.get('/register_update', (req, res) => {
+  res.render('pages/register_update.ejs')
+})
 
 /**
  * photo_grid 
@@ -229,13 +236,16 @@ app.post('/addUser', (req,res) => {
 /**
  * Landing Page
  */
-app.get('/landing', checkLoggedIn, (req, res, next) => {
-  res.render('pages/landing');
+app.get('/landing/:id', checkLoggedIn, (req, res) => {
+  var query = `SELECT team_name FROM teams WHERE username = '${req.params.id}'`;
+  pool.query(query, (error, result) => {
+    if (error)
+      res.end(error);
+    var results = {'rows': result.rows };
+    results['id'] = req.params.id;
+    res.render('pages/landing', results);
+  })
 });
-
-app.get('/login_update', (req, res) => {
-  res.render('pages/login_update.ejs')
-})
 
 /**
  * victory Page
@@ -303,6 +313,91 @@ app.get('/admin', checkAdmin, (req, res) => {
       res.end(error);
     var results = {'rows': result.rows };
     res.render('pages/admin', results);
+  })
+});
+
+/**
+ * Create new team
+ */
+
+app.post('/addTeam/:id', (req, res) => {
+  var testQuery = `SELECT COUNT(*) FROM teams WHERE team_name='${req.body.teamName}'`;
+  pool.query(testQuery, (error, result) => {
+    if (error)
+      res.end(error);
+    var results = result.rows;
+    console.log(results);
+    results.forEach((r) => {
+      if(parseInt(r.count) ===0 ) {
+        var query = `INSERT INTO teams (username, team_name) VALUES ('${req.params.id}', '${req.body.teamName}')`;
+        console.log(`${req.body.teamName}`);
+        console.log(query);
+        pool.query(query, (error, result) => {
+          if (error)
+            res.end(error);
+          res.redirect(`/addTokimon/${req.body.teamName}`);
+        })
+      }
+      else{
+        res.redirect(`/landing/${req.params.id}`);
+      }
+  })
+});
+});
+
+/**
+ * Add Tokimon to Team
+ */
+
+app.post('/addToTeam/:id', (req, res) => {
+  var query = `INSERT INTO tokimonTeams (team_name, tokiname) VALUES ('${req.body.uid}', '${req.body.tokiID}')`;
+  console.log(query);
+  pool.query(query, (error, result) => {
+    if (error)
+      res.end(error);
+    res.redirect(`/addTokimon/${req.body.uid}`);
+  })
+});
+
+/**
+ * More info of Team
+ */
+if(DEBUG) {
+  app.get('/moreinfoOfTeam/:id', (req, res) => {
+    var testquery = `SELECT * FROM tokimonTeams (team_name, tokiname) WHERE team_name = '${req.body.teamName}'`;
+    pool.query(testquery, (error, result) => {
+      if (error)
+        res.end(error);
+      var results = {'rows': result.rows};
+      results['teamName'] = req.params.id;
+      res.render(`pages/teamPage`, results);
+    })
+  
+    console.log(query);
+    pool.query(query, (error, result) => {
+      if (error)
+        res.end(error);
+      var results = {'rows': result.rows};
+      results['teamName'] = req.params.id;
+      res.render(`pages/teamPage`, results);
+    })
+  });
+}
+
+/**
+ * Display Tokimon to be added to Team
+ */
+
+app.get('/addTokimon/:id', (req, res) => {
+  var query = `SELECT * FROM tokimon WHERE name NOT IN (SELECT tokiname FROM tokimonTeams WHERE team_name = '${req.params.id}')`;
+  // var resTeamName = {};
+  pool.query(query, (error, result) => {
+    if (error) {
+      console.log(error);
+      res.end(error);
+    }
+    var results = {'rows': result.rows, 'teamName' : req.params.id };
+    res.render('pages/users', results);
   })
 });
 

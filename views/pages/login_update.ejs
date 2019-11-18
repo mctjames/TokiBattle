@@ -11,37 +11,32 @@
 
   <body>
 
-        <p>
-            <section>
-                    <video autoplay muted>
-                    <source src="/stylesheets/pictures/smoke.mp4" type="video/mp4"> </video>
-
-
     <div id="b"> 
     <div id="navigationBar">
 
     </div>
 
-    <h2>Login Form</h2>
+    <h2 id = "headLogin">Login To Battle!</h2>
 
     <form action="/authenticate" method="post">
-
+      <hr>
       <div class="container">
-        <h2> To log in as an admin use <br>
+        <h2 id = "adminLogin"> To log in as an admin use <br><br>
           Login: admin  <br> 
           Password: password 
-        <h2>
+        </h2>
       
-      
+      <hr>
         <label for="uname"><b>Username</b></label>
         <input type="text" placeholder="Enter Username" name="uname" required>
 
-        <br></br>
+        <br><br>
 
         <label for="psw"><b>Password</b></label>
         <input type="password" placeholder="Enter Password" name="psw" required>
-            
-        <button type="submit">Login</button>
+        <br>  
+        <br>   
+        <button class = "loginB" type="submit">Login</button>
 
       </div>
       
@@ -68,13 +63,12 @@
       
     </form>
           <form action="/register" method="post">
+            <br>
         <button type="submit" class="registerbtn">Register a new account</button>
          </form>
         </div>
 </div>
 
-</section>
-</p>
 
   </body>
 </html>
