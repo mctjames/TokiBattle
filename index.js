@@ -184,6 +184,13 @@ app.get('/battlepage_2', (req, res) => {
   res.render('pages/battlepage_2.ejs')
 })
 
+app.get('/login_update', (req, res) => {
+  res.render('pages/login_update.ejs')
+})
+
+app.get('/register_update', (req, res) => {
+  res.render('pages/register_update.ejs')
+})
 
 /**
  * photo_grid 
