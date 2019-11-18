@@ -138,7 +138,7 @@ app.post('/authenticate', (req,res) => {
             pool.query(authLogon, (error, result) => {
               if (error) res.end(error);
               //res.render('pages/landing');
-              res.redirect('/landing');
+              res.redirect(`/landing/${req.body.uname}`);
             });
           }
         }
