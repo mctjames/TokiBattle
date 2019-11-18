@@ -93,15 +93,14 @@ app.get('/login', (req,res) => {
       }
       res.cookie("data",cookieData,{maxAge: 90000000, httpOnly: true, secure: false, overwrite: true});
     }
- 
-    //used for logging in 
+  } 
+  //used for logging in 
     else {
       if (req.cookies.data.status == "notloggedin") {
         results = {'status':"Your username or password could not be verified. Please try again."};
         res.render('pages/login', results);
       }
-    }
-  } 
+  }
   res.render('pages/login');
 })
 
@@ -343,7 +342,7 @@ app.post('/addTeam/:id', (req, res) => {
         pool.query(query, (error, result) => {
           if (error)
             res.end(error);
-          res.redirect(`/addTokimon/${req.body.teamName}`);
+          res.redirect(`/addTokimon/${req.params.id}/${req.body.teamName}`);
         })
       }
       else{
@@ -396,7 +395,7 @@ if(DEBUG) {
  * Display Tokimon to be added to Team
  */
 
-app.get('/addTokimon/:id', (req, res) => {
+app.get('/addTokimon/:uid/:id', (req, res) => {
   var query = `SELECT * FROM tokimon WHERE name NOT IN (SELECT tokiname FROM tokimonTeams WHERE team_name = '${req.params.id}')`;
   // var resTeamName = {};
   pool.query(query, (error, result) => {
@@ -404,7 +403,7 @@ app.get('/addTokimon/:id', (req, res) => {
       console.log(error);
       res.end(error);
     }
-    var results = {'rows': result.rows, 'teamName' : req.params.id };
+    var results = {'rows': result.rows, 'teamName' : req.params.id, 'uname': req.params.uid };
     res.render('pages/users', results);
   })
 });
