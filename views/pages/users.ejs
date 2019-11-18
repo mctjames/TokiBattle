@@ -37,7 +37,7 @@
                 Ice
                </th>
                <th class="actualTh">
-                Hit Points
+                HP
                </th>
                <th class="actualTh">
                 Attack
@@ -61,8 +61,11 @@
                 Move 4
                </th>
                <th class="actualTh">
+                   Picture
+                </th>
+                <th class="actualTh">
                 See Info
-               </th>
+                </th>
                <th  class="actualTh"> 
                 Add to Team
                </th>
@@ -75,25 +78,25 @@
                     <%= r.name %>
                 </td>
                 <td class="actualTd">
-                    <%= r.Fire %>
+                    <%= r.fire %>
                 </td>
                 <td class="actualTd">
-                    <%= r.Water %>
+                    <%= r.water %>
                 </td>
                 <td class="actualTd">
-                    <%= r.Electric %>
+                    <%= r.electric %>
                 </td>
                 <td class="actualTd">
-                    <%= r.Flying %>
+                    <%= r.flying %>
                 </td>
                 <td class="actualTd">
-                    <%= r.Fighting %>
+                    <%= r.fighting %>
                 </td>
                 <td class="actualTd">
-                    <%= r.Ice %>
+                    <%= r.ice %>
                 </td>
                 <td class="actualTd">
-                    <%= r.HP %>
+                    <%= r.hp %>
                 </td>
                 <td class="actualTd">
                     <%= r.attack %>
@@ -102,7 +105,7 @@
                     <%= r.defense %>
                 </td>
                 <td class="actualTd">
-                    <%= r.Speed %>
+                    <%= r.speed %>
                 </td>
                 <td class="actualTd">
                     <%= r.move1 %>
@@ -117,14 +120,18 @@
                     <%= r.move4 %>
                 </td>
                 <td class="actualTd">
+                    <img src= "<%= r.piclink %>"/>
+                </td>
+                <td class="actualTd">
                     <form action="/moreinfo" method="POST">
-                      <input class="ToBeHidden" type="text" name="tokiID" id="tokiID" value=<%= r.id %>>
-                      <input type="submit" value="More Info">
+                        <input class="ToBeHidden" type="text" name="tokiID" id="tokiID" value=<%= r.id %>>
+                        <input type="submit" value="More Info">
                     </form><br>
                 </td>
                 <td class="actualTd">
-                  <form action="/addToTeam" method="POST">  <!--create add to team POST method which will return to the same page such that the added Tokimon is not shown -->
-                    <input class="ToBeHidden" type="text" name="tokiID" id="tokiID" value=<%= r.id %>>
+                  <form action="/addToTeam/<%= teamName %>" method="POST">  <!--create add to team POST method which will return to the same page such that the added Tokimon is not shown -->
+                    <input class="ToBeHidden" type="text" name="uid" id="tokiID" value=<%= teamName %>>
+                    <input class="ToBeHidden" type="text" name="tokiID" id="tokiID" value=<%= r.name %>>
                     <input type="submit" value="Add to Team">
                   </form><br>
               </td>
