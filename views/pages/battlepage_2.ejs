@@ -9,8 +9,7 @@
   <div id= "battle">
       <div id="b"> 
               <div class="column">
-                  <button class="btn item1"><img id="toki1" src="/stylesheets/pictures/squirt.png" style="width:80%" onclick="changeImage(id)">
-                  </button>
+                  <button class="btn item1"><img id="toki1" src="/stylesheets/pictures/squirt.png" style="width:80%" onclick="changeImage(id)"></button>
                   <button class="btn item2"><img id="toki2" src="/stylesheets/pictures/squirt2.png" style="width:80%" onclick="changeImage(id)"></button>
                   <button class="btn item3"><img id="toki3" src="/stylesheets/pictures/squirt3.png" style="width:80%" onclick="changeImage(id)"></button>
 
@@ -46,9 +45,13 @@
                 </div>
   </div>
   <div title="tokimon gif"></div>
-      <iframe id="gif1" src="https://giphy.com/embed/Myp2C0iWDMh2g" frameborder="0" width="80" height="90" style="pointer-events: none;"></iframe>
+      <iframe id="gif0" src="https://giphy.com/embed/Myp2C0iWDMh2g" frameborder="0" width="80" height="90" class="giphy-embed" style="pointer-events: none;"></iframe>
   </div>
-  <div  style = "visibility:hidden">
+
+
+
+  <div  style = "display:none;">
+      <iframe id="gif1" src="https://giphy.com/embed/Myp2C0iWDMh2g" frameborder="0" width="80" height="90" class="giphy-embed" style="pointer-events: none;"></iframe>
       <iframe id="gif2"  src="https://giphy.com/embed/iIlxok6eMBeBW" width="384" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
       <iframe id="gif3" src="https://giphy.com/embed/mBp5qOyg2HjvlhGU09" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
       <iframe id="gif4" src="https://giphy.com/embed/z8OcWLLk4SrpS" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
@@ -66,27 +69,28 @@
   
       if(document.getElementById(id) == toki1)
       {
-        document.getElementById("gif1").src =  document.getElementById("gif1").src;
+        console.log("its not working");
+        document.getElementById("gif0").src = document.getElementById("gif1").src;
       }
       if(document.getElementById(id) == toki2)
       {
-        document.getElementById("gif1").src =  document.getElementById("gif2").src;
+        document.getElementById("gif0").src =  document.getElementById("gif2").src;
       }
       if(document.getElementById(id) == toki3)
       {
-        document.getElementById("gif1").src =  document.getElementById("gif3").src;
+        document.getElementById("gif0").src =  document.getElementById("gif3").src;
       }
       if(document.getElementById(id) == toki4)
       {
-        document.getElementById("gif1").src =  document.getElementById("gif4").src;
+        document.getElementById("gif0").src =  document.getElementById("gif4").src;
       }
       if(document.getElementById(id) == toki5)
       {
-        document.getElementById("gif1").src =  document.getElementById("gif5").src;
+        document.getElementById("gif0").src =  document.getElementById("gif5").src;
       }
       if(document.getElementById(id) == toki6)
       {
-        document.getElementById("gif1").src =  document.getElementById("gif6").src;
+        document.getElementById("gif0").src =  document.getElementById("gif6").src;
       }
   
   
