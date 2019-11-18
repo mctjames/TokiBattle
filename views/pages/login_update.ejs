@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/login_update.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+    </script>
+  </head>
+
+  <body>
+
+        <p>
+            <section>
+                    <video autoplay muted>
+                    <source src="/stylesheets/pictures/smoke.mp4" type="video/mp4"> </video>
+
+
+    <div id="b"> 
+    <div id="navigationBar">
+
+    </div>
+
+    <h2>Login Form</h2>
+
+    <form action="/authenticate" method="post">
+
+      <div class="container">
+        <h2> To log in as an admin use <br>
+          Login: admin  <br> 
+          Password: password 
+        <h2>
+      
+      
+        <label for="uname"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="uname" required>
+
+        <br></br>
+
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" required>
+            
+        <button type="submit">Login</button>
+
+      </div>
+      
+      <div class="container" style="background-color:#f1f1f1">
+
+        <div id="failed">
+          <% if (typeof status !== 'undefined') { %>
+            <% if (status != 'loggedin') { %>
+              <p><%= status %></p>
+            <% } %>
+          <% } %>
+        </div>
+
+        <div id="failed">
+          <% if (typeof status !== 'undefined') { %>
+            <% if (status == 'Username does not exist') { %>
+              <p><%= status %></p>
+            <% } %>
+          <% } %>
+        </div>
+
+      </div>
+      
+      
+    </form>
+          <form action="/register" method="post">
+        <button type="submit" class="registerbtn">Register a new account</button>
+         </form>
+        </div>
+</div>
+
+</section>
+</p>
+
+  </body>
+</html>
