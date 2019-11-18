@@ -122,6 +122,7 @@ app.post('/authenticate', (req,res) => {
     results.forEach((r) => {
       if(r.username === req.body.uname) {
         if(r.password != req.body.psw) {
+          found= true; 
           res.redirect('/login');
         }
         else {
