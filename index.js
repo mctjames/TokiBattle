@@ -25,11 +25,7 @@ var pool;
 pool = new Pool({
   connectionString: process.env.DATABASE_URL
     // connectionString:'postgres://postgres:password@localhost/postgres'
-<<<<<<< HEAD
- //connectionString:'postgres://postgres:postgres@localhost/postgres'
-=======
 //  connectionString:'postgres://postgres:postgres@localhost/postgres'
->>>>>>> 7797e2679158f737507ae05e362ab54c569f3f70
 });
 pool.connect()
 
@@ -38,7 +34,7 @@ var sess;
 var user;
 
 //Redis Clients
-//var redisClient = redis.createClient()
+//var redisClient = redis.createClient() 
 //var publish = redis.createClient()
 //var subscribe = redis.createClient()
 
