@@ -10,9 +10,9 @@ const app           =   express()
 const bodyParser    =   require('body-parser')
 const session       =   require('express-session')
 const { Pool }      =   require('pg')
-const redis         =   require('redis')
+//const redis         =   require('redis')
 const cookieParser  =   require('cookie-parser');
-const redisStore    =   require('connect-redis')(session)
+//const redisStore    =   require('connect-redis')(session)
 const adapter       =   require('socket.io-adapter')
 const client        =   require('socket.io-client')
 const parser        =   require('socket.io-parser')
@@ -34,9 +34,9 @@ var sess;
 var user;
 
 //Redis Clients
-var redisClient = redis.createClient()
-var publish = redis.createClient()
-var subscribe = redis.createClient()
+//var redisClient = redis.createClient()
+//var publish = redis.createClient()
+//var subscribe = redis.createClient()
 
 /*****************************************
  * Dependencies Setup and File Structure *
@@ -44,10 +44,10 @@ var subscribe = redis.createClient()
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({extended : false}))
 app.use(express.json())
-app.use(cookieParser());
+app.use(cookieParser('ssshhhhh'));
 app.use(session({
   secret: 'ssshhhhh',
-  store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
+  //store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
   cookie: { secure: true, maxAge:86400000 },
   saveUninitialized: false,
   resave: false
@@ -135,10 +135,10 @@ app.post('/authenticate', (req,res) => {
             admin: r.admin
           }
           res.cookie("data",cookieData,{maxAge: 90000000, httpOnly: true, secure: false, overwrite: true});
-          redisClient.hmset(`${r.username}`, cookieData, function(err, reply) {
-            if (err) console.log("authenticate error:", err);
-            console.log("authenticate reply:", reply);
-          });
+          // redisClient.hmset(`${r.username}`, cookieData, function(err, reply) {
+          //   if (err) console.log("authenticate error:", err);
+          //   console.log("authenticate reply:", reply);
+          // });
           if(r.admin == '1') {
             var authLogon = `SELECT * FROM trainer WHERE username = '${req.body.uname}'`;
             found = true
@@ -471,7 +471,7 @@ app.get('/admin/moves', checkAdmin, (req, res) => {
   */
 io.on('connection', (socket) => { //listening for events
   console.log('Client connected');
-	socket.on('disconnect', () => {
+  socket.on('disconnect', () => {
     console.log('Client disconnected');
   })
 });
@@ -479,9 +479,9 @@ io.on('connection', (socket) => { //listening for events
 io.use(function(socket, next) {
 })
 
-redisClient.on('connect', function(){
-  console.log('Redis Connection Successful');
-});
+// redisClient.on('connect', function(){
+//   console.log('Redis Connection Successful');
+// });
 
 /*********************
  * Utility Functions *
@@ -496,12 +496,24 @@ function checkAdmin(req, res, next) {
   }
   else {
     var user = req.cookies.data.username;
-    redisClient.hgetall(user, function(err, reply) {
-      if (err) console.log("There is an error when checking for username in cookie and in redis during checkAdmin", err);
-      if (user == reply.username) {
-        return next();
-      }
-    });
+    var queryA = `select * from trainer where username = ${user}`;
+
+     pool.query(queryA, (error, result) => {
+          var results = result.rows;
+          if(results[0].admin == '1') {
+            return next();
+          }
+          else {
+            res.redirect('/login');
+          }
+        });
+
+    // redisClient.hgetall(user, function(err, reply) {
+    //   if (err) console.log("There is an error when checking for username in cookie and in redis during checkAdmin", err);
+    //   if (user == reply.username) {
+    //     return next();
+    //   }
+    // });
   }
 }
 
@@ -514,13 +526,14 @@ function checkLoggedIn(req, res, next) {
     res.redirect('/login');
   }
   else {
-    var user = req.cookies.data.username
-    redisClient.hgetall(user, function(err, reply) {
-      if (err) console.log("There is an error when checking for username in cookie and in redis during checkLoggedIn", err);
-      if (user == reply.username) {
-        return next();
-      }
-    });
+    // var user = req.cookies.data.username
+    // redisClient.hgetall(user, function(err, reply) {
+    //   if (err) console.log("There is an error when checking for username in cookie and in redis during checkLoggedIn", err);
+    //   if (user == reply.username) {
+    //     return next();
+    //   }
+    // });
+    return next();
   }
 }
 
