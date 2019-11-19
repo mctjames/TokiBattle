@@ -54,7 +54,7 @@ app.use(session({
 }));
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
-http.listen(PORT, "127.0.0.1");
+http.listen(PORT);
 //app.use(json.bodyParser())
 //app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
