@@ -498,9 +498,10 @@ function checkAdmin(req, res, next) {
   }
   else {
     var user = req.cookies.data.username;
-    var queryA = `select * from trainer where username = ${user}`;
+    var queryA = `select * from trainer where username = '${user}'`;
 
      pool.query(queryA, (error, result) => {
+        if(result) {
           var results = result.rows;
           if(results[0].admin == '1') {
             return next();
@@ -508,7 +509,11 @@ function checkAdmin(req, res, next) {
           else {
             res.redirect('/login');
           }
-        });
+        }  
+        else {
+          res.redirect('/login');
+        }
+        
 
     // redisClient.hgetall(user, function(err, reply) {
     //   if (err) console.log("There is an error when checking for username in cookie and in redis during checkAdmin", err);
