@@ -187,7 +187,7 @@ app.get('/loadingBattle', checkLoggedIn, (req, res) => {
 
 
 /**
- * battlepage_2 Page
+ * battlepage_2 Page  
  */
 app.get('/battlepage_2', checkLoggedIn, (req, res) => {
   res.render('pages/battlepage_2.ejs')
@@ -286,7 +286,7 @@ app.get('/loser', checkLoggedIn, (req, res) => {
   var results = {'status': losing_trainer}
   // renders the loser page. 
   res.render('pages/loser', results);
-  // Twitter API - tweets out loser info
+  // Twitter API - tweets out loser info 
   T.post('statuses/update', {status: `${losing_trainer} lost the battle on ${timestamp} because they didn't raise their Tokimon with love and care.` }, function(err, data, response) {
   })
 });
