@@ -8,11 +8,13 @@
 
     <link rel="stylesheet" href="/stylesheets/landing.css" type="text/css" media="all">
     <script type="text/javascript" src="twitter.js" defer> </script>
+    <h1 id = "maintitle"> Welcome to TokiBattle! Below you will find buttons to features <br> that will be coming soon.
+       For now, take a look at what's to come!</h1>
 
 </head>
 
 <body>
-        
+
            <li> 
               <button type="button" class="navigationButton" id="victory">
               <a class="nagivationLink" id="navigationHome" href="/loadingBattle"> <h6>Simulate a battle</h6> </a>
@@ -35,22 +37,21 @@
               </button>
           </li>
 
+      <div class = "teamBuilder" style="float:right;">
 
 
-
-          <form action="/addTeam/<%= id %>" method="POST">
-            Name of Team:<br>
-            <input type="text" name="teamName" value="">
-             <br>
-            <button type="submit">Build Team</button>
-        </form>
-
-        <div>
+        <div class="middle-div">
+            <form id = "formID" action="/addTeam/<%= id %>" method="POST">
+              Name of Team:<br>
+              <input type="text" name="teamName" value="">
+               <br>
+              <button type="submit">Build Team</button>
+          </form>
                 <table>
                   <thead>
                     <tr>
                       <th>
-                        Teams
+                        Created Teams
                       </th>
                       <!-- <th>
                         Edit/More Info
@@ -73,18 +74,9 @@
                     <% }); %>
                   </tbody>
                 </table>
-              </div>
+          </div>
+     </div>
 
-
-
-
-
-    <div id="backgroundImage">
-        <h1>TokiBattle</h1>
-        <h2>New features coming soon!</h2>
-        
-        
-    </div>
   <script src="js/scripts.js"></script>
 </body>
 </html>
