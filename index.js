@@ -521,6 +521,7 @@ function checkAdmin(req, res, next) {
     //     return next();
     //   }
     // });
+    })
   }
 }
 
