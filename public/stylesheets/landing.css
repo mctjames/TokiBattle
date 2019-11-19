@@ -10,9 +10,86 @@ body, html {
 }
 
 h1 {
-  margin: 0 0 0% 45%;
+  margin: 0 0 0% 20%;
+}
+
+#maintitle{
+padding-top: 40px;
 }
 
 h2 {
   margin: 0 0 0% 40%;
+}
+
+.navigationButton{
+  padding-top: 0px;
+  width: 7% ;
+    margin: 10px;
+    box-sizing: border-box;
+    border-radius: 3px;
+  border: 1px solid #c90909;
+  background-color:#f54b4b;
+  text-align: center;
+color: white;
+font-size: 20px;
+
+}
+
+#formID{
+  font-size: 25px;
+  color: rgb(240, 207, 18);
+  align-content: right;
+  font-weight: bold;
+}
+
+div.teamBuilder{
+  padding-right: 100px;
+  align-content: center;
+  height: 170px;
+  width:250px;
+}
+
+div.middle-div{
+  position: relative;
+  top: -120%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+
+}
+
+
+input{
+
+  padding: 10px;
+  width: 70% ;
+    margin: 3px 0px 3px 0px;
+    box-sizing: border-box;
+    border-radius: 3px;
+  border: 1px solid #c4c4c4;
+  padding-right: 10px;
+  
+}
+
+table{
+  font-size: 20px;
+  color: rgb(255, 255, 255);
+  align-content: right;
+}
+
+th{
+  color: black;
+}
+
+button{
+  padding-top: 0px;
+  width: 40% ;
+    margin: 5px;
+    box-sizing: border-box;
+    border-radius: 3px;
+  border: 1px solid #c90909;
+  background-color:#f54b4b;
+  text-align: center;
+color: white;
+font-size: 16px;
 }
