@@ -1,12 +1,13 @@
 body, html {
     height: 100%;
     margin: 0;
-    background-image: url("/stylesheets/pictures/1.jpg");
+    background-image: url("/stylesheets/pictures/pokeball-pokemon-pngrepo-com.png");
 
 
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    background-color: black;
 }
 
 h1 {
@@ -136,6 +137,7 @@ h2 {
   position: absolute;
   top: 50%;
   left: 20%;
+
 body, html {
   height: 100%;
   margin: 0;
@@ -160,11 +162,10 @@ h2 {
 
   
   height: 125%; 
-
-  
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+
 }
 
 #addPageBackgroundImage {
@@ -435,4 +436,46 @@ display: none;
 
 #header {
   font: normal 100% Arial, Georgia, "Times New Roman", Times, serif;
+}
+
+
+table{
+  background-color: rgb(226, 55, 49);
+  color: rgb(0, 0, 0);
+  border-radius: 7pt;
+  font-size: 16pt;
+  padding-left: 10%;
+  padding: 3%;
+  border: 1px solid black;
+  border-collapse: collapse;
+
+  
+}
+
+.pageContent{
+  text-align: center;
+  font-size: 20pt;
+  color: rgb(0, 0, 0);
+  -webkit-text-stroke: 0px black;
+  /* background-color: black; */
+  border-radius: 7pt;
+}
+
+th, td{
+  padding: 12px;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+a{
+  padding-top: 0%;
+  width: 60% ;
+    margin: 5px;
+    box-sizing: border-box;
+    border-radius: 3px;
+  border: 1px solid #c90909;
+  background-color:#f54b4b;
+  text-align: center;
+color: black;
+font-size: 15px;
 }
