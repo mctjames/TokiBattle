@@ -357,13 +357,13 @@ app.post('/addTeam/:id', (req, res) => {
  * Add Tokimon to Team
  */
 
-app.post('/addToTeam/:id', (req, res) => {
+app.post('/addToTeam/:uid/:id', (req, res) => {
   var query = `INSERT INTO tokimonTeams (team_name, tokiname) VALUES ('${req.body.uid}', '${req.body.tokiID}')`;
   console.log(query);
   pool.query(query, (error, result) => {
     if (error)
       res.end(error);
-    res.redirect(`/addTokimon/${req.body.uid}/${req.params.id}`);
+    res.redirect(`/addTokimon/${req.params.uid}/${req.params.id}`);
   })
 });
 
@@ -405,7 +405,9 @@ app.get('/addTokimon/:uid/:id', (req, res) => {
       console.log(error);
       res.end(error);
     }
-    var results = {'rows': result.rows, 'teamName' : req.params.id, 'uname': req.params.uid };
+    var results = {'rows': result.rows};
+    results['teamName'] = req.params.id;
+    results['uname'] = req.params.uid;
     res.render('pages/users', results);
   })
 });
