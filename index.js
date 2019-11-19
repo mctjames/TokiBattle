@@ -25,7 +25,11 @@ var pool;
 pool = new Pool({
   connectionString: process.env.DATABASE_URL
     // connectionString:'postgres://postgres:password@localhost/postgres'
+<<<<<<< HEAD
  //connectionString:'postgres://postgres:postgres@localhost/postgres'
+=======
+//  connectionString:'postgres://postgres:postgres@localhost/postgres'
+>>>>>>> 7797e2679158f737507ae05e362ab54c569f3f70
 });
 pool.connect()
 
@@ -80,7 +84,7 @@ app.all('/', (req, res) => {
 })
 
 /**
- * Login Page
+ * Login Page 
  */
 app.get('/login', (req,res) => {
   var results;
@@ -187,7 +191,7 @@ app.get('/loadingBattle', checkLoggedIn, (req, res) => {
 
 
 /**
- * battlepage_2 Page
+ * battlepage_2 Page  
  */
 app.get('/battlepage_2', checkLoggedIn, (req, res) => {
   res.render('pages/battlepage_2.ejs')
@@ -286,7 +290,7 @@ app.get('/loser', checkLoggedIn, (req, res) => {
   var results = {'status': losing_trainer}
   // renders the loser page. 
   res.render('pages/loser', results);
-  // Twitter API - tweets out loser info
+  // Twitter API - tweets out loser info 
   T.post('statuses/update', {status: `${losing_trainer} lost the battle on ${timestamp} because they didn't raise their Tokimon with love and care.` }, function(err, data, response) {
   })
 });
