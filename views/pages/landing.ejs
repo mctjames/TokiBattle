@@ -52,9 +52,9 @@
                       <th>
                         Teams
                       </th>
-                      <th>
+                      <!-- <th>
                         Edit/More Info
-                      </th>
+                      </th> -->
                     </tr>
                   </thead>
                   <tbody>
@@ -64,7 +64,7 @@
                             <%= r.team_name %>
                         </td>
                         <!-- <td>
-                            <form action="/moreinfoOfTeam/<%= r.team_name %>" method="GET">
+                            <form action="/moreinfoOfTeam/<%= id %>/<%= r.team_name %>" method="GET">
                                 <input class="ToBeHidden" type="text" name="teamName" id="tokiID" value=<%= r.team_name %>>
                                 <input type="submit" value="More Info">
                             </form><br>

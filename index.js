@@ -371,13 +371,14 @@ app.post('/addToTeam/:id', (req, res) => {
  * More info of Team
  */
 if(DEBUG) {
-  app.get('/moreinfoOfTeam/:id', (req, res) => {
+  app.get('/moreinfoOfTeam/:uid/:id', (req, res) => {
     var testquery = `SELECT * FROM tokimonTeams (team_name, tokiname) WHERE team_name = '${req.body.teamName}'`;
     pool.query(testquery, (error, result) => {
       if (error)
         res.end(error);
       var results = {'rows': result.rows};
       results['teamName'] = req.params.id;
+      results['userName'] = req.params.uid;
       res.render(`pages/teamPage`, results);
     })
   
