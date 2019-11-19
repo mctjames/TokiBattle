@@ -131,7 +131,7 @@
                     </form><br>
                 </td> -->
                 <td class="actualTd">
-                  <form action="/addToTeam/<%= teamName %>" method="POST">  <!--create add to team POST method which will return to the same page such that the added Tokimon is not shown -->
+                  <form action="/addToTeam/<%= uname %>/<%= teamName %>" method="POST">  <!--create add to team POST method which will return to the same page such that the added Tokimon is not shown -->
                     <input class="ToBeHidden" type="text" name="uid" id="tokiID" value=<%= teamName %>>
                     <input class="ToBeHidden" type="text" name="tokiID" id="tokiID" value=<%= r.name %>>
                     <input type="submit" value="Add to Team">
