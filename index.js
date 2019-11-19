@@ -363,7 +363,7 @@ app.post('/addToTeam/:id', (req, res) => {
   pool.query(query, (error, result) => {
     if (error)
       res.end(error);
-    res.redirect(`/addTokimon/${req.body.uid}`);
+    res.redirect(`/addTokimon/${req.body.uid}/${req.params.id}`);
   })
 });
 
