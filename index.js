@@ -23,8 +23,8 @@ const PORT          =   process.env.PORT || 5000
 // Other specific use variables
 var pool;
 pool = new Pool({
-  connectionString: process.env.DATABASE_URL
-    // connectionString:'postgres://postgres:password@localhost/postgres'
+  //connectionString: process.env.DATABASE_URL
+     connectionString:'postgres://postgres:password@localhost/postgres'
 //  connectionString:'postgres://postgres:postgres@localhost/postgres'
 });
 pool.connect()
@@ -193,6 +193,18 @@ app.get('/battlepage_2', checkLoggedIn, (req, res) => {
   res.render('pages/battlepage_2.ejs')
 })
 
+
+
+
+/**
+ * battlepage_3 Page  
+ */
+app.get('/battlepage_3A', (req, res) => {
+  res.render('pages/battlepage_3A.ejs')
+})
+
+
+
 app.get('/login_update', (req, res) => {
   res.render('pages/login_update.ejs')
 })
@@ -200,10 +212,6 @@ app.get('/login_update', (req, res) => {
 app.get('/register_update', (req, res) => {
   res.render('pages/register_update.ejs')
 })
-
-/**
- * photo_grid 
- */
 
 
 /**
