@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="/stylesheets/battlepage_3A.css" type="text/css" media="all">
+</head>
+<body>
+
+  <div id= "battle">
+      <div id="b"> 
+              <div class="column">
+                  <button class="btn item1"><img id="toki1" src="/stylesheets/pictures/squirt.png" style="width:80%" onclick="changeImage(id)"></button>
+                  <button class="btn item2"><img id="toki2" src="/stylesheets/pictures/squirt2.png" style="width:80%" onclick="changeImage(id)"></button>
+                  <button class="btn item3"><img id="toki3" src="/stylesheets/pictures/squirt3.png" style="width:80%" onclick="changeImage(id)"></button>
+
+              </div>
+              <div class="column2">
+                  <button class="btn item4"><img id="toki4" src="/stylesheets/pictures/squirt4.png" style="width:80%" onclick="changeImage(id)"></button>
+                  <button class="btn item5"><img id="toki5" src="/stylesheets/pictures/squirt5.png" style="width:80%" onclick="changeImage(id)"></button>
+                  <button class="btn item6"><img id="toki6" src="/stylesheets/pictures/squirt6.png" style="width:80%" onclick="changeImage(id)"></button>
+              </div>
+              <style>
+                  .btn {
+                    border: none;
+                    background-color:inherit;
+                    padding: 14px 28px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    display: inline-block;
+                  }
+                  
+                  .btn:hover {background: #eee;}
+                  
+                  .item1 {color: green;}
+                  .item2 {color: green;}
+                  .item3 {color: green;}
+                  .item4 {color: green;}
+                  .item5 {color: green;}
+                  .item6 {color: green;}
+
+                  </style>
+                  <div>
+                    <button class="ready">Ability 1</button>
+                    <button class="ready">Ability 2</button>
+                    <button class="ready">Ability 3</button>
+                    <button class="ready">Ability 4</button>
+                  </div>
+                </div>
+  </div>
+
+
+
+
+
+
+    <iframe id="bobbyGif" src="stylesheets/gifs/bobbyFlip2.gif" class="giphy-embed" scrolling="no" frameborder="0" style="pointer-events: none;"></iframe>
+
+
+
+
+    <div title="tokimon gif">
+        <iframe id="gif0" src="stylesheets/gifs/rex2.gif" scrolling="no" frameborder="0" width="80" height="90" class="giphy-embed"  style="pointer-events: none;"></iframe>
+    </div>
+
+
+
+
+  <div  style = "display:none;">
+      <iframe id="gif1" src="stylesheets/gifs/rex1.gif" scrolling="no" frameborder="0" width="80" height="90" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="gif2"  src="stylesheets/gifs/ucorn1.gif" scrolling="no"  width="384" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="gif3" src="stylesheets/gifs/jar1.gif" scrolling="no" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="gif4" src="stylesheets/gifs/disco1.gif" scrolling="no"  width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="gif5" src="stylesheets/gifs/stumpy.gif" scrolling="no" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="gif6" src="stylesheets/gifs/cat1.gif" scrolling="no"  width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+
+  </div>
+  
+  
+  
+  
+  <script language="javascript">
+    function changeImage(id){
+      // document.getElementById("gif1").src = document.getElementById(id).src;
+  
+      if(document.getElementById(id) == toki1)
+      {
+        console.log("its not working");
+        document.getElementById("gif0").src = document.getElementById("gif1").src;
+      }
+      if(document.getElementById(id) == toki2)
+      {
+        document.getElementById("gif0").src =  document.getElementById("gif2").src;
+      }
+      if(document.getElementById(id) == toki3)
+      {
+        document.getElementById("gif0").src =  document.getElementById("gif3").src;
+      }
+      if(document.getElementById(id) == toki4)
+      {
+        document.getElementById("gif0").src =  document.getElementById("gif4").src;
+      }
+      if(document.getElementById(id) == toki5)
+      {
+        document.getElementById("gif0").src =  document.getElementById("gif5").src;
+      }
+      if(document.getElementById(id) == toki6)
+      {
+        document.getElementById("gif0").src =  document.getElementById("gif6").src;
+      }
+  
+  
+    }
+  </script>
+
+</body> 
+</html>

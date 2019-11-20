@@ -193,6 +193,15 @@ app.get('/battlepage_2', checkLoggedIn, (req, res) => {
   res.render('pages/battlepage_2.ejs')
 })
 
+
+/**
+ * battlepage_3 Page  
+ */
+app.get('/battlepage_3A', checkLoggedIn, (req, res) => {
+  res.render('pages/battlepage_3A.ejs')
+})
+
+
 app.get('/login_update', (req, res) => {
   res.render('pages/login_update.ejs')
 })
