@@ -194,11 +194,23 @@ app.get('/battlepage_2', checkLoggedIn, (req, res) => {
 })
 
 
+// /**
+//  * battlepage_3 Page  
+//  */
+// app.get('/battlepage_3A', checkLoggedIn, (req, res) => {
+//   res.render('pages/battlepage_3A.ejs')
+// })
+
 /**
  * battlepage_3 Page  
  */
-app.get('/battlepage_3A', checkLoggedIn, (req, res) => {
-  res.render('pages/battlepage_3A.ejs')
+app.get('/battlepage_3A/:teamName', checkLoggedIn, (req, res) => {
+  var teamQuery = `SELECT tokiname FROM tokimonteams WHERE username='${req.params.teamName}'`;
+  pool.query(teamQuery, (error, result) => {
+    if (error) res.end(error);
+    var results = result.rows;
+    res.render('pages/battlepage_3A.ejs', results)
+  });
 })
 
 
