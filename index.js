@@ -24,8 +24,8 @@ var sessionFileStore = require('session-file-store')(session);
 // Other specific use variables
 var pool;
 pool = new Pool({
-  //connectionString: process.env.DATABASE_URL
-     connectionString:'postgres://postgres:password@localhost/postgres'
+  connectionString: process.env.DATABASE_URL
+    // connectionString:'postgres://postgres:password@localhost/postgres'
 //  connectionString:'postgres://postgres:postgres@localhost/postgres'
 });
 pool.connect()
