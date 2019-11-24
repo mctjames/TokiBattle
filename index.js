@@ -490,7 +490,7 @@ app.get('/admin/moves', checkAdmin, (req, res) => {
  /**
   * Function for listening to connections
   */
-
+// useless comment
 
 app.get('/index', function(req, res) {
     res.render('pages/index.ejs');
