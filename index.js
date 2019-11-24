@@ -508,11 +508,11 @@ io.on('connection', (socket) => { //listening for events
     socket.on('username', function(username) {
         socket.username = username;
         console.log("testing");
-        io.emit('is_online', '🔵 <i>' + socket.username + ' join the chat..</i>');
+        io.emit('is_online', ' <i>' + socket.username + ' join the chat..</i>');
     });
 
     socket.on('disconnect', function(username) {
-        io.emit('is_online', '🔴 <i>' + socket.username + ' left the chat..</i>');
+        io.emit('is_online', ' <i>' + socket.username + ' left the chat..</i>');
     })
 
     socket.on('chat_message', function(message) {
