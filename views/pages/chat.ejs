@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>All Trainers</title>
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/admin.css" />
+    <script src="js/script.js"></script>
+  </head>
+  <body>
+    <p id='message_display'></p>
+
+    <form class="", action="javascript:void(0)">
+        <Input type='text' id='message_input' name='' value='' required autofocus>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+    var socket = io(); //connecting to the socket associated with this page
+    var el = document.getElementById('server-time');
+    socket.on('time', function(timeString) { //listen for the time object being sent from the server
+    el.innerHTML = 'Server time: ' + timeString;
+
+    Socket.on('message', function(msg) {
+	    Dis.innerHTML += `Message: ${msg} <br/>`; // receive message and display the broadcast message
+    });
+
+    document.forms[0].onsubmit = function () {
+        var input = document.getElementByID("message_display");
+        var msg=input.value;
+        socket.emit("chat",msg); //broadcast the msg to the server (chat = event)
+        input.value='';
+        }
+    })
+    </script>
+  </body>
+</html>

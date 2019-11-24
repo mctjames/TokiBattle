@@ -28,7 +28,6 @@ pool = new Pool({
 //  connectionString:'postgres://postgres:postgres@localhost/postgres'
 });
 pool.connect()
-
 //app.use(cookieParser("secretSign#143_!223"));
 var sess;
 var user;
@@ -468,6 +467,14 @@ app.get('/admin/moves', checkAdmin, (req, res) => {
  * SocketIO and Redis Functions *
  *******************************/
 
+//io.set("transports", ["xhr-polling"]); 
+//io.set("polling duration", 10); 
+app.get('/chat', (req, res) => {
+  console.log(req.cookies)
+  res.render('pages/chat.ejs');
+})
+setInterval(() => io.emit('time', new Date().toTimeString()), 1000); //listening for event on client-side every second by sending new time/string object
+
  /**
   * Function for listening to connections
   */
@@ -479,11 +486,16 @@ io.on('connection', (socket) => { //listening for events
 });
 
 io.use(function(socket, next) {
+  
 })
 
-// redisClient.on('connect', function(){
-//   console.log('Redis Connection Successful');
-// });
+io.sockets.on('connection', function (socket) {
+  io.sockets.emit('status', { status: status }); // note the use of io.sockets to emit but socket.on to listen
+  socket.on('reset', function (data) {
+    status = "War is imminent!";
+    io.sockets.emit('status', { status: status });
+  });
+});
 
 /*********************
  * Utility Functions *
