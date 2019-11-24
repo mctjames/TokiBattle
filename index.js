@@ -88,7 +88,7 @@ io.on('connection', (socket) => { //listening for events
 
 app.get('/chat', (req, res) => {
   console.log(req.cookies)
-  res.render('pages/chat.ejs');
+  res.render('pages/chat');
   setInterval(() => io.emit('time', new Date().toTimeString()), 1000); //listening for event on client-side every second by sending new time/string object
 })
 
