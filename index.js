@@ -19,6 +19,7 @@ const parser        =   require('socket.io-parser')
 const http          =   require('http').Server(app)
 const io            =   require('socket.io')(http)
 const PORT          =   process.env.PORT || 5000
+var sessionFileStore = require('session-file-store')(session);
 
 // Other specific use variables
 var pool;
@@ -45,13 +46,22 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({extended : false}))
 app.use(express.json())
 app.use(cookieParser('ssshhhhh'));
-app.use(session({
+
+
+var express_session = session({
   secret: 'ssshhhhh',
-  //store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
+  store: sessionFileStore({path: './TokiBattle/sessions'}),
   cookie: { secure: true, maxAge:86400000 },
   saveUninitialized: false,
   resave: false
-}));
+})
+// app.use(session({
+//   secret: 'ssshhhhh',
+//   //store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
+//   cookie: { secure: true, maxAge:86400000 },
+//   saveUninitialized: false,
+//   resave: false
+// }));
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 http.listen(PORT);
@@ -480,15 +490,42 @@ app.get('/admin/moves', checkAdmin, (req, res) => {
  /**
   * Function for listening to connections
   */
-io.on('connection', (socket) => { //listening for events
-  console.log('Client connected');
-  socket.on('disconnect', () => {
-    console.log('Client disconnected');
-  })
+
+
+app.get('/index', function(req, res) {
+    res.render('pages/index.ejs');
 });
 
-io.use(function(socket, next) {
-})
+
+io.use(function(socket,next){
+  express_session(socket.handshake, {}, next);
+});
+
+io.on('connection', (socket) => { //listening for events
+  console.log('Client connected');
+  socket.emit(socket.handshake.session);
+
+    socket.on('username', function(username) {
+        socket.username = username;
+        console.log("testing");
+        io.emit('is_online', '🔵 <i>' + socket.username + ' join the chat..</i>');
+    });
+
+    socket.on('disconnect', function(username) {
+        io.emit('is_online', '🔴 <i>' + socket.username + ' left the chat..</i>');
+    })
+
+    socket.on('chat_message', function(message) {
+        io.emit('chat_message', '<strong>' + socket.username + '</strong>: ' + message);
+    });
+
+  // socket.on('disconnect', () => {
+  //   console.log('Client disconnected');
+  // })
+});
+
+// io.use(function(socket, next) {
+// })
 
 // redisClient.on('connect', function(){
 //   console.log('Redis Connection Successful');
