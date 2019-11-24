@@ -23,13 +23,8 @@ const PORT          =   process.env.PORT || 5000
 // Other specific use variables
 var pool;
 pool = new Pool({
-<<<<<<< HEAD
-  // connectionString: process.env.DATABASE_URL
-    connectionString:'postgres://postgres:password@localhost/postgres'
-=======
   //connectionString: process.env.DATABASE_URL
      connectionString:'postgres://postgres:password@localhost/postgres'
->>>>>>> a4edbd107a52ffbc04785e1e14e77ea2f99d00a1
 //  connectionString:'postgres://postgres:postgres@localhost/postgres'
 });
 pool.connect()
