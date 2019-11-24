@@ -16,7 +16,6 @@
     </form>
   </body>
   <script defer>
-        var el = document.getElementById('server-time');
 
         socket.on('time', function(timeString) { //listen for the time object being sent from the server
             document.querySelector('#server-time').innerHTML = 'Server time: ' + timeString;

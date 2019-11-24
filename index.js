@@ -80,7 +80,7 @@ io.on('connection', (socket) => { //listening for events
   socket.on('disconnect', () => {
     console.log('Client disconnected');
     socket.on('chat', function(message) { // chat = event (from HTML)
-      Console.log("chat message: " + message);
+      console.log("chat message: " + message);
       io.emit('message', message); // broadcast message event, emit message to all clients
     });
   })
