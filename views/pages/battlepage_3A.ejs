@@ -9,9 +9,14 @@
   <div id= "battle">
       <div id="b"> 
               <div class="column">
-                  <% var count = 0 %>
+                  <% var count = 1 %>
                   <% rows.forEach((r) => { %>
-                    <button class="btn item<%= count++ %>"><img id="<%= r.tokiname %>" src="<%= r.piclink %>" style="width:80%" onclick="changeImage(id)"></button>
+                    <% var toki_num = 1 %>
+                    <button class="btn item<%= count++ %>"><img id="<%= r.tokiname %> toki<%= count %>" src="<%= r.piclink %>" style="width:80%" onclick="changeImage(id)"></button>
+                    <input type="text" id="move<%= toki_num %>" value="<%= r.move1 %>">
+                    <input type="text" id="move<%= toki_num++ %>" value="<%= r.move2 %>">
+                    <input type="text" id="move<%= toki_num++ %>" value="<%= r.move3 %>">
+                    <input type="text" id="move<%= toki_num++ %>" value="<%= r.move4 %>">
                   <% }); %>
               </div>
               <style>
@@ -35,10 +40,10 @@
 
                   </style>
                   <div>
-                    <button class="ready">Ability 1</button>
-                    <button class="ready">Ability 2</button>
-                    <button class="ready">Ability 3</button>
-                    <button class="ready">Ability 4</button>
+                    <button id="attack1"></button>
+                    <button id="attack2"></button>
+                    <button id="attack3"></button>
+                    <button id="attack4"></button>
                   </div>
                 </div>
   </div>
@@ -81,6 +86,11 @@
       {
         console.log("its not working");
         document.getElementById("gif0").src = document.getElementById("gif1").src;
+        document.getElementById("attack1").value = document.getElementById("move1").value;
+        document.getElementById("attack2").value = document.getElementById("move2").value;
+        document.getElementById("attack3").value = document.getElementById("move3").value;
+        document.getElementById("attack4").value = document.getElementById("move4").value;
+
       }
       if(document.getElementById(id) == toki2)
       {
