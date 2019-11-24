@@ -492,7 +492,7 @@ app.get('/admin/moves', checkAdmin, (req, res) => {
   */
 // useless comment
 
-app.get('/index', function(req, res) {
+app.get('/index', function(req, res)  {
     res.render('pages/index');
 });
 
