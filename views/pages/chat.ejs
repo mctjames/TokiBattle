@@ -5,32 +5,32 @@
     <title>All Trainers</title>
 
     <link rel="stylesheet" type="text/css" href="/stylesheets/admin.css" />
-    <script src="js/script.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script> var socket = io.connect('http://localhost:5000', {reconnect: true});; </script>
   </head>
   <body>
-    <p id='message_display'></p>
-
+    <p id='server-time'>Time</p>
+    <p id='message_display'>Messages</p>
     <form class="", action="javascript:void(0)">
         <Input type='text' id='message_input' name='' value='' required autofocus>
     </form>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-    var socket = io(); //connecting to the socket associated with this page
-    var el = document.getElementById('server-time');
-    socket.on('time', function(timeString) { //listen for the time object being sent from the server
-    el.innerHTML = 'Server time: ' + timeString;
-
-    Socket.on('message', function(msg) {
-	    Dis.innerHTML += `Message: ${msg} <br/>`; // receive message and display the broadcast message
-    });
-
-    document.forms[0].onsubmit = function () {
-        var input = document.getElementByID("message_display");
-        var msg=input.value;
-        socket.emit("chat",msg); //broadcast the msg to the server (chat = event)
-        input.value='';
-        }
-    })
-    </script>
   </body>
+  <script defer>
+        var el = document.getElementById('server-time');
+
+        socket.on('time', function(timeString) { //listen for the time object being sent from the server
+            document.querySelector('#server-time').innerHTML = 'Server time: ' + timeString;
+        });
+
+        socket.on('message', function(msg) {
+            document.querySelector('#message_display').innerHTML += `Message: ${msg} <br/>`; // receive message and display the broadcast message
+        });
+
+        document.forms[0].onsubmit = function () {
+            var input = document.querySelector('#message_input');
+            var msg = input.value;
+            socket.emit("chat",msg); //broadcast the msg to the server (chat = event)
+            input.value='';
+        }
+    </script>
 </html>

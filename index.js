@@ -16,9 +16,12 @@ const cookieParser  =   require('cookie-parser');
 const adapter       =   require('socket.io-adapter')
 const client        =   require('socket.io-client')
 const parser        =   require('socket.io-parser')
-const http          =   require('http').Server(app)
-const io            =   require('socket.io')(http)
+const http          =   require('http')
+var server          =   http.createServer(app)
+const io            =   require('socket.io').listen(server)
 const PORT          =   process.env.PORT || 5000
+var sessionFileStore = require('session-file-store')(session);
+server.listen(PORT);
 
 // Other specific use variables
 var pool;
@@ -44,18 +47,50 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({extended : false}))
 app.use(express.json())
 app.use(cookieParser('ssshhhhh'));
-app.use(session({
+app.use('/static', express.static('node_modules'));
+var express_session = session({
   secret: 'ssshhhhh',
-  //store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
+  store: new sessionFileStore({ path: './TokiBattle/sessions' }),
   cookie: { secure: true, maxAge:86400000 },
   saveUninitialized: false,
   resave: false
-}));
+});
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
-http.listen(PORT);
+
 //app.use(json.bodyParser())
 //app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
+
+/********************************
+ * SocketIO and Redis Functions *
+ *******************************/
+
+//io.set("transports", ["xhr-polling"]); 
+//io.set("polling duration", 10); 
+io.use(function(socket, next) {
+  express_session(socket.handshake, {}, next); 
+});
+
+ /**
+  * Function for listening to connections
+  */
+io.on('connection', (socket) => { //listening for events
+  console.log('Client connected');
+  socket.emit(socket.handshake.session);
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+    socket.on('chat', function(message) { // chat = event (from HTML)
+      Console.log("chat message: " + message);
+      io.emit('message', message); // broadcast message event, emit message to all clients
+    });
+  })
+});
+
+app.get('/chat', (req, res) => {
+  console.log(req.cookies)
+  res.render('pages/chat.ejs');
+  setInterval(() => io.emit('time', new Date().toTimeString()), 1000); //listening for event on client-side every second by sending new time/string object
+})
 
 /****************
  * Client Pages *
@@ -461,40 +496,6 @@ app.get('/admin/moves', checkAdmin, (req, res) => {
     var results = {'rows': result.rows };
     res.render('pages/admin', results);
   })
-});
-
-/********************************
- * SocketIO and Redis Functions *
- *******************************/
-
-//io.set("transports", ["xhr-polling"]); 
-//io.set("polling duration", 10); 
-app.get('/chat', (req, res) => {
-  console.log(req.cookies)
-  res.render('pages/chat.ejs');
-})
-setInterval(() => io.emit('time', new Date().toTimeString()), 1000); //listening for event on client-side every second by sending new time/string object
-
- /**
-  * Function for listening to connections
-  */
-io.on('connection', (socket) => { //listening for events
-  console.log('Client connected');
-  socket.on('disconnect', () => {
-    console.log('Client disconnected');
-  })
-});
-
-io.use(function(socket, next) {
-  
-})
-
-io.sockets.on('connection', function (socket) {
-  io.sockets.emit('status', { status: status }); // note the use of io.sockets to emit but socket.on to listen
-  socket.on('reset', function (data) {
-    status = "War is imminent!";
-    io.sockets.emit('status', { status: status });
-  });
 });
 
 /*********************
