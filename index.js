@@ -45,20 +45,20 @@ var user;
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({extended : false}))
 app.use(express.json())
-app.use(cookieParser('ssshhhhh'));
-
-
 var express_session = session({
   secret: 'ssshhhhh',
+  key: 'express.sid',
   store: sessionFileStore({path: './TokiBattle/sessions'}),
-  cookie: { secure: true, maxAge:86400000 },
+  cookie: { secure: false, maxAge:86400000, overwrite: true  },
   saveUninitialized: false,
   resave: false
 })
+
 // app.use(session({
 //   secret: 'ssshhhhh',
-//   //store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
-//   cookie: { secure: true, maxAge:86400000 },
+//   key: 'express.sid',
+//   store: sessionFileStore({path: './TokiBattle/sessions'}),
+//   cookie: { secure: true, maxAge:86400000, overwrite: true },
 //   saveUninitialized: false,
 //   resave: false
 // }));
@@ -94,6 +94,7 @@ app.all('/', (req, res) => {
  */
 app.get('/login', (req,res) => {
   var results;
+  console.log(req.socket)
   if (req.cookies.data) {
     //used in the logout process
     if (req.cookies.data.status == "loggedin")
@@ -101,7 +102,7 @@ app.get('/login', (req,res) => {
       var cookieData = {
         status: "notloggedin",
       }
-      res.cookie("data",cookieData,{maxAge: 90000000, httpOnly: true, secure: false, overwrite: true});
+      res.cookie("data",cookieData,{maxAge: 86400000, httpOnly: true, secure: false, overwrite: true});
     }
   
   //used for logging in 
@@ -490,19 +491,20 @@ app.get('/admin/moves', checkAdmin, (req, res) => {
  /**
   * Function for listening to connections
   */
-// useless comment
 
 app.get('/index', function(req, res)  {
-    res.render('pages/index');
+  res.render('pages/index');
 });
 
 
 io.use(function(socket,next){
-  express_session(socket.handshake, {}, next);
+  express_session(socket.request, {}, next);
 });
 
 io.on('connection', (socket) => { //listening for events
   console.log('Client connected');
+  console.log("testing io.connection client connect sessionID:", socket.request.session);
+  //socket.emit(socket.handshake.session);
   socket.emit(socket.handshake.session);
 
     socket.on('username', function(username) {
@@ -519,7 +521,33 @@ io.on('connection', (socket) => { //listening for events
         io.emit('chat_message', '<strong>' + socket.username + '</strong>: ' + message);
     });
 
-
+  // io.use(function(socket, next){
+  //   console.log("Query: ", socket.request.headers.cookie);
+  //   var handshakeData = socket.request
+  //   // return the result of next() to accept the connection.
+  //   return next()
+  //   // call next() with an Error if you need to reject the connection.
+  //   next(new Error('Authentication error'));
+  // });
+  // io.set('authorization', function (data, accept) {
+  //   // check if there's a cookie header
+  //   console.log("initial data.headers.cookie log:", data.headers.cookie);
+  //   if (data.headers.cookie) {
+  //       // if there is, parse the cookie
+  //       //data.cookie = data.cookies;
+  //       // note that you will need to use the same key to grad the
+  //       // session id, as you specified in the Express setup.
+  //       console.log("data.headers.cookie:", data.headers.cookie)
+  //       data.sessionID = data.headers.cookie;
+  //       console.log("data.sessionID:", data.sessionID)
+  //   } else {
+  //       // if there isn't, turn down the connection with a message
+  //       // and leave the function.
+  //       return accept('No cookie transmitted.', false);
+  //   }
+  //   // accept the incoming connection
+  //   accept(null, true);
+  // });
 
     // james is testing stuff in here
 
@@ -531,8 +559,6 @@ io.on('connection', (socket) => { //listening for events
         //send a message to all connected clients
         io.emit('buttonUpdate', clickCount);
     })
-
-    
 
 
 
