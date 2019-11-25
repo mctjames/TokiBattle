@@ -205,11 +205,12 @@ app.get('/battlepage_2', checkLoggedIn, (req, res) => {
  * battlepage_3 Page  
  */
 app.get('/battlepage_3A/:teamName', checkLoggedIn, (req, res) => {
-  var teamQuery = `SELECT tokiname, fire, water, electric, flying, fighting, ice, hp, attack, defense, speed, move1, move2, move3, move4, piclink FROM tokimonteams JOIN tokimon ON tokimonteams.tokiname = tokimon.name WHERE team_name ='${req.params.teamName}'`;
+  var teamQuery = `SELECT tokiname, fire, water, electric, flying, fighting, ice, hp, attack, defense, speed, move1, move2, move3, move4, piclink, gif FROM tokimonteams JOIN tokimon ON tokimonteams.tokiname = tokimon.name WHERE team_name ='${req.params.teamName}'`;
   console.log(teamQuery);
   pool.query(teamQuery, (error, result) => {
     if (error) res.end(error);
     var results = {'rows' : result.rows};
+    console.log(results)
     res.render('pages/battlepage_3A.ejs', results)
   });
 })
