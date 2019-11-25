@@ -521,32 +521,22 @@ io.on('connection', (socket) => { //listening for events
 
 
 
-    // james is testing stuff in here
-
+    // battlepage_2 click functions 
     var clickCount = 0;
-
-
-    socket.on('clicked', function(data){
+    var destination = '/battlepage_3A';
+    socket.on('clicked', function(data, destination){
       clickCount++; 
-        //send a message to all connected clients
-        io.emit('buttonUpdate', clickCount);
+
+      if(clickCount >= 2)
+      {
+        io.emit('redirect', destination); 
+      }
     })
-
-    
-
+   
 
 
-  // socket.on('disconnect', () => {
-  //   console.log('Client disconnected');
-  // })
 });
 
-// io.use(function(socket, next) {
-// })
-
-// redisClient.on('connect', function(){
-//   console.log('Redis Connection Successful');
-// });
 
 /*********************
  * Utility Functions *
