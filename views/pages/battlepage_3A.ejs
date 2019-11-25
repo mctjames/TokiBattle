@@ -9,11 +9,11 @@
   <div id= "battle">
       <div id="b"> 
               <div class="column">
-                  <% var count = 1 %>
+                  <% var count = 0 %>
                   <% rows.forEach((r) => { %>
                     <% var toki_num = 1 %>
-                    <button class="btn item<%= count++ %>"><img id="<%= r.tokiname %> toki<%= count %>" src="<%= r.piclink %>" style="width:80%" onclick="changeImage(id)"></button>
-                    <input type="text" id="move<%= toki_num %>" value="<%= r.move1 %>">
+                    <input class="btn item<%= ++count %>"><img id="toki<%= count %>" src="<%= r.piclink %>" style="width:80%" onclick="changeImage(id)"></button>
+                    <input type="text" id="move<%= toki_num++ %>" value="<%= r.move1 %>">
                     <input type="text" id="move<%= toki_num++ %>" value="<%= r.move2 %>">
                     <input type="text" id="move<%= toki_num++ %>" value="<%= r.move3 %>">
                     <input type="text" id="move<%= toki_num++ %>" value="<%= r.move4 %>">
@@ -40,10 +40,10 @@
 
                   </style>
                   <div>
-                    <button id="attack1"></button>
-                    <button id="attack2"></button>
-                    <button id="attack3"></button>
-                    <button id="attack4"></button>
+                    <input id="attack1"></input>
+                    <input id="attack2"></input>
+                    <input id="attack3"></input>
+                    <input id="attack4"></input>
                   </div>
                 </div>
   </div>
@@ -85,7 +85,7 @@
       if(document.getElementById(id) == toki1)
       {
         console.log("its not working");
-        document.getElementById("gif0").src = document.getElementById("gif1").src;
+        document.getElementById("gif0").src = document.getElementById("toki1").src;
         document.getElementById("attack1").value = document.getElementById("move1").value;
         document.getElementById("attack2").value = document.getElementById("move2").value;
         document.getElementById("attack3").value = document.getElementById("move3").value;
