@@ -24,8 +24,8 @@ var sessionFileStore = require('session-file-store')(session);
 // Other specific use variables
 var pool;
 pool = new Pool({
-  connectionString: process.env.DATABASE_URL
-    // connectionString:'postgres://postgres:password@localhost/postgres'
+  //connectionString: process.env.DATABASE_URL
+    connectionString:'postgres://postgres:password@localhost/postgres'
 //  connectionString:'postgres://postgres:postgres@localhost/postgres'
 });
 pool.connect()
@@ -199,7 +199,7 @@ app.get('/loadingBattle', checkLoggedIn, (req, res) => {
 /**
  * battlepage_2 Page  
  */
-app.get('/battlepage_2', checkLoggedIn, (req, res) => {
+app.get('/battlepage_2', (req, res) => {
   res.render('pages/battlepage_2.ejs')
 })
 
@@ -518,6 +518,23 @@ io.on('connection', (socket) => { //listening for events
     socket.on('chat_message', function(message) {
         io.emit('chat_message', '<strong>' + socket.username + '</strong>: ' + message);
     });
+
+
+
+    // james is testing stuff in here
+
+    var clickCount = 0;
+
+
+    socket.on('clicked', function(data){
+      clickCount++; 
+        //send a message to all connected clients
+        io.emit('buttonUpdate', clickCount);
+    })
+
+    
+
+
 
   // socket.on('disconnect', () => {
   //   console.log('Client disconnected');

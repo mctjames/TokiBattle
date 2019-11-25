@@ -40,8 +40,31 @@
 
                   </style>
                   <div>
-                   <button class="ready">READY!</button>
+                   <button id="buttonCount" class="ready">READY!</button>
                   </div>
+
+          </br>  
+          </br>      
+     <p id="buttonCount">The button has been clicked 0 times.</p>
+     
+     <button onclick="buttonClicked()">Click me</button>
+     
+     <script src="/socket.io/socket.io.js"></script>
+     <script>
+       var socket = io.connect();
+       
+       function buttonClicked(){
+         socket.emit('clicked');
+       }
+       
+       //when we receive buttonUpdate, do this
+       socket.on('buttonUpdate', function(data){
+         document.getElementById("buttonCount").innerHTML = 'The button has been clicked ' + data + ' times.';
+       });
+    </script>
+
+
+
                 </div>
   </div>
   <div title="tokimon gif"></div>
