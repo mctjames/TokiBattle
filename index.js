@@ -12,6 +12,8 @@ const session       =   require('express-session')
 const { Pool }      =   require('pg')
 //const redis         =   require('redis')
 const cookieParser  =   require('cookie-parser');
+const cookie        = require('cookie');
+
 //const redisStore    =   require('connect-redis')(session)
 const adapter       =   require('socket.io-adapter')
 const client        =   require('socket.io-client')
@@ -19,12 +21,13 @@ const parser        =   require('socket.io-parser')
 const http          =   require('http').Server(app)
 const io            =   require('socket.io')(http)
 const PORT          =   process.env.PORT || 5000
+var sessionFileStore = require('session-file-store')(session);
 
 // Other specific use variables
 var pool;
 pool = new Pool({
   //connectionString: process.env.DATABASE_URL
-     connectionString:'postgres://postgres:password@localhost/postgres'
+    connectionString:'postgres://postgres:password@localhost/postgres'
 //  connectionString:'postgres://postgres:postgres@localhost/postgres'
 });
 pool.connect()
@@ -45,13 +48,22 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({extended : false}))
 app.use(express.json())
 app.use(cookieParser('ssshhhhh'));
-app.use(session({
+
+
+var express_session = session({
   secret: 'ssshhhhh',
-  //store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
+  store: sessionFileStore({path: './TokiBattle/sessions'}),
   cookie: { secure: true, maxAge:86400000 },
   saveUninitialized: false,
   resave: false
-}));
+})
+// app.use(session({
+//   secret: 'ssshhhhh',
+//   //store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
+//   cookie: { secure: true, maxAge:86400000 },
+//   saveUninitialized: false,
+//   resave: false
+// }));
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 http.listen(PORT);
@@ -189,7 +201,7 @@ app.get('/loadingBattle', checkLoggedIn, (req, res) => {
 /**
  * battlepage_2 Page  
  */
-app.get('/battlepage_2', checkLoggedIn, (req, res) => {
+app.get('/battlepage_2', (req, res) => {
   res.render('pages/battlepage_2.ejs')
 })
 
@@ -527,19 +539,82 @@ app.get('/admin/moves', checkAdmin, (req, res) => {
  /**
   * Function for listening to connections
   */
-io.on('connection', (socket) => { //listening for events
-  console.log('Client connected');
-  socket.on('disconnect', () => {
-    console.log('Client disconnected');
-  })
+
+// chat app testing page
+app.get('/index', function(req, res)  {
+    res.render('pages/index');
 });
 
-io.use(function(socket, next) {
-})
 
-// redisClient.on('connect', function(){
-//   console.log('Redis Connection Successful');
-// });
+io.use(function(socket,next){
+  express_session(socket.handshake, {}, next);
+});
+
+io.on('connection', (socket) => { //listening for events
+  console.log('Client connected');
+
+///////////
+
+
+  var cookieDump =socket.handshake.headers.cookie; 
+  //console.log("cookieDump: ", cookieDump);
+
+
+  var cookieValues = cookie.parse(cookieDump);
+
+  //cookieValues is an object
+  //cookieValues.data is a string
+
+  //console.log("cookieValues: ", cookieValues);
+  console.log("Trying to print username: ", cookieValues)
+  console.log("typeof ", typeof cookieValues.data);
+
+
+
+  socket.emit('your-event', {cookieValues});
+
+
+//////////////////
+
+
+
+    socket.emit(socket.handshake.session);
+
+
+    socket.on('username', function(username) {
+        socket.username = username;
+        io.emit('is_online', '🔵 <i>' + socket.username + ' join the chat..</i>');
+    });
+
+    socket.on('disconnect', function(username) {
+        io.emit('is_online', '🔴 <i>' + socket.username + ' left the chat..</i>');
+    })
+
+    socket.on('chat_message', function(message) {
+        io.emit('chat_message', '<strong>' + socket.username + '</strong>: ' + message);
+    });
+
+
+
+    // battlepage_2 click functions 
+    //var user = req.cookies.data.username;
+
+
+    var clickCount = 0;
+    var destination = '/battlepage_3A';
+    socket.on('clicked', function(data, destination){
+      clickCount++; 
+
+      if(clickCount >= 2)
+      {
+        io.emit('redirect', destination); 
+      }
+    })
+   
+
+
+});
+
 
 /*********************
  * Utility Functions *

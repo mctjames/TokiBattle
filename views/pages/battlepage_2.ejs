@@ -40,8 +40,34 @@
 
                   </style>
                   <div>
-                   <button class="ready">READY!</button>
+                   <button onclick = "buttonClicked()" class="ready">READY!</button>
                   </div>
+
+          </br>  
+          </br>    
+
+
+      
+
+     
+     <script src="/socket.io/socket.io.js"></script>
+     <script>
+       var socket = io.connect();
+       
+
+       function buttonClicked(){
+
+         socket.emit('clicked');
+       }
+       
+       socket.on('redirect', function(destination) {
+          window.location = '/battlepage_3A';
+        });
+
+    </script>
+
+
+
                 </div>
   </div>
   <div title="tokimon gif"></div>
