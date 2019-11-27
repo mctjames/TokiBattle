@@ -5,19 +5,18 @@
   <link rel="stylesheet" href="/stylesheets/battlepage_3A.css" type="text/css" media="all">
 </head>
 <body>
-
   <div id= "battle">
       <div id="b"> 
               <div class="column">
                   <% var count = 0 %>
                   <% rows.forEach((r) => { %>
                     <% var toki_num = 1 %>
-                    <button class="btn item<%= ++count %>"><img id="toki<%= count %>" src="<%= r.piclink %>" style="width:80%" onclick="changeImage(id)"></button>
-                    <input type="text" id="move<%= count %><%= toki_num++ %>" value="<%= r.move1 %>">
-                    <input type="text" id="move<%= count %><%= toki_num++ %>" value="<%= r.move2 %>">
-                    <input type="text" id="move<%= count %><%= toki_num++ %>" value="<%= r.move3 %>">
-                    <input type="text" id="move<%= count %><%= toki_num++ %>" value="<%= r.move4 %>">
-                    <input type="text" id="giflink<%= count %>" value="<%= r.gif %>">
+                    <button class="btn item<%= ++count %>"><img id="toki<%= count %>" src="<%= r.piclink %>" style="width:60%" onclick="changeImage(id)"></button>
+                    <input type="hidden" id="move<%= count %><%= toki_num++ %>" value="<%= r.move1 %>"></input>
+                    <input type="hidden" id="move<%= count %><%= toki_num++ %>" value="<%= r.move2 %>"></input>
+                    <input type="hidden" id="move<%= count %><%= toki_num++ %>" value="<%= r.move3 %>"></input>
+                    <input type="hidden" id="move<%= count %><%= toki_num++ %>" value="<%= r.move4 %>"></input>
+                    <input type="hidden" id="giflink<%= count %>" value="<%= r.gif %>"></input>
                   <% }); %>
               </div>
               <style>
@@ -30,39 +29,23 @@
                     display: inline-block;
                   }
                   
-                  .btn:hover {background: #eee;}
-                  
-                  .item1 {color: green;}
-                  .item2 {color: green;}
-                  .item3 {color: green;}
-                  .item4 {color: green;}
-                  .item5 {color: green;}
-                  .item6 {color: green;}
-
+                  .btn:hover {background: rgb(255, 222, 114);}
                   </style>
-                  <div>
+
+                  <div id = "buttonAbility">
                     <input id="attack1"></input>
                     <input id="attack2"></input>
                     <input id="attack3"></input>
                     <input id="attack4"></input>
-                  </div>
                 </div>
   </div>
 
 
 
 
-
-    <iframe id="bobbyGif" src="stylesheets/gifs/bobbyFlip2.gif" class="giphy-embed" scrolling="no" frameborder="0" style="pointer-events: none;"></iframe>
-
-
-
-
     <div title="tokimon gif">
-        <iframe id="gif0" src="stylesheets/gifs/rex2.gif" scrolling="no" frameborder="0" width="80" height="90" class="giphy-embed"  style="pointer-events: none;"></iframe>
+        <iframe id="gif0" src='https://giphy.com/embed/dVuo3Rq4nO5JPKBwve' scrolling="no" frameborder="0" width="80" height="90" class="giphy-embed"  style="pointer-events: none;"></iframe>
     </div>
-
-
 
 
   <div  style = "display:none;">
@@ -76,12 +59,9 @@
   </div>
   
   
-  
-  
   <script language="javascript">
     function changeImage(id){
       // document.getElementById("gif1").src = document.getElementById(id).src;
-  
       if(document.getElementById(id) == toki1)
       {
         console.log("its not working");
