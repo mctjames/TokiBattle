@@ -43,6 +43,12 @@
             });
             // ask username
             var username = prompt('Please tell me your name');
+            
+            //testing cookie username stuff
+            //var username2 = req.cookies.data.username;
+            //console.log(username2);
+
+
             socket.emit('username', username);
     </script>
   </body>

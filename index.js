@@ -12,6 +12,8 @@ const session       =   require('express-session')
 const { Pool }      =   require('pg')
 //const redis         =   require('redis')
 const cookieParser  =   require('cookie-parser');
+const cookie        = require('cookie');
+
 //const redisStore    =   require('connect-redis')(session)
 const adapter       =   require('socket.io-adapter')
 const client        =   require('socket.io-client')
@@ -490,8 +492,8 @@ app.get('/admin/moves', checkAdmin, (req, res) => {
  /**
   * Function for listening to connections
   */
-// useless comment
 
+// chat app testing page
 app.get('/index', function(req, res)  {
     res.render('pages/index');
 });
@@ -503,11 +505,37 @@ io.use(function(socket,next){
 
 io.on('connection', (socket) => { //listening for events
   console.log('Client connected');
-  socket.emit(socket.handshake.session);
+
+///////////
+
+
+  var cookieDump =socket.handshake.headers.cookie; 
+  //console.log("cookieDump: ", cookieDump);
+
+
+  var cookieValues = cookie.parse(cookieDump);
+
+  //cookieValues is an object
+  //cookieValues.data is a string
+
+  //console.log("cookieValues: ", cookieValues);
+  console.log("Trying to print username: ", cookieValues)
+  console.log("typeof ", typeof cookieValues.data);
+
+
+
+  socket.emit('your-event', {cookieValues});
+
+
+//////////////////
+
+
+
+    socket.emit(socket.handshake.session);
+
 
     socket.on('username', function(username) {
         socket.username = username;
-        console.log("testing");
         io.emit('is_online', '🔵 <i>' + socket.username + ' join the chat..</i>');
     });
 
@@ -522,6 +550,9 @@ io.on('connection', (socket) => { //listening for events
 
 
     // battlepage_2 click functions 
+    //var user = req.cookies.data.username;
+
+
     var clickCount = 0;
     var destination = '/battlepage_3A';
     socket.on('clicked', function(data, destination){
