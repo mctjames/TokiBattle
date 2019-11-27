@@ -41,15 +41,13 @@
             socket.on('is_online', function(username) {
                 $('#messages').append($('<li>').html(username));
             });
-            // ask username
-            var username = prompt('Please tell me your name');
             
-            //testing cookie username stuff
-            //var username2 = req.cookies.data.username;
-            //console.log(username2);
+            //get user name from our login 
+            socket.on('sendUser', function(msg){
+                var username = msg;
+                socket.emit('username', username);
+            });
 
-
-            socket.emit('username', username);
     </script>
   </body>
 </html>

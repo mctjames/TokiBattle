@@ -555,27 +555,18 @@ io.on('connection', (socket) => { //listening for events
 
 ///////////
 
-
+// Grabbing user names
   var cookieDump =socket.handshake.headers.cookie; 
-  //console.log("cookieDump: ", cookieDump);
-
-
   var cookieValues = cookie.parse(cookieDump);
-
-  //cookieValues is an object
-  //cookieValues.data is a string
-
-  //console.log("cookieValues: ", cookieValues);
-  console.log("Trying to print username: ", cookieValues)
   var string_JSON_cookie = cookieValues.data.slice(2, cookieValues.data.length)
   JSON_cookie = JSON.parse(string_JSON_cookie)
   console.log("after slice ", JSON_cookie.username);
 
+  // send username string to client side
+  io.emit('sendUser', JSON_cookie.username);
 
-  socket.emit('your-event', {cookieValues});
 
 
-//////////////////
 
 
 
@@ -595,10 +586,6 @@ io.on('connection', (socket) => { //listening for events
         io.emit('chat_message', '<strong>' + socket.username + '</strong>: ' + message);
     });
 
-
-
-    // battlepage_2 click functions 
-    //var user = req.cookies.data.username;
 
 
     var clickCount = 0;
