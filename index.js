@@ -381,13 +381,46 @@ app.post('/addTeam/:id', (req, res) => {
  */
 
 app.post('/addToTeam/:uid/:id', (req, res) => {
-  var query = `INSERT INTO tokimonTeams (team_name, tokiname) VALUES ('${req.body.uid}', '${req.body.tokiID}')`;
-  console.log(query);
-  pool.query(query, (error, result) => {
+  var countTokiQuery = `SELECT COUNT(*) FROM tokimonTeams WHERE team_name = '${req.body.uid}'`;
+
+  pool.query(countTokiQuery, (error, result) => {
     if (error)
       res.end(error);
-    res.redirect(`/addTokimon/${req.params.uid}/${req.params.id}`);
-  })
+    var CountResult = result.rows;
+    console.log(CountResult);
+    CountResult.forEach((r) => {
+      if(parseInt(r.count) <=5 ) {
+        var query = `INSERT INTO tokimonTeams (team_name, tokiname) VALUES ('${req.body.uid}', '${req.body.tokiID}')`;
+        console.log(query);
+        pool.query(query, (error, result) => {
+          if (error)
+            res.end(error);
+          res.redirect(`/addTokimon/${req.params.uid}/${req.params.id}`);
+        })
+      }
+      else {
+        var query = `SELECT * FROM tokimonTeams WHERE team_name = '${req.body.uid}'`;
+        console.log(query);
+        pool.query(query, (error, result) => {
+          if (error)
+            res.end(error);
+          var results = result.rows;
+          results['maxToki'] = "You cannot add more than six Tokimons";
+          results['teamName'] = req.params.id;
+          results['userName'] = req.params.uid;
+          res.render(`pages/teamPage`, results);
+        })
+      }
+    });
+
+  // var query = `INSERT INTO tokimonTeams (team_name, tokiname) VALUES ('${req.body.uid}', '${req.body.tokiID}')`;
+  // console.log(query);
+  // pool.query(query, (error, result) => {
+  //   if (error)
+  //     res.end(error);
+  //   res.redirect(`/addTokimon/${req.params.uid}/${req.params.id}`);
+  // })
+  });
 });
 
 /**
@@ -405,14 +438,14 @@ if(DEBUG) {
       res.render(`pages/teamPage`, results);
     })
   
-    console.log(query);
-    pool.query(query, (error, result) => {
-      if (error)
-        res.end(error);
-      var results = {'rows': result.rows};
-      results['teamName'] = req.params.id;
-      res.render(`pages/teamPage`, results);
-    })
+    // console.log(query);
+    // pool.query(query, (error, result) => {
+    //   if (error)
+    //     res.end(error);
+    //   var results = {'rows': result.rows};
+    //   results['teamName'] = req.params.id;
+    //   res.render(`pages/teamPage`, results);
+    // })
   });
 }
 
