@@ -567,8 +567,9 @@ io.on('connection', (socket) => { //listening for events
 
   //console.log("cookieValues: ", cookieValues);
   console.log("Trying to print username: ", cookieValues)
-  console.log("typeof ", typeof cookieValues.data);
-
+  var string_JSON_cookie = cookieValues.data.slice(2, cookieValues.data.length)
+  JSON_cookie = JSON.parse(string_JSON_cookie)
+  console.log("after slice ", JSON_cookie.username);
 
 
   socket.emit('your-event', {cookieValues});
