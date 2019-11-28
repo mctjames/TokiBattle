@@ -46,25 +46,36 @@
           </br>  
           </br>    
 
-
+  <div class="container">
+    <center>
+      <button id="upvote-btn"> Upvote </button>
+      <h1 id="upvote-count" >0 Upvotes</h1>
+    </center>
+  </div>
       
 
      
      <script src="/socket.io/socket.io.js"></script>
      <script>
-       var socket = io.connect();
+      var socket = io.connect();
        
+      var data = 0
+      function buttonClicked(){
+        console.log("clicked once");
+        data = data +1;
+        socket.emit('clicked', data);
+      }
 
-       function buttonClicked(){
-
-         socket.emit('clicked');
-       }
-       
-       socket.on('redirect', function(destination) {
-          window.location = '/battlepage_3A';
+      socket.on('redirect', function(destination) {
+          window.location = '/battlepage_2';
         });
 
     </script>
+
+
+
+
+
 
 
 

@@ -206,9 +206,9 @@ app.get('/battlepage_2', (req, res) => {
 })
 
 
-// /**
-//  * battlepage_3 Page  
-//  */
+/**
+ * battlepage_3 Page  
+ */
 // app.get('/battlepage_3A', checkLoggedIn, (req, res) => {
 //   res.render('pages/battlepage_3A.ejs')
 // })
@@ -548,29 +548,59 @@ app.get('/index', function(req, res)  {
 
 io.use(function(socket,next){
   express_session(socket.handshake, {}, next);
+  //console.log("io.use function: ",socket.handshake.headers.cookie);
 });
 
-io.on('connection', (socket) => { //listening for events
-  console.log('Client connected');
+///////new//////////////////
+var user = []; 
 
-///////////
+function User(id){
+  this.id = id; 
+}
+/////////old////////////////
+io.on('connection', (socket) => { //listening for events
+  console.log('we have a new client: ' + socket.id );
+/////new///////////////
+
+
+
+  // socket.on('start', (data) => {
+  //   console.log(socket.id);
+  //   var user = new User(socket.id);
+  //   users.push(user);
+
+  //   console.log("the data is :", data);
+
+  // });
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////old//////////////////
 
 // Grabbing user names
   var cookieDump =socket.handshake.headers.cookie; 
   var cookieValues = cookie.parse(cookieDump);
+
+  //console.log("cookieDump information: ", cookieValues);
+
   var string_JSON_cookie = cookieValues.data.slice(2, cookieValues.data.length)
   JSON_cookie = JSON.parse(string_JSON_cookie)
-  console.log("after slice ", JSON_cookie.username);
+  //console.log("after slice ", JSON_cookie.username);
 
   // send username string to client side
   io.emit('sendUser', JSON_cookie.username);
 
-
-
-
-
-
-    socket.emit(socket.handshake.session);
+  socket.emit(socket.handshake.session);
 
 
     socket.on('username', function(username) {
@@ -588,12 +618,8 @@ io.on('connection', (socket) => { //listening for events
 
 
 
-    var clickCount = 0;
-    var destination = '/battlepage_3A';
     socket.on('clicked', function(data, destination){
-      clickCount++; 
-
-      if(clickCount >= 2)
+      if(data >= 2)
       {
         io.emit('redirect', destination); 
       }
