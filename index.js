@@ -23,6 +23,8 @@ const io            =   require('socket.io')(http)
 const PORT          =   process.env.PORT || 5000
 var sessionFileStore = require('session-file-store')(session);
 
+const TokiBattle = require('./battleServer')
+
 // Other specific use variables
 var pool;
 pool = new Pool({
@@ -551,37 +553,29 @@ io.use(function(socket,next){
   //console.log("io.use function: ",socket.handshake.headers.cookie);
 });
 
-///////new//////////////////
-var user = []; 
 
-function User(id){
-  this.id = id; 
-}
-/////////old////////////////
+// variable for finiding two players on the same page. 
+let waitingPlayer = null;
+
+// this version starts socket.io when we hit battlepage_2
+//io.of("/battlepage_2").on('connection', (socket) => {
+// // this version just launches from the start
 io.on('connection', (socket) => { //listening for events
-  console.log('we have a new client: ' + socket.id );
-/////new///////////////
 
 
+     if(waitingPlayer){
+      new TokiBattle(waitingPlayer, socket);
+      waitingPlayer = null;
+    }
+    else
+    {
+      waitingPlayer = socket;
+      waitingPlayer.emit('message', 'waiting for an opponent');
+    }
 
-  // socket.on('start', (data) => {
-  //   console.log(socket.id);
-  //   var user = new User(socket.id);
-  //   users.push(user);
-
-  //   console.log("the data is :", data);
-
-  // });
-
-
-
-
-
-
-
-
-
-
+    socket.on('message', (text) => {
+      io.emit('message', text);
+    }); 
 
 
 
@@ -590,18 +584,13 @@ io.on('connection', (socket) => { //listening for events
 // Grabbing user names
   var cookieDump =socket.handshake.headers.cookie; 
   var cookieValues = cookie.parse(cookieDump);
-
   //console.log("cookieDump information: ", cookieValues);
-
   var string_JSON_cookie = cookieValues.data.slice(2, cookieValues.data.length)
   JSON_cookie = JSON.parse(string_JSON_cookie)
   //console.log("after slice ", JSON_cookie.username);
-
   // send username string to client side
   io.emit('sendUser', JSON_cookie.username);
-
   socket.emit(socket.handshake.session);
-
 
     socket.on('username', function(username) {
         socket.username = username;
@@ -618,6 +607,43 @@ io.on('connection', (socket) => { //listening for events
 
 
 
+
+////////////// player 1 attacks /////////////
+    socket.on('attack1', function(attack){
+      console.log("attack1 server side");
+      console.log("the attack value is: ", attack);
+    });
+    socket.on('attack2', function(){
+      console.log("attack2 server side");
+    });
+    socket.on('attack3', function(){
+      console.log("attack3 server side");
+    });
+
+    socket.on('attack4', function(){
+      console.log("attack4 server side");
+    });
+
+//////////////player 2 attacks///////////////
+    socket.on('attack5', function(){
+      console.log("attack5 server side");
+    });
+    socket.on('attack6', function(){
+      console.log("attack6 server side");
+    });
+    socket.on('attack7', function(){
+      console.log("attack7 server side");
+    });
+
+    socket.on('attack8', function(){
+      console.log("attack8 server side");
+    });
+
+
+
+
+
+
     socket.on('clicked', function(data, destination){
       if(data >= 2)
       {
@@ -625,6 +651,7 @@ io.on('connection', (socket) => { //listening for events
       }
     })
    
+
 
 
 });

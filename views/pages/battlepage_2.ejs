@@ -48,8 +48,36 @@
 
   <div class="container">
     <center>
-      <button id="upvote-btn"> Upvote </button>
-      <h1 id="upvote-count" >0 Upvotes</h1>
+      <button onclick = "attack1Clicked()" id="attack1"> player1 attack1 </button>
+      <button onclick = "attack2Clicked()" id="attack2"> player1 attack2 </button>
+      <button onclick = "attack3Clicked()" id="attack3"> player1 attack3 </button>
+      <button onclick = "attack4Clicked()" id="attack4"> player1 attack4 </button>
+        </br>
+        </br>
+      <button onclick = "attack5Clicked()" id="attack5"> player2 attack1 </button>
+      <button onclick = "attack6Clicked()" id="attack6"> player2 attack2 </button>
+      <button onclick = "attack7Clicked()" id="attack7"> player2 attack3 </button>
+      <button onclick = "attack8Clicked()" id="attack8"> player2 attack4 </button>
+        </br>
+        </br>
+<!--         the text box -->
+      <div class = "text-wrapper">
+        <ul id ="events"></ul>
+
+        <div class = "button-wrapper">
+          <form id ="chat-form">         
+            <input id ="chat" />
+            <button id = "say"> Say </button> 
+          </form>
+
+          
+          <button id = "rock" class ="turn"> Rock </button>
+          <button id = "paper" class ="turn"> Paper </button>
+          <button id = "scissors" class ="turn"> Scissors </button>
+
+        </div>
+      </div>
+
     </center>
   </div>
       
@@ -57,8 +85,99 @@
      
      <script src="/socket.io/socket.io.js"></script>
      <script>
-      var socket = io.connect();
-       
+    // version for when starting from battlepage_2
+    // this version breaks the chat functions
+      //var socket = io.connect("http://localhost:5000/battlepage_2");
+    // version for when starting socket.io from connection
+    var socket = io.connect();
+
+
+////////////////////Rock paper scissors test ////////////
+      // addind text box for testing 
+      const writeEvent = (text) => {
+        //<ul> element
+        const parent = document.querySelector('#events');
+        // <li> element
+        const el = document.createElement('li');
+        el.innerHTML = text;
+
+        parent.appendChild(el);
+      };
+
+      const onFormSubmitted = (e) => {
+        e.preventDefault();
+
+        const input = document.querySelector('#chat');
+        const text = input.value;
+        input.value = '';
+
+        socket.emit('message', text); 
+      };
+
+      const addButtonListeners = () => {
+        ['rock', 'paper', 'scissors'].forEach((id) =>{
+          const button = document.getElementById(id);
+          button.addEventListener('click', () => {
+            socket.emit('turn', id);
+          });
+        });
+      };
+
+
+      writeEvent('Welcome to Tokebattler!');
+      socket.on('message', writeEvent);
+
+      document.querySelector('#chat-form').addEventListener('submit', onFormSubmitted);
+
+      addButtonListeners();
+
+
+      //////////Player 1 attacks /////////////////
+      function attack1Clicked(){
+        console.log("attack1");
+        var attack = "attack1";
+        socket.emit('attack1', attack);
+      }
+
+      function attack2Clicked(){
+        console.log("attack2");
+        socket.emit('attack2');
+      }
+
+      function attack3Clicked(){
+        console.log("attack3");
+        socket.emit('attack3');
+      }
+
+      function attack4Clicked(){
+        console.log("attack4");
+        socket.emit('attack4');
+      }
+
+///////////Player 2 attacks ////////////////////
+      function attack5Clicked(){
+        console.log("attack5");
+        socket.emit('attack5');
+      }
+
+      function attack6Clicked(){
+        console.log("attack6");
+        socket.emit('attack6');
+      }
+
+      function attack7Clicked(){
+        console.log("attack7");
+        socket.emit('attack7');
+      }
+
+      function attack8Clicked(){
+        console.log("attack8");
+        socket.emit('attack8');
+      }
+
+
+////////////ready button code////////////
+
       var data = 0
       function buttonClicked(){
         console.log("clicked once");
@@ -69,6 +188,21 @@
       socket.on('redirect', function(destination) {
           window.location = '/battlepage_2';
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     </script>
 

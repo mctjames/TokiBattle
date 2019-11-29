@@ -11,6 +11,13 @@ h1{
     background: black;
 }
 
+li{
+    text-align: center;
+    font-size: 25px;
+    color: red;
+    background: black;
+}
+
 #b{
     background-size: cover;
     background-color: rgb(255, 108, 71);
@@ -106,4 +113,8 @@ h1{
       color: white;
 
   }
+
+
+
+
 
