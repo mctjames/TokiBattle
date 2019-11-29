@@ -582,15 +582,15 @@ io.on('connection', (socket) => { //listening for events
 /////////old//////////////////
 
 // Grabbing user names
-  var cookieDump =socket.handshake.headers.cookie; 
-  var cookieValues = cookie.parse(cookieDump);
-  //console.log("cookieDump information: ", cookieValues);
-  var string_JSON_cookie = cookieValues.data.slice(2, cookieValues.data.length)
-  JSON_cookie = JSON.parse(string_JSON_cookie)
-  //console.log("after slice ", JSON_cookie.username);
-  // send username string to client side
-  io.emit('sendUser', JSON_cookie.username);
-  socket.emit(socket.handshake.session);
+  // var cookieDump =socket.handshake.headers.cookie; 
+  // var cookieValues = cookie.parse(cookieDump);
+  // //console.log("cookieDump information: ", cookieValues);
+  // var string_JSON_cookie = cookieValues.data.slice(2, cookieValues.data.length)
+  // JSON_cookie = JSON.parse(string_JSON_cookie)
+  // //console.log("after slice ", JSON_cookie.username);
+  // // send username string to client side
+  // io.emit('sendUser', JSON_cookie.username);
+  // socket.emit(socket.handshake.session);
 
     socket.on('username', function(username) {
         socket.username = username;
@@ -605,39 +605,6 @@ io.on('connection', (socket) => { //listening for events
         io.emit('chat_message', '<strong>' + socket.username + '</strong>: ' + message);
     });
 
-
-
-
-////////////// player 1 attacks /////////////
-    socket.on('attack1', function(attack){
-      console.log("attack1 server side");
-      console.log("the attack value is: ", attack);
-    });
-    socket.on('attack2', function(){
-      console.log("attack2 server side");
-    });
-    socket.on('attack3', function(){
-      console.log("attack3 server side");
-    });
-
-    socket.on('attack4', function(){
-      console.log("attack4 server side");
-    });
-
-//////////////player 2 attacks///////////////
-    socket.on('attack5', function(){
-      console.log("attack5 server side");
-    });
-    socket.on('attack6', function(){
-      console.log("attack6 server side");
-    });
-    socket.on('attack7', function(){
-      console.log("attack7 server side");
-    });
-
-    socket.on('attack8', function(){
-      console.log("attack8 server side");
-    });
 
 
 

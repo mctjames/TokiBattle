@@ -73,7 +73,7 @@ class TokiBattle{
 				break;
 			case 2:
 				// p1 won
-				this.sendWinMessage(this.player[1], this.player[0]);
+				this.sendWinMessage(this.players[1], this.players[0]);
 				break;
 		}
 	}
