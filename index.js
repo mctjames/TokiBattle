@@ -12,18 +12,18 @@ const session       =   require('express-session')
 const { Pool }      =   require('pg')
 //const redis         =   require('redis')
 const cookieParser  =   require('cookie-parser');
-const cookie        = require('cookie');
+const cookie        =   require('cookie');
 
 //const redisStore    =   require('connect-redis')(session)
 const adapter       =   require('socket.io-adapter')
 const client        =   require('socket.io-client')
 const parser        =   require('socket.io-parser')
-const http          =   require('http').Server(app)
+const http          =   require('http').createServer(app)
 const io            =   require('socket.io')(http)
 const PORT          =   process.env.PORT || 5000
-var sessionFileStore = require('session-file-store')(session);
-
-const TokiBattle = require('./battleServer')
+var sessionFileStore =  require('session-file-store')(session);
+module.exports      =   app.listen(PORT+1);
+const TokiBattle    =   require('./battleServer')
 
 // Other specific use variables
 var pool;

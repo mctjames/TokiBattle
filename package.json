@@ -7,7 +7,8 @@
     "node": "12.x"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "mocha"
   },
   "author": "james_nora_sean_eric_thomas",
   "license": "ISC",
@@ -19,6 +20,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "git": "^0.1.5",
+    "mocha": "^6.2.2",
     "node": "^13.1.0",
     "nodejs": "0.0.0",
     "nodemon": "^1.19.4",
@@ -35,5 +37,10 @@
   },
   "bugs": {
     "url": "https://github.com/mctjames/TokiBattle/issues"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "supertest": "^4.0.2"
   }
 }
