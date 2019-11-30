@@ -1,40 +1,33 @@
 function damageCalc(move, attacker, defender) {
-    var damage = move.power attacker.attack / defender.defense;
-    typeAdjust = 25;
-    STABmodifier = 2*(100-typeAdjust);
-    effectiveModifier = 100-typeAdjust;
     
-    if (move.type == "water") {
-        damage += damage * (attacker.water - 25)/STABmodifier;
-        damage += damage * (defender.fire - 25)/effectiveModifier;
-        damage -= damage * (defender.water - 25)/effectiveModifier;
+    var power = 25;
+    var typeAdjust = 25;
+    var STABmodifier = 2*(100-typeAdjust);
+    var effectiveModifier = 100-typeAdjust;
+    var damage = power * attacker[7] / defender[8];
+    
+    if (move == "Waterfall") {
+        damage += damage * (attacker[2] - typeAdjust)/STABmodifier;
+        damage += damage * (defender[1] - typeAdjust)/effectiveModifier;
+        damage -= damage * (defender[2] - typeAdjust)/effectiveModifier;
     }
-    else if (move.type == "fire") {
-        damage += damage * (attacker.fire - 25)/STABmodifier;
-        damage += damage * (defender.ice - 25)/effectiveModifier;
-        damage -= damage * (defender.fire - 25)/effectiveModifier;
+
+    else if (move == "Aerial Black") {
+        damage += damage * (attacker[4] - typeAdjust)/STABmodifier;
+        damage += damage * (defender[5] - typeAdjust)/effectiveModifier;
+        damage -= damage * (defender[3] - typeAdjust)/effectiveModifier;
     }
-    else if (move.type == "electric") {
-        damage += damage * (attacker.electric - 25)/STABmodifier;
-        damage += damage * (defender.flying - 25)/effectiveModifier;
-        damage += damage * (defender.water - 25)/effectiveModifier;
+
+    else if (move == "Agile Strike") {
+        damage += damage * (attacker[5] - typeAdjust)/STABmodifier;
+        damage += damage * (defender[6] - typeAdjust)/effectiveModifier;
+        damage -= damage * (defender[4] - typeAdjust)/effectiveModifier;
     }
-    else if (move.type == "flying") {
-        damage += damage * (attacker.flying - 25)/STABmodifier;
-        damage += damage * (defender.fighting - 25)/effectiveModifier;
-        damage -= damage * (defender.electric - 25)/effectiveModifier;
-    }
-    else if (move.type == "fighting") {
-        damage += damage * (attacker.fighting - 25)/STABmodifier;
-        damage += damage * (defender.ice - 25)/effectiveModifier;
-        damage -= damage * (defender.flying - 25)/effectiveModifier;
-    }
-    else if (move.type == "ice") {
-        damage += damage * (attacker.ice - 25)/STABmodifier;
-        damage += damage * (defender.flying - 25)/effectiveModifier;
-        damage -= damage * (defender.ice - 25)/effectiveModifier;
-        damage -= damage * (defender.water - 25)/effectiveModifier;
-        damage -= damage * (defender.fire - 25)/effectiveModifier;
+    else if (move == "Overheat") {
+        damage += damage * (attacker[1] - typeAdjust)/STABmodifier;
+        damage += damage * (defender[6] - typeAdjust)/effectiveModifier;
+        damage -= damage * (defender[1] - typeAdjust)/effectiveModifier;
+        damage -= damage * (defender[2] - typeAdjust)/effectiveModifier;
     }
     return damage;
 }
