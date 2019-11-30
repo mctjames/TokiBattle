@@ -52,50 +52,205 @@ class TokiBattle{
 		})
 	}
 
+
+	damageCalc(move, attacker, defender) {
+	    
+	    var power = 25;
+	    var typeAdjust = 25;
+	    var STABmodifier = 2*(100-typeAdjust);
+	    var effectiveModifier = 100-typeAdjust;
+	    var damage = power * attacker[7] / defender[8];
+	    
+	    if (move == "attack1") {
+	        damage += damage * (attacker[2] - typeAdjust)/STABmodifier;
+	        damage += damage * (defender[1] - typeAdjust)/effectiveModifier;
+	        damage -= damage * (defender[2] - typeAdjust)/effectiveModifier;
+	    }
+
+	    else if (move == "attack2") {
+	        damage += damage * (attacker[4] - typeAdjust)/STABmodifier;
+	        damage += damage * (defender[5] - typeAdjust)/effectiveModifier;
+	        damage -= damage * (defender[3] - typeAdjust)/effectiveModifier;
+	    }
+
+	    else if (move == "attack3") {
+	        damage += damage * (attacker[5] - typeAdjust)/STABmodifier;
+	        damage += damage * (defender[6] - typeAdjust)/effectiveModifier;
+	        damage -= damage * (defender[4] - typeAdjust)/effectiveModifier;
+	    }
+	    else if (move == "attack4") {
+	        damage += damage * (attacker[1] - typeAdjust)/STABmodifier;
+	        damage += damage * (defender[6] - typeAdjust)/effectiveModifier;
+	        damage -= damage * (defender[1] - typeAdjust)/effectiveModifier;
+	        damage -= damage * (defender[2] - typeAdjust)/effectiveModifier;
+	    }
+	    else {
+	    	damage = 0;
+	    }
+	    return damage;
+	}
+
+
+
 	onTurn(playerIndex, turn){
 		this.turns[playerIndex] = turn; 
 		this.sendToPlayer(playerIndex, `You selected ${turn}`);
 		
+		var toki = teamToki[0];
 
+		var poke = teamPoke[0]; 
 
-		this.resolveAttacks(); 
+		this.resolveAttacks(toki, poke); 
 
 		//this.checkGameOver();
 	}
 
-	resolveAttacks(){
+
+
+
+
+	resolveAttacks(toki, poke){
 		const turns = this.turns;
 
 		// we want this to ensure that both moves have been entered from each player
 		if ( turns[0] && turns[1] ){
-
-
-
-
-			if(turns[0] == 'swap1' || turns[0] == 'swap2' || turns[0] == 'swap3' || turns[0] == 'swap4' || 
-				turns[0] == 'swap5' || turns[0] == 'swap6' && turns[1]){
-
-				console.log("swap1 worked");	
-			}
-
-			if(turns[1] == 'swap1' || turns[1] == 'swap2' || turns[1] == 'swap3' || turns[1] == 'swap4' || 
-				turns[1] == 'swap5' || turns[1] == 'swap6' && turns[0]){
-
-				console.log("swap1 worked but for player 1");	
-			}
-
-
-			if(turns[0] == 'attack1' && turns[1])
+			// swap functions 
+			if(turns[0] == 'swap0' && turns[1])
 			{
-				console.log("attack1 worked");
+				toki = teamToki[0];
+				console.log(toki);
+				this.sendToPlayers('player 0 swapped to toki zero' + turns[0]);
+				turns[0] = "Nothing";
 			}
-
-			if(turns[1] == 'attack1' && turns[0])
+			if(turns[1] == 'swap0' && turns[0])
 			{
-				console.log("attack1 worked but for player 1 this time");
+				poke = teamPoke[0];
+				console.log(poke);
+				this.sendToPlayers('player 1 swapped to toki zero' + turns[0]);
+				turns[1] = "Nothing";
 			}
+			//swap 1
+			if(turns[0] == 'swap1' && turns[1])
+			{
+				toki = teamToki[1];
+				console.log(toki);
+				this.sendToPlayers('player 0 swapped to toki one' + turns[0]);
+				turns[0] = "Nothing";
+			}
+			if(turns[1] == 'swap1' && turns[0])
+			{
+				poke = teamPoke[1];
+				console.log(poke);
+				this.sendToPlayers('player 1 swapped to toki one' + turns[0]);
+				turns[1] = "Nothing";		
+			}
+			//swap 2
+			if(turns[0] == 'swap2' && turns[1])
+			{
+				toki = teamToki[2];
+				console.log(toki);
+				this.sendToPlayers('player 0 swapped to toki two' + turns[0]);
+				turns[0] = "Nothing";			
+			}
+			if(turns[1] == 'swap2' && turns[0])
+			{
+				poke = teamPoke[2];
+				console.log(poke);
+				this.sendToPlayers('player 1 swapped to toki two' + turns[0]);
+				turns[1] = "Nothing";
+			}
+			//swap3
+			if(turns[0] == 'swap3' && turns[1])
+			{
+				toki = teamToki[3];
+				console.log(toki);
+				this.sendToPlayers('player 0 swapped to toki three' + turns[0]);
+				turns[0] = "Nothing";
+			}
+			if(turns[1] == 'swap3' && turns[0])
+			{
+				poke = teamPoke[3];
+				console.log(poke);
+				this.sendToPlayers('player 1 swapped to toki three' + turns[0]);
+				turns[1] = "Nothing";
+			}
+			//swap 4
+			if(turns[0] == 'swap4' && turns[1])
+			{
+			    toki = teamToki[4];
+			    console.log(toki);
+			    this.sendToPlayers('player 0 swapped to toki four' + turns[0]);
+			    turns[0] = "Nothing";
+			}
+			if(turns[1] == 'swap4' && turns[0])
+			{
+			    poke = teamPoke[4];
+			    console.log(poke);
+			    this.sendToPlayers('player 1 swapped to toki four' + turns[0]);
+			    turns[1] = "Nothing";
+			}
+			//swap5
+			if(turns[0] == 'swap5' && turns[1])
+			{
+			    toki = teamToki[5];
+			    console.log(toki);
+			    this.sendToPlayers('player 0 swapped to toki five' + turns[0]);
+			    turns[0] = "Nothing";
+			}
+			if(turns[1] == 'swap5' && turns[0])
+			{
+			    poke = teamPoke[5];
+			    console.log(poke);
+			    this.sendToPlayers('player 1 swapped to toki five' + turns[0]);
+			    turns[1] = "Nothing";
+			}
+					
+			//////// speed calculation /////////
+			if(toki[10] > poke[10])
+			{
+				var fast = toki;
+				var slow = poke;
 
-		}
+				var fastmove = turns[0];
+				var slowmove = turns[1];
+			}
+			else
+			{
+				var fast = toki;
+				var slow = poke; 
+				var fastmove = turns[1];
+				var slowmove = turns[0];
+			}
+		
+			var damage = damageCalc(fastmove, fast, slow);
+			console.log("damage: ", damage);
+					
+
+			// if(turns[0] == 'swap1' || turns[0] == 'swap2' || turns[0] == 'swap3' || turns[0] == 'swap4' || 
+			// 	turns[0] == 'swap5' || turns[0] == 'swap6' && turns[1]){
+
+			// 	swapFunction()
+			// 	console.log("swap1 worked");	
+			// }
+
+			// if(turns[1] == 'swap1' || turns[1] == 'swap2' || turns[1] == 'swap3' || turns[1] == 'swap4' || 
+			// 	turns[1] == 'swap5' || turns[1] == 'swap6' && turns[0]){
+
+			// 	console.log("swap1 worked but for player 1");	
+			// }
+
+
+			// if(turns[0] == 'attack1' && turns[1])
+			// {
+			// 	console.log("attack1 worked");
+			// }
+
+			// if(turns[1] == 'attack1' && turns[0])
+			// {
+			// 	console.log("attack1 worked but for player 1 this time");
+			// }
+
+			}
 
 	}
 

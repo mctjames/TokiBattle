@@ -7,6 +7,7 @@ function damageCalc(move, attacker, defender) {
     var damage = power * attacker[7] / defender[8];
     
     if (move == "Waterfall") {
+
         damage += damage * (attacker[2] - typeAdjust)/STABmodifier;
         damage += damage * (defender[1] - typeAdjust)/effectiveModifier;
         damage -= damage * (defender[2] - typeAdjust)/effectiveModifier;
@@ -28,6 +29,9 @@ function damageCalc(move, attacker, defender) {
         damage += damage * (defender[6] - typeAdjust)/effectiveModifier;
         damage -= damage * (defender[1] - typeAdjust)/effectiveModifier;
         damage -= damage * (defender[2] - typeAdjust)/effectiveModifier;
+    }
+    else {
+        damage = 0;
     }
     return damage;
 }
