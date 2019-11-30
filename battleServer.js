@@ -18,6 +18,10 @@
 	var squirtle = ["Squirtle", 4, 92, 28, 47, 31, 53, 40, 90, 50, 20, "https://giphy.com/stickers/bowz-ffrh-XEVPdxchKc9i5dRkKF", "https://giphy.com/stickers/bowz-ffrh-ftpl2KPZURk39KqawY"];
 	
 	var teamPoke = [charmander, pikachu, gastergar, bellsprout, bulbasaur, squirtle];
+		
+	var aliveToki = 6;
+	var alivePoke = 6;
+
 
 class TokiBattle{
 
@@ -97,8 +101,9 @@ class TokiBattle{
 		this.sendToPlayer(playerIndex, `You selected ${turn}`);
 		
 		var toki = teamToki[0];
-
 		var poke = teamPoke[0]; 
+
+
 
 		this.resolveAttacks(toki, poke); 
 
@@ -222,33 +227,66 @@ class TokiBattle{
 				var slowmove = turns[0];
 			}
 		
-			var damage = damageCalc(fastmove, fast, slow);
-			console.log("damage: ", damage);
-					
 
-			// if(turns[0] == 'swap1' || turns[0] == 'swap2' || turns[0] == 'swap3' || turns[0] == 'swap4' || 
-			// 	turns[0] == 'swap5' || turns[0] == 'swap6' && turns[1]){
+			slow[9] -= this.damageCalc(fastmove, fast, slow);
+			
+			if(slow[9] <= 0)
+			{
+				if(slow == toki)
+				{
+					aliveToki -= 1;
+					var tokiDead = true;
+					if(alivetoki <= 0)
+					{
+						//send to winscreen //////////////////////////////////////////////////
+					}					
+				}
+				else
+				{
+					alivePoke -= 1;
+					var pokeDead = true; 
+					if(alivePoke <= 0)
+					{
+						//send to winscreen /////////////////////////////////////////////////////
+					}
+				}
 
-			// 	swapFunction()
-			// 	console.log("swap1 worked");	
-			// }
 
-			// if(turns[1] == 'swap1' || turns[1] == 'swap2' || turns[1] == 'swap3' || turns[1] == 'swap4' || 
-			// 	turns[1] == 'swap5' || turns[1] == 'swap6' && turns[0]){
+			}
+			else
+			{
+				fast[9] -= this.damageCalc(slowmove, slow, fast);
+				
+				if(fast[9] <= 0)
+				{
+					if(fast == toki)
+					{
+						aliveToki -= 1;
+						var tokiDead = true;
+						if(alivetoki <= 0)
+						{
+							//send to winscreen //////////////////////////////////////////////////
+						}					
+					}
+					else
+					{
+						alivePoke -= 1;
+						var pokeDead = true; 
+						if(alivePoke <= 0)
+						{
+							//send to winscreen /////////////////////////////////////////////////////
+						}
+					}
+				}
+			}
 
-			// 	console.log("swap1 worked but for player 1");	
-			// }
+
+			// when dead swap in new toki and restart process
 
 
-			// if(turns[0] == 'attack1' && turns[1])
-			// {
-			// 	console.log("attack1 worked");
-			// }
 
-			// if(turns[1] == 'attack1' && turns[0])
-			// {
-			// 	console.log("attack1 worked but for player 1 this time");
-			// }
+
+
 
 			}
 
