@@ -5,6 +5,8 @@ var should = chai.should();
 var expect = chai.expect;
 var request = require('supertest');
 var knex = require('../db/knex');
+var sinon = require('sinon');
+var ejs = require('ejs');
 chai.use(chaiHttp);
 
 describe('database', function() {
@@ -76,5 +78,33 @@ describe('login', function() {
     it('should allow admin access / GET', function(done){
         request(server).post('/authenticate').send({'uname':'admin','psw':'password'}).expect('Location','/admin').end(done)
     });
+
+    it('will register a new user but fail and ask them to register again / GET', function(done) {
+        var spy = sinon.spy(ejs, '__express');
+        request(server)
+            .post('/addUser')
+            .send({ uname: 'notadmin', psw: 'password' })
+            .expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                expect(spy.calledWithMatch(/\/register\.ejs$/)).to.be.true;
+                spy.restore();
+                done();
+            });
+    }); 
+
+    it('will register a new user and bring them to the login page / GET', function(done) {
+        var spy = sinon.spy(ejs, '__express');
+        request(server)
+            .post('/addUser')
+            .send({ uname: 'aaa111', psw: 'password' })
+            .expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                expect(spy.calledWithMatch(/\/login\.ejs$/)).to.be.true;
+                spy.restore();
+                done();
+            });
+    }); 
 });
 

@@ -254,11 +254,11 @@ app.get('/register_update', (req, res) => {
  * Add Users Page
  */
 
-app.post('/addUser', (req,res) => {
+app.post('/addUser', (req,res,next) => {
   if (DEBUG) console.log("sessionID at /addUser:", req.sessionID)
   var confirmUsername = `SELECT COUNT(*) FROM trainer WHERE username='${req.body.uname}'`;
   console.log(confirmUsername);
-  
+
   pool.query(confirmUsername, (error, result) => {
     if (error)
       res.end(error);
