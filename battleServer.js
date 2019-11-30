@@ -1,7 +1,33 @@
+				     //  	name      1,  2   3   4   5   6   7   8	 HP9 SPD10 
+	var kilimonjaro = ["Kilimonjaro", 27, 71, 11, 66, 44, 33, 40, 50, 35, 75, "https://giphy.com/stickers/bowz-ffrh-cLl4Db3byHH4AOKe3F", "https://giphy.com/stickers/bowz-ffrh-fqhyp7k335xD6cpHz3"];
+
+	var fungust = ["Fungust", 21, 45,	9,	80,	80,	21,	41,	44,	50,	65,	"https://giphy.com/stickers/bowz-ffrh-IgXJiugnfMwPkEpFX2", "https://giphy.com/stickers/bowz-ffrh-XEZjiAqcZWXrPUsZ1x"];
+
+	var bobby = ["Bobby", 31, 26, 95, 11, 67, 53, 80, 10,	10, 100, "https://giphy.com/stickers/bowz-ffrh-WUIda5VPUNPLJdfKIL", "https://giphy.com/stickers/bowz-ffrh-JR0VORq8UozRwh7Thb"];
+
+	var conyvore = ["Conyvore", 7, 38,	25, 12,	76, 91,	78, 16, 30, 76, "https://giphy.com/stickers/bowz-ffrh-dVuo3Rq4nO5JPKBwve" , 	"https://giphy.com/stickers/bowz-ffrh-LrRFdf1P7OGclKNO8r" ];
+
+	var drygon = ["Drygon", 69, 8, 77,	65, 34,	4, 80, 66,	44,	10,	"https://giphy.com/stickers/bowz-ffrh-mBSD4fY9FC5oMeJmm6",	"https://giphy.com/stickers/bowz-ffrh-RGXNe5I5LGAWlXygJS"];
+
+	var stumpy = ["Stumpy", 33,	33,	33,	33,	90,	33,	75,	70,	50,	5, "https://giphy.com/stickers/bowz-ffrh-Z9WJJxRKVY5CsC4DR3",	"https://giphy.com/stickers/bowz-ffrh-RNWadB4LfyiY0xTvK4"];
+
+	var charmander = ["Charmander", 75,	65,	33,	38,	20,	28,	66,	66,	33,	35, "https://giphy.com/stickers/bowz-ffrh-Yrlf6mmRWxfM9mAYZr",	"https://media.giphy.com/media/j3hXxRQ4vDlojLt0tX/giphy.webp"];
+
+	var pikachu = ["Pikachu", 31, 54, 60, 39, 3, 75, 75, 46, 10, 69, "https://giphy.com/stickers/bowz-ffrh-Me1HHiv2BRKADvnWVP",	"https://giphy.com/stickers/bowz-ffrh-YooRpjzgf0KXpFDhqA"];
+
+	var gastergar = ["Gastergar", 50, 17, 39, 11, 77, 54, 75, 26, 62, 37, "https://giphy.com/stickers/bowz-ffrh-UrnPDS2ggS4yCwIzkr", "https://giphy.com/stickers/bowz-ffrh-j6BQa0h3zlGycU1Wxm"];
+	var bellsprout = ["Bellsprout", 15, 57, 44, 46, 55, 31, 47, 56, 49, 48, "https://giphy.com/stickers/bowz-ffrh-JrY6DOnQetktT9JH6h", "https://giphy.com/stickers/bowz-ffrh-dvlDuIO66AIAPX6xQl"];
+	var bulbasaur = ["Bulbasaur", 45, 45, 26, 24, 93, 26, 23, 75, 34, 68, "https://giphy.com/stickers/bowz-ffrh-jUzq0gWDDMB3CiGnOr", "https://giphy.com/stickers/bowz-ffrh-UTY2bNeQJSUkofYlrp"];
+	var squirtle = ["Squirtle", 4, 92, 28, 47, 31, 53, 40, 90, 50, 20, "https://giphy.com/stickers/bowz-ffrh-XEVPdxchKc9i5dRkKF", "https://giphy.com/stickers/bowz-ffrh-ftpl2KPZURk39KqawY"];
+	
+
 class TokiBattle{
 
-	constructor(p1, p2){
-		this.players = [p1, p2];
+	
+
+
+	constructor(p0, p1){
+		this.players = [p0, p1];
 		this.turns = [null, null];
 
 		this.sendToPlayers('The Battle Begins!');
@@ -9,7 +35,11 @@ class TokiBattle{
 
 		this.players.forEach((player, idx) => {
 			player.on('turn', (turn) => {
+				//console.log("index: " , idx);
+
+
 				this.onTurn(idx, turn);
+
 			});
 		});
 	}
@@ -35,26 +65,18 @@ class TokiBattle{
 		const turns = this.turns;
 
 		if (turns[0] && turns[1]){
+			
+
 			this.sendToPlayers('Game over ' + turns.join(' : '));
+
+
+
 			this.getGameResult();
 			this.turns = [null, null];
 			this.sendToPlayers('Next Round!');
 		};
 	}
 
-	// // brute force version for rps logic
-	// getGameResult(){
-	// 	switch (this.turns[0]){
-	// 		case 'rock';
-	// 			switch (this.turns[1]){
-	// 				case 'rock': return -1;
-	// 				case 'paper': return 0;
-	// 				case 'scissors': return 1; 
-	// 			}
-	// 		case 'paper';
-	// 		case 'scissors';
-	// 	}
-	// }
 
 	getGameResult(){
 		const p0 = this.decodeTurn(this.turns[0]);
@@ -78,11 +100,6 @@ class TokiBattle{
 		}
 	}
 
-	sendWinMessage(winner, loser){
-		winner.emit('message', 'You Won!');
-		loser.emit('message', 'You lost!');
-	}
-
 	decodeTurn(turn){
 		switch (turn){
 			case 'rock':
@@ -95,6 +112,12 @@ class TokiBattle{
 				throw new Error(`could not decode turn ${turn}`)							
 		}
 	}
+
+	sendWinMessage(winner, loser){
+		winner.emit('message', 'You Won!');
+		loser.emit('message', 'You lost!');
+	}
+
 
 }
 

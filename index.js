@@ -558,9 +558,9 @@ io.use(function(socket,next){
 let waitingPlayer = null;
 
 // this version starts socket.io when we hit battlepage_2
-//io.of("/battlepage_2").on('connection', (socket) => {
+io.of("/battlepage_2").on('connection', (socket) => {
 // // this version just launches from the start
-io.on('connection', (socket) => { //listening for events
+//io.on('connection', (socket) => { //listening for events
 
 
      if(waitingPlayer){
@@ -570,7 +570,7 @@ io.on('connection', (socket) => { //listening for events
     else
     {
       waitingPlayer = socket;
-      waitingPlayer.emit('message', 'waiting for an opponent');
+      waitingPlayer.emit('message', 'Waiting for an opponent. You are player 0');
     }
 
     socket.on('message', (text) => {
@@ -581,16 +581,6 @@ io.on('connection', (socket) => { //listening for events
 
 /////////old//////////////////
 
-// Grabbing user names
-  // var cookieDump =socket.handshake.headers.cookie; 
-  // var cookieValues = cookie.parse(cookieDump);
-  // //console.log("cookieDump information: ", cookieValues);
-  // var string_JSON_cookie = cookieValues.data.slice(2, cookieValues.data.length)
-  // JSON_cookie = JSON.parse(string_JSON_cookie)
-  // //console.log("after slice ", JSON_cookie.username);
-  // // send username string to client side
-  // io.emit('sendUser', JSON_cookie.username);
-  // socket.emit(socket.handshake.session);
 
     socket.on('username', function(username) {
         socket.username = username;
@@ -604,12 +594,6 @@ io.on('connection', (socket) => { //listening for events
     socket.on('chat_message', function(message) {
         io.emit('chat_message', '<strong>' + socket.username + '</strong>: ' + message);
     });
-
-
-
-
-
-
 
     socket.on('clicked', function(data, destination){
       if(data >= 2)
