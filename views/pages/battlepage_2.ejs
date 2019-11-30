@@ -45,12 +45,19 @@
 
   <div class="container">
     <center>
-      <button id="attack1"> player1 attack1 </button>
-      <button id="attack2"> player1 attack2 </button>
-      <button id="attack3"> player1 attack3 </button>
-      <button id="attack4"> player1 attack4 </button>
+      <button id="attack1" class = "turn"> player1 attack1 </button>
+      <button id="attack2" class = "turn"> player1 attack2 </button>
+      <button id="attack3" class = "turn"> player1 attack3 </button>
+      <button id="attack4" class = "turn"> player1 attack4 </button>
         </br>
         </br>
+      <button id="swap1" class = "turn"> swap to 1 </button>
+      <button id="swap2" class = "turn"> swap to 2 </button>
+      <button id="swap3" class = "turn"> swap to 3 </button>
+      <button id="swap4" class = "turn"> swap to 4 </button>
+      <button id="swap5" class = "turn"> swap to 5 </button>
+      <button id="swap6" class = "turn"> swap to 6 </button>
+
 
 <!--         the text box -->
       <div class = "text-wrapper">
@@ -115,6 +122,13 @@
 
         // attack button functionaliity. 
         ['attack1', 'attack2', 'attack3', 'attack4'].forEach((id) => {
+          const button = document.getElementById(id);
+          button.addEventListener('click', () => {
+            socket.emit('turn', id);
+          });
+        });
+
+        ['swap1', 'swap2', 'swap3', 'swap4', 'swap5', 'swap6'].forEach((id) => {
           const button = document.getElementById(id);
           button.addEventListener('click', () => {
             socket.emit('turn', id);
