@@ -13,7 +13,7 @@ const { Pool }      =   require('pg')
 //const redis         =   require('redis')
 const cookieParser  =   require('cookie-parser');
 const cookie        =   require('cookie');
-
+var queries         =   require('./db/queries'); // For Mocha Testing
 //const redisStore    =   require('connect-redis')(session)
 const adapter       =   require('socket.io-adapter')
 const client        =   require('socket.io-client')
@@ -22,7 +22,6 @@ const http          =   require('http').createServer(app)
 const io            =   require('socket.io')(http)
 const PORT          =   process.env.PORT || 5000
 var sessionFileStore =  require('session-file-store')(session);
-module.exports      =   app.listen(PORT+1);
 const TokiBattle    =   require('./battleServer')
 
 // Other specific use variables
@@ -72,6 +71,23 @@ http.listen(PORT);
 //app.use(json.bodyParser())
 //app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.json({
+      message: err.message,
+      error: err
+    });
+  });
+}
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.json({
+    message: err.message,
+    error: {}
+  });
+});
+
 /****************
  * Client Pages *
  ***************/ 
@@ -81,15 +97,6 @@ http.listen(PORT);
  * @query - Table creation queries as needed
  */
 app.all('/', (req, res) => {
-  var trainerQuery = tableCreator("trainer");
-  var tokimonQuery = tableCreator("tokimon");
-  var teamQuery = tableCreator("team");
-  var moveQuery = tableCreator("move");
-  var sprite = tableCreator("sprite");
-  var movesprite = tableCreator("movesprite");
-  console.log(req.cookies)
-  pool.query(trainerQuery, (error, result) => {
-  });
   res.redirect('/login');
 })
 
@@ -340,6 +347,22 @@ app.get('/logout',(req,res) => {
       res.redirect('/');
   });
 });
+
+/**
+ * Mocha Testing page
+ */
+
+ app.get('/trainer', (req,res,next) => {
+    // For Mocha Testing
+    queries.getAll()
+    .then(function(trainer) {
+      res.status(200).json(trainer);
+    })
+    .catch(function(error) {
+      next(error);
+    });
+    // End Mocha Testing Code
+ })
 
 /************************
  * Administration Pages *
@@ -795,6 +818,8 @@ var T = new Twit({
 //
 //  tweet 'hello world!'
 //
+
+module.exports      =   app.listen(PORT+1);
 
 /** REMOVED
  * Function to return queries as needed based on arguments specified
