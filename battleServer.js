@@ -24,34 +24,32 @@
 
 class TokiBattle{
 
-	
 
 
-	constructor(p0, p1){
+	constructor(p0, p1, toki, poke, aliveToki, alivePoke){
 		this.players = [p0, p1];
 		this.turns = [null, null];
 
 		this.sendToPlayers('The Battle Begins!');
 		console.log("Two players are ready to battle!");
 
-		
 		var toki = teamToki[0];
 		var poke = teamPoke[0]; 
 
-		var aliveToki = 6;
-		var alivePoke = 6;
+		var aliveToki = [true, true, true, true, true, true];
+		var alivePoke = [true, true, true, true, true, true];
 
 
 
 
 
 
-		this.players.forEach((player, idx) => {
+		this.players.forEach((player, playerIndex) => {
 			player.on('turn', (turn) => {
-				//console.log("index: " , idx);
+				//console.log("index: " , playerIndex);
 
 
-				this.onTurn(idx, turn, toki, poke, aliveToki, alivePoke);
+				this.onTurn(playerIndex, turn, toki, poke, aliveToki, alivePoke);
 
 			});
 		});
@@ -75,7 +73,7 @@ class TokiBattle{
 	    var STABmodifier = 2*(100-typeAdjust);
 	    var effectiveModifier = 100-typeAdjust;
 	    var damage = power * attacker[7] / defender[8];
-	    
+	    console.log("move is " + move);
 	    if (move == "attack1") {
 	        damage += damage * (attacker[2] - typeAdjust)/STABmodifier;
 	        damage += damage * (defender[1] - typeAdjust)/effectiveModifier;
@@ -102,6 +100,7 @@ class TokiBattle{
 	    else {
 	    	damage = 0;
 	    }
+	    console.log("damage is " + damage);
 	    return damage;
 	}
 
@@ -112,7 +111,9 @@ class TokiBattle{
 		this.sendToPlayer(playerIndex, `You selected ${turn}`);
 		
 
+		console.log("toki wthin onTurn " + toki[0]);
 
+		console.log("toki wthin onTurn " + poke[0]);		
 
 		this.resolveAttacks(toki, poke , aliveToki, alivePoke); 
 
@@ -126,21 +127,27 @@ class TokiBattle{
 	resolveAttacks(toki, poke, aliveToki, alivePoke){
 		const turns = this.turns;
 
+		var tokiDead = false;
+		var pokeDead = false;
+
+
+		console.log("tokimon is " + toki[0]);
+		console.log("pokemon is " + poke[0]);
+
 		// we want this to ensure that both moves have been entered from each player
 		if ( turns[0] && turns[1] ){
 			// swap functions 
 			if(turns[0] == 'swap0' && turns[1])
 			{
 				toki = teamToki[0];
-				console.log(toki);
-				this.sendToPlayers('player 0 swapped to toki zero' + turns[0]);
+				this.sendToPlayers('player 0 swapped to ' + toki[0]);
 				turns[0] = "Nothing";
 			}
 			if(turns[1] == 'swap0' && turns[0])
 			{
 				poke = teamPoke[0];
 				console.log(poke);
-				this.sendToPlayers('player 1 swapped to toki zero' + turns[0]);
+				this.sendToPlayers('player 1 swapped to ' + poke[0]);
 				turns[1] = "Nothing";
 			}
 			//swap 1
@@ -148,14 +155,14 @@ class TokiBattle{
 			{
 				toki = teamToki[1];
 				console.log(toki);
-				this.sendToPlayers('player 0 swapped to toki one' + turns[0]);
+				this.sendToPlayers('player 0 swapped to ' + toki[0]);
 				turns[0] = "Nothing";
 			}
 			if(turns[1] == 'swap1' && turns[0])
 			{
 				poke = teamPoke[1];
 				console.log(poke);
-				this.sendToPlayers('player 1 swapped to toki one' + turns[0]);
+				this.sendToPlayers('player 1 swapped to ' + poke[0]);
 				turns[1] = "Nothing";		
 			}
 			//swap 2
@@ -163,14 +170,14 @@ class TokiBattle{
 			{
 				toki = teamToki[2];
 				console.log(toki);
-				this.sendToPlayers('player 0 swapped to toki two' + turns[0]);
+				this.sendToPlayers('player 0 swapped to ' + toki[0]);
 				turns[0] = "Nothing";			
 			}
 			if(turns[1] == 'swap2' && turns[0])
 			{
 				poke = teamPoke[2];
 				console.log(poke);
-				this.sendToPlayers('player 1 swapped to toki two' + turns[0]);
+				this.sendToPlayers('player 1 swapped to ' + poke[0]);
 				turns[1] = "Nothing";
 			}
 			//swap3
@@ -178,14 +185,14 @@ class TokiBattle{
 			{
 				toki = teamToki[3];
 				console.log(toki);
-				this.sendToPlayers('player 0 swapped to toki three' + turns[0]);
+				this.sendToPlayers('player 0 swapped to ' + toki[0]);
 				turns[0] = "Nothing";
 			}
 			if(turns[1] == 'swap3' && turns[0])
 			{
 				poke = teamPoke[3];
 				console.log(poke);
-				this.sendToPlayers('player 1 swapped to toki three' + turns[0]);
+				this.sendToPlayers('player 1 swapped to ' + poke[0]);
 				turns[1] = "Nothing";
 			}
 			//swap 4
@@ -193,14 +200,14 @@ class TokiBattle{
 			{
 			    toki = teamToki[4];
 			    console.log(toki);
-			    this.sendToPlayers('player 0 swapped to toki four' + turns[0]);
+			    this.sendToPlayers('player 0 swapped to ' + toki[0]);
 			    turns[0] = "Nothing";
 			}
 			if(turns[1] == 'swap4' && turns[0])
 			{
 			    poke = teamPoke[4];
 			    console.log(poke);
-			    this.sendToPlayers('player 1 swapped to toki four' + turns[0]);
+			    this.sendToPlayers('player 1 swapped to ' + poke[0]);
 			    turns[1] = "Nothing";
 			}
 			//swap5
@@ -208,14 +215,14 @@ class TokiBattle{
 			{
 			    toki = teamToki[5];
 			    console.log(toki);
-			    this.sendToPlayers('player 0 swapped to toki five' + turns[0]);
+			    this.sendToPlayers('player 0 swapped to ' + toki[0]);
 			    turns[0] = "Nothing";
 			}
 			if(turns[1] == 'swap5' && turns[0])
 			{
 			    poke = teamPoke[5];
 			    console.log(poke);
-			    this.sendToPlayers('player 1 swapped to toki five' + turns[0]);
+			    this.sendToPlayers('player 1 swapped to ' + poke[0]);
 			    turns[1] = "Nothing";
 			}
 					
@@ -238,17 +245,71 @@ class TokiBattle{
 		
 
 			slow[9] -= this.damageCalc(fastmove, fast, slow);
-			
+			console.log(slow[9]);
 			if(slow[9] <= 0)
 			{
+				console.log("we should be here");
 				if(slow == toki)
 				{
-					aliveToki -= 1;
-					var tokiDead = true;
-					if(alivetoki <= 0)
+					// death checks
+					if(toki == teamToki[0])
 					{
-						//send to winscreen //////////////////////////////////////////////////
+						aliveToki[0] = false;
+					}
+
+					else if(toki == teamToki[1])
+					{
+						aliveToki[1] = false;
 					}					
+					else if(toki == teamToki[2])
+					{
+						aliveToki[2] = false;
+					}	
+					else if(toki == teamToki[3])
+					{
+						aliveToki[3] = false;
+					}	
+					else if(toki == teamToki[4])
+					{
+						aliveToki[4] = false;
+					}	
+					else if(toki == teamToki[5])
+					{
+						aliveToki[5] = false;
+					}
+					this.sendToPlayers(toki[0] + ' is dead!');
+					
+					// swapping functions start here
+					if (aliveToki[0] == true)
+					{
+						toki = teamToki[0];
+					}
+					else if (aliveToki[1] == true)
+					{
+						toki = teamToki[1];
+					}
+					else if (aliveToki[2] == true)
+					{
+						toki = teamToki[2];
+					}
+					else if (aliveToki[3] == true)
+					{
+						toki = teamToki[3];
+					}
+					else if (aliveToki[4] == true)
+					{
+						toki = teamToki[4];
+					}					
+					else if (aliveToki[5] == true)
+					{
+						toki = teamToki[5];
+					}		
+					this.sendToPlayers(toki[0] + ' got swapped in');
+					// var tokiDead = true;
+					// else
+					// {
+					// 	//send to winscreen //////////////////////////////////////////////////
+					// }					
 				}
 				else
 				{
@@ -264,39 +325,82 @@ class TokiBattle{
 			}
 			else
 			{
+				console.log("puppy");
 				fast[9] -= this.damageCalc(slowmove, slow, fast);
-				
+				console.log(fast[9]);
 				if(fast[9] <= 0)
 				{
+					console.log("hereeeee");
 					if(fast == toki)
 					{
-						aliveToki -= 1;
-						var tokiDead = true;
-						if(alivetoki <= 0)
+						//death checks
+						if(toki == teamToki[0])
 						{
-							//send to winscreen //////////////////////////////////////////////////
-						}					
-					}
-					else
-					{
-						alivePoke -= 1;
-						var pokeDead = true; 
-						if(alivePoke <= 0)
-						{
-							//send to winscreen /////////////////////////////////////////////////////
+							aliveToki[0] = false;
 						}
+						else if(toki == teamToki[1])
+						{
+							aliveToki[1] = false;
+						}					
+						else if(toki == teamToki[2])
+						{
+							aliveToki[2] = false;
+						}	
+						else if(toki == teamToki[3])
+						{
+							aliveToki[3] = false;
+						}	
+						else if(toki == teamToki[4])
+						{
+							aliveToki[4] = false;
+						}	
+						else if(toki == teamToki[5])
+						{
+							aliveToki[5] = false;
+						}
+						this.sendToPlayers(toki[0] + ' is dead!');
+
+						// swap in new tokimon
+						if (aliveToki[0] == true)
+						{
+							toki = teamToki[0];
+						}
+						else if (aliveToki[1] == true)
+						{
+							toki = teamToki[1];
+						}
+						else if (aliveToki[2] == true)
+						{
+							toki = teamToki[2];
+						}
+						else if (aliveToki[3] == true)
+						{
+							toki = teamToki[3];
+						}
+						else if (aliveToki[4] == true)
+						{
+							toki = teamToki[4];
+						}					
+						else if (aliveToki[5] == true)
+						{
+							toki = teamToki[5];
+						}		
+						this.sendToPlayers(toki[0] + ' was swapped in!');
+						// var tokiDead = true;
+						// else
+						// {
+						// 	//send to winscreen //////////////////////////////////////////////////
+						// }					
 					}
+					
 				}
 			}
 
 
-
-
-
 			
 
-	}
-}
+	} // if(turns[0] && turn[1])
+} // function bracket. 
 
 
 
