@@ -113,7 +113,7 @@ describe('login and logout', function() {
             .expect(200)
             .end((err, res) => {
                 if (err) return done(err);
-                expect(spy.calledWithMatch(/\/login\.ejs$/)).to.be.false;
+                expect(spy.calledWithMatch(/\/register\.ejs$/)).to.be.false;
                 spy.restore();
                 done();
             });
@@ -127,10 +127,10 @@ describe('login and logout', function() {
 });
 
 describe('battlepage', function() {
+    this.timeout(5000);
     it('will go from battle scene to battle page / GET', function(done) {
-        request(server).get('/loadingBattle').then(function() {
-            request(server).get('/battle_page2').expect('Location','/battle_page2')
-            done();
+        request(server).get('/loadingBattle').expect('Location','/battle_page2').end(function() {
+            setTimeout(done, 3000);
         });
     });
 });
