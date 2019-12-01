@@ -19,8 +19,7 @@
 	
 	var teamPoke = [charmander, pikachu, gastergar, bellsprout, bulbasaur, squirtle];
 		
-	var aliveToki = 6;
-	var alivePoke = 6;
+
 
 
 class TokiBattle{
@@ -35,12 +34,24 @@ class TokiBattle{
 		this.sendToPlayers('The Battle Begins!');
 		console.log("Two players are ready to battle!");
 
+		
+		var toki = teamToki[0];
+		var poke = teamPoke[0]; 
+
+		var aliveToki = 6;
+		var alivePoke = 6;
+
+
+
+
+
+
 		this.players.forEach((player, idx) => {
 			player.on('turn', (turn) => {
 				//console.log("index: " , idx);
 
 
-				this.onTurn(idx, turn);
+				this.onTurn(idx, turn, toki, poke, aliveToki, alivePoke);
 
 			});
 		});
@@ -94,18 +105,16 @@ class TokiBattle{
 	    return damage;
 	}
 
+	///////////////pass in toki and poke values for onTurn and call onTurn in resolveAttacks so that the current tokimon isnt always 0/////////////////////////////////////////////////////////////////////////
 
-
-	onTurn(playerIndex, turn){
+	onTurn(playerIndex, turn, toki, poke, aliveToki, alivePoke){
 		this.turns[playerIndex] = turn; 
 		this.sendToPlayer(playerIndex, `You selected ${turn}`);
 		
-		var toki = teamToki[0];
-		var poke = teamPoke[0]; 
 
 
 
-		this.resolveAttacks(toki, poke); 
+		this.resolveAttacks(toki, poke , aliveToki, alivePoke); 
 
 		//this.checkGameOver();
 	}
@@ -114,7 +123,7 @@ class TokiBattle{
 
 
 
-	resolveAttacks(toki, poke){
+	resolveAttacks(toki, poke, aliveToki, alivePoke){
 		const turns = this.turns;
 
 		// we want this to ensure that both moves have been entered from each player
@@ -281,30 +290,14 @@ class TokiBattle{
 			}
 
 
-			// when dead swap in new toki and restart process
 
 
 
-
-
-
-			}
+			
 
 	}
+}
 
-
-	// decodeTurn(turn){
-	// 	switch (turn){
-	// 		case 'attack1':
-	// 			return 0;
-	// 		case 'attack2':
-	// 			return 1;
-	// 		case 'attack3':
-	// 			return 2;	
-	// 		default:
-	// 			throw new Error(`could not decode turn ${turn}`)							
-	// 	}
-	// }
 
 
 	checkGameOver(){
