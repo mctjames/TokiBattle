@@ -45,7 +45,7 @@ describe('database', function() {
     });
 });
 
-describe('login', function() {
+describe('login and logout', function() {
     beforeEach(function(done) {
         knex.migrate.rollback().then(function() {
             knex.migrate.latest().then(function() {
@@ -67,19 +67,31 @@ describe('login', function() {
         request(server).get('/').expect('Location','/login').end(done)
     });
     
-    it('should not allow a login / GET', function(done){
+    it('should not allow a login without logging in / GET', function(done){
         request(server).get('/landing/notadmin').expect('Location','/login').end(done)
     });
 
-    it('should allow login / GET', function(done){
+    it('should not allow access to admin page without login / GET', function(done){
+        request(server).get('/admin').expect('Location','/login').end(done)
+    });
+
+    it('should not allow login with wrong username but right password / GET', function(done){
+        request(server).post('/authenticate').send({'uname':'wrongusername','psw':'password'}).expect('Location','login').end(done)
+    });
+
+    it('should now allow login with correct username but wrong password / GET', function(done){
+        request(server).post('/authenticate').send({'uname':'notadmin','psw':'badpassword'}).expect('Location','/login').end(done)
+    });
+
+    it('should allow login with correct username and password / GET', function(done){
         request(server).post('/authenticate').send({'uname':'notadmin','psw':'password'}).expect('Location','/landing/notadmin').end(done)
     });
 
-    it('should allow admin access / GET', function(done){
+    it('should allow admin access with admin account / GET', function(done){
         request(server).post('/authenticate').send({'uname':'admin','psw':'password'}).expect('Location','/admin').end(done)
     });
 
-    it('will register a new user but fail and ask them to register again / GET', function(done) {
+    it('will register a new user but fail due to existing user and ask them to register again / GET', function(done) {
         var spy = sinon.spy(ejs, '__express');
         request(server)
             .post('/addUser')
@@ -101,10 +113,24 @@ describe('login', function() {
             .expect(200)
             .end((err, res) => {
                 if (err) return done(err);
-                expect(spy.calledWithMatch(/\/login\.ejs$/)).to.be.true;
+                expect(spy.calledWithMatch(/\/login\.ejs$/)).to.be.false;
                 spy.restore();
                 done();
             });
     }); 
+
+    it('will log out', function(done) {
+        request(server).post('/authenticate').send({'uname':'notadmin','psw':'password'}).expect('Location','/landing/notadmin').end(function() {
+            request(server).get('/logout').expect('Location','/').end(done);
+        }); 
+    });
 });
 
+describe('battlepage', function() {
+    it('will go from battle scene to battle page / GET', function(done) {
+        request(server).get('/loadingBattle').then(function() {
+            request(server).get('/battle_page2').expect('Location','/battle_page2')
+            done();
+        });
+    });
+});

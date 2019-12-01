@@ -201,7 +201,7 @@ app.post('/register', (req, res) => {
 /**
  * loadingBattle Page
  */
-app.get('/loadingBattle', checkLoggedIn, (req, res) => {
+app.get('/loadingBattle', (req, res) => {
   res.render('pages/loadingBattle.ejs')
 
 })
