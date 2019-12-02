@@ -3,7 +3,17 @@ body{
     background: url("/stylesheets/pictures/back.jpg"); 
     text-align: center;
 }
+.text-wrapper{
+  background-color: rgb(255, 255, 255);
+  width: 400px;
+  height: 300px;
+  max-height: 300px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid lightgrey;
 
+}
 h1{
     text-align: center;
     font-size: 50px;
@@ -22,11 +32,55 @@ li{
     background-size: cover;
     background-color: rgb(255, 108, 71);
     position: relative;
-    height: 420px;
-    width: 450px;
+    height: 330px;
+    width: 400px;
     border: 5px solid rgb(230, 212, 49);
     right: -1300px; 
     border-radius: 5px;
+}
+
+div.b2{
+  background-size: cover;
+  background-color: rgb(255, 108, 71);
+  position: relative;
+  height: 330px;
+  width: 400px;
+  border: 5px solid rgb(230, 212, 49);
+  right: 0px; 
+  border-radius: 5px;
+  align-content: center;
+  
+}
+
+div.b3{
+  background-size: cover;
+  position: relative;
+  height: 330px;
+  width: 900px;
+  /* border: 5px solid rgb(230, 212, 49); */
+  right: 0px; 
+  border-radius: 5px;
+  align-content: center;
+  padding-left: 500px;
+}
+
+div.leftGif{
+  margin-left: -350%;
+  margin-top: -83%;
+}
+
+div.player1board{
+  margin-top: -23.90%;
+}
+
+div.container{
+  margin-top: -265%;
+  margin-right: 40%;
+}
+
+div.tokimonSelection{
+  margin-right: -270%;
+  margin: 2%
 }
 
 #battlePosition1{
@@ -57,11 +111,26 @@ li{
 
   }
 
+  .column3 {
+    float: left;
+    width: 49.9999999999999999%;
+    margin-top: -72%;
+
+  }
+
+  .column4 {
+    float: left;
+    width: 49.9999999999999999%;
+    margin-top: -72%;
+
+  }
+
   #gif0{
     width: 400px;
     height: 300px;
     margin-left: 50%;
   }
+
 
   #gif1{
     width: 400px;
@@ -98,23 +167,96 @@ li{
   .column2 img {
     align-items: top;
   }
-  
+ 
   img{
-      padding: 3px;
+      padding: 4px;
       display: inline-block;
       height: 85px;
-      width: 10px;
+      width: 7px;
   }
-
-  .ready{
+/* 
+  button{
       background-color: crimson;
       padding: 20px;
       align-items: baseline;
       color: white;
+  }
+ */
 
+ input {
+  outline: none;
+  font-size: 1.0rem;
+  padding: 0 5px;
+}
+
+  button {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    padding: 3px 15px;
+    color: white;
+    line-height: 25px;
+    background-color: #00bcd4;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px;
+    transition: all 150ms ease-in;
+    outline: none;
   }
 
 
+  button:hover {
+    background-color: #79d7e4;
+}
 
+button.turn {
+  color: rgb(255, 64, 129);
+  background-color: white;
+  box-shadow:none;
+  padding: 10px;
+}
 
+button.turn:hover {
+  background-color: #eaeaea;
+}
 
+#events {
+  flex-grow: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid lightgrey;
+  overflow-y: scroll;
+  background-color: black; 
+}
+
+#events li {
+  padding: 10px 10px 10px 10px;
+
+}
+
+.chat-wrapper {
+  padding: 10px;
+
+}
+
+.chat-wrapper form {
+  display: flex;
+}
+
+.chat-wrapper form input {
+  font-size: 1.0rem;
+  margin: 0 10px 0 0;
+  padding: 0 5px;
+  flex-grow: 1;
+}
+
+.chat-wrapper form button {
+  width: 80px;
+}
+
+.button-wrapper {
+  display: flex;
+  padding: 10px 50px;
+  justify-content: space-evenly;
+}
