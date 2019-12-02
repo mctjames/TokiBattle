@@ -203,6 +203,28 @@ div.tokimonSelection{
     transition: all 150ms ease-in;
     outline: none;
   }
+ */
+
+ input {
+  outline: none;
+  font-size: 1.0rem;
+  padding: 0 5px;
+}
+
+  button {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    padding: 3px 15px;
+    color: white;
+    line-height: 25px;
+    background-color: #00bcd4;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px;
+    transition: all 150ms ease-in;
+    outline: none;
+  }
 
 
   button:hover {
@@ -234,6 +256,38 @@ button.turn:hover {
   padding: 10px 10px 10px 10px;
 
 }
+
+
+  button:hover {
+    background-color: #79d7e4;
+}
+
+button.turn {
+  color: rgb(255, 64, 129);
+  background-color: white;
+  box-shadow:none;
+  padding: 10px;
+}
+
+button.turn:hover {
+  background-color: #eaeaea;
+}
+
+#events {
+  flex-grow: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid lightgrey;
+  overflow-y: scroll;
+  background-color: black; 
+}
+
+#events li {
+  padding: 10px 10px 10px 10px;
+
+}
+
 
 .chat-wrapper {
   padding: 10px;
