@@ -706,22 +706,6 @@ class TokiBattle{
 
 
 
-	checkGameOver(){
-		const turns = this.turns;
-
-		if (turns[0] && turns[1]){
-			
-
-			this.sendToPlayers('Game over ' + turns.join(' : '));
-
-
-
-			this.getGameResult();
-			this.turns = [null, null];
-			this.sendToPlayers('Next Round!');
-		};
-	}
-
 
 
 }

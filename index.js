@@ -145,7 +145,7 @@ app.post('/authenticate', (req,res) => {
         else {
           var cookieData = {
             username: r.username,
-            status: "loggedin",
+            status: "loggedin", 
             admin: r.admin
           }
           res.cookie("data",cookieData,{maxAge: 90000000, httpOnly: true, secure: false, overwrite: true});
