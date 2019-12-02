@@ -366,8 +366,11 @@ class TokiBattle{
 			}
 		
 			/////////damage/////////////
-			slow[9] -= this.damageCalc(fastmove, fast, slow);
+			var damage = this.damageCalc(fastmove, fast, slow);
+			slow[9] -= damage;
 			console.log(slow[9]);
+			this.sendToPlayers(fast[0] + " used " + fastmove);
+			this.sendToPlayers(slow[0] + " took " + damage + " damage");
 
 			//////if a tokimon/pokemon dies///////
 			if(slow[9] <= 0)
@@ -511,8 +514,11 @@ class TokiBattle{
 			else
 			//////if the slow tokimon/pokemon didn't die, it gets to attack now///////
 			{
-				fast[9] -= this.damageCalc(slowmove, slow, fast);
+				var damage = this.damageCalc(slowmove, slow, fast);
+				fast[9] -= damage;
 				console.log(fast[9]);
+				this.sendToPlayers(slow[0] + " used " + slowmove);
+				this.sendToPlayers(fast[0] + " took " + damage + " damage");
 
 				//////if a tokimon/pokemon dies///////
 				if(fast[9] <= 0)
