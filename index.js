@@ -145,7 +145,7 @@ app.post('/authenticate', (req,res) => {
         else {
           var cookieData = {
             username: r.username,
-            status: "loggedin",
+            status: "loggedin", 
             admin: r.admin
           }
           res.cookie("data",cookieData,{maxAge: 90000000, httpOnly: true, secure: false, overwrite: true});
@@ -582,15 +582,15 @@ io.on('connection', (socket) => { //listening for events
 /////////old//////////////////
 
 // Grabbing user names
-  var cookieDump =socket.handshake.headers.cookie; 
-  var cookieValues = cookie.parse(cookieDump);
-  //console.log("cookieDump information: ", cookieValues);
-  var string_JSON_cookie = cookieValues.data.slice(2, cookieValues.data.length)
-  JSON_cookie = JSON.parse(string_JSON_cookie)
-  //console.log("after slice ", JSON_cookie.username);
-  // send username string to client side
-  io.emit('sendUser', JSON_cookie.username);
-  socket.emit(socket.handshake.session);
+  // var cookieDump =socket.handshake.headers.cookie; 
+  // var cookieValues = cookie.parse(cookieDump);
+  // //console.log("cookieDump information: ", cookieValues);
+  // var string_JSON_cookie = cookieValues.data.slice(2, cookieValues.data.length)
+  // JSON_cookie = JSON.parse(string_JSON_cookie)
+  // //console.log("after slice ", JSON_cookie.username);
+  // // send username string to client side
+  // io.emit('sendUser', JSON_cookie.username);
+  // socket.emit(socket.handshake.session);
 
     socket.on('username', function(username) {
         socket.username = username;
