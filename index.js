@@ -27,8 +27,8 @@ const TokiBattle    =   require('./battleServer')
 // Other specific use variables
 var pool;
 pool = new Pool({
-  //connectionString: process.env.DATABASE_URL
-    connectionString:'postgres://postgres:password@localhost/postgres'
+  connectionString: process.env.DATABASE_URL
+    //connectionString:'postgres://postgres:password@localhost/postgres'
 //  connectionString:'postgres://postgres:postgres@localhost/postgres'
 });
 pool.connect()
@@ -152,7 +152,7 @@ app.post('/authenticate', (req,res) => {
         else {
           var cookieData = {
             username: r.username,
-            status: "loggedin",
+            status: "loggedin", 
             admin: r.admin
           }
           res.cookie("data",cookieData,{maxAge: 90000000, httpOnly: true, secure: false, overwrite: true});
@@ -317,6 +317,7 @@ app.get('/victory', checkLoggedIn, (req, res) => {
   T.post('statuses/update', {status: `${winning_trainer} won the battle on ${timestamp}!` }, function(err, data, response) {
   })
 });
+
 
 /**
  * loser Page
@@ -581,19 +582,22 @@ io.use(function(socket,next){
 let waitingPlayer = null;
 
 // this version starts socket.io when we hit battlepage_2
-//io.of("/battlepage_2").on('connection', (socket) => {
+io.of("/battlepage_2").on('connection', (socket) => {
 // // this version just launches from the start
-io.on('connection', (socket) => { //listening for events
+//io.on('connection', (socket) => { //listening for events
 
 
-     if(waitingPlayer){
+    if(waitingPlayer){
+      socket.emit('message', 'You are player 1');
+      socket.emit('message', 'You are Team Pokemon');
       new TokiBattle(waitingPlayer, socket);
       waitingPlayer = null;
     }
     else
     {
       waitingPlayer = socket;
-      waitingPlayer.emit('message', 'waiting for an opponent');
+      waitingPlayer.emit('message', 'Waiting for an opponent. You are player 0');
+      waitingPlayer.emit('message', 'You are Team Tokimon');
     }
 
     socket.on('message', (text) => {
@@ -602,18 +606,6 @@ io.on('connection', (socket) => { //listening for events
 
 
 
-/////////old//////////////////
-
-// Grabbing user names
-  // var cookieDump =socket.handshake.headers.cookie; 
-  // var cookieValues = cookie.parse(cookieDump);
-  // //console.log("cookieDump information: ", cookieValues);
-  // var string_JSON_cookie = cookieValues.data.slice(2, cookieValues.data.length)
-  // JSON_cookie = JSON.parse(string_JSON_cookie)
-  // //console.log("after slice ", JSON_cookie.username);
-  // // send username string to client side
-  // io.emit('sendUser', JSON_cookie.username);
-  // socket.emit(socket.handshake.session);
 
     socket.on('username', function(username) {
         socket.username = username;
@@ -627,45 +619,6 @@ io.on('connection', (socket) => { //listening for events
     socket.on('chat_message', function(message) {
         io.emit('chat_message', '<strong>' + socket.username + '</strong>: ' + message);
     });
-
-
-
-
-////////////// player 1 attacks /////////////
-    socket.on('attack1', function(attack){
-      console.log("attack1 server side");
-      console.log("the attack value is: ", attack);
-    });
-    socket.on('attack2', function(){
-      console.log("attack2 server side");
-    });
-    socket.on('attack3', function(){
-      console.log("attack3 server side");
-    });
-
-    socket.on('attack4', function(){
-      console.log("attack4 server side");
-    });
-
-//////////////player 2 attacks///////////////
-    socket.on('attack5', function(){
-      console.log("attack5 server side");
-    });
-    socket.on('attack6', function(){
-      console.log("attack6 server side");
-    });
-    socket.on('attack7', function(){
-      console.log("attack7 server side");
-    });
-
-    socket.on('attack8', function(){
-      console.log("attack8 server side");
-    });
-
-
-
-
-
 
     socket.on('clicked', function(data, destination){
       if(data >= 2)

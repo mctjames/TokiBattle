@@ -6,222 +6,76 @@
 </head>
 <body>
 
-  <div id= "battle">
-      <div id="b"> 
-              <div class="column">
-                  <button class="btn item1"><img id="toki1" src="/stylesheets/pictures/squirt.png" style="width:80%" onclick="changeImage(id)"></button>
-                  <button class="btn item2"><img id="toki2" src="/stylesheets/pictures/squirt2.png" style="width:80%" onclick="changeImage(id)"></button>
-                  <button class="btn item3"><img id="toki3" src="/stylesheets/pictures/squirt3.png" style="width:80%" onclick="changeImage(id)"></button>
+  <!-- <div id= "battle"> -->
+    <!-- <div class="container"> -->
+      <!-- <center> -->
+  <!--         the text box -->
+  <div class = "text-wrapper">
+      <div id ="events"></div>
 
-              </div>
-              <div class="column2">
-                  <button class="btn item4"><img id="toki4" src="/stylesheets/pictures/squirt4.png" style="width:80%" onclick="changeImage(id)"></button>
-                  <button class="btn item5"><img id="toki5" src="/stylesheets/pictures/squirt5.png" style="width:80%" onclick="changeImage(id)"></button>
-                  <button class="btn item6"><img id="toki6" src="/stylesheets/pictures/squirt6.png" style="width:80%" onclick="changeImage(id)"></button>
-              </div>
-              <style>
-                  .btn {
-                    border: none;
-                    background-color:inherit;
-                    padding: 14px 28px;
-                    font-size: 16px;
-                    cursor: pointer;
-                    display: inline-block;
-                  }
-                  
-                  .btn:hover {background: #eee;}
-                  
-                  .item1 {color: green;}
-                  .item2 {color: green;}
-                  .item3 {color: green;}
-                  .item4 {color: green;}
-                  .item5 {color: green;}
-                  .item6 {color: green;}
-
-                  </style>
-                  <div>
-                   <button onclick = "buttonClicked()" class="ready">READY!</button>
-                  </div>
-
-          </br>  
-          </br>    
-
-  <div class="container">
-    <center>
-      <button onclick = "attack1Clicked()" id="attack1"> player1 attack1 </button>
-      <button onclick = "attack2Clicked()" id="attack2"> player1 attack2 </button>
-      <button onclick = "attack3Clicked()" id="attack3"> player1 attack3 </button>
-      <button onclick = "attack4Clicked()" id="attack4"> player1 attack4 </button>
-        </br>
-        </br>
-      <button onclick = "attack5Clicked()" id="attack5"> player2 attack1 </button>
-      <button onclick = "attack6Clicked()" id="attack6"> player2 attack2 </button>
-      <button onclick = "attack7Clicked()" id="attack7"> player2 attack3 </button>
-      <button onclick = "attack8Clicked()" id="attack8"> player2 attack4 </button>
-        </br>
-        </br>
-<!--         the text box -->
-      <div class = "text-wrapper">
-        <ul id ="events"></ul>
-
-        <div class = "button-wrapper">
-          <form id ="chat-form">         
-            <input id ="chat" />
-            <button id = "say"> Say </button> 
-          </form>
-
-          
-          <button id = "rock" class ="turn"> Rock </button>
-          <button id = "paper" class ="turn"> Paper </button>
-          <button id = "scissors" class ="turn"> Scissors </button>
-
-        </div>
-      </div>
-
-    </center>
-  </div>
+      <div class = "button-wrapper">
       
+          <button id="Waterfall" class ="turn">Waterfall </button>
+          <button id="Aerial Black" class ="turn">Aerial Black </button>
+          <button id="Agile Strike" class ="turn">Agile Strike </button>
+          <button id="Burnout" class ="turn">Burnout </button>
 
-     
-     <script src="/socket.io/socket.io.js"></script>
-     <script>
-    // version for when starting from battlepage_2
-    // this version breaks the chat functions
-      //var socket = io.connect("http://localhost:5000/battlepage_2");
-    // version for when starting socket.io from connection
-    var socket = io.connect();
-
-
-////////////////////Rock paper scissors test ////////////
-      // addind text box for testing 
-      const writeEvent = (text) => {
-        //<ul> element
-        const parent = document.querySelector('#events');
-        // <li> element
-        const el = document.createElement('li');
-        el.innerHTML = text;
-
-        parent.appendChild(el);
-      };
-
-      const onFormSubmitted = (e) => {
-        e.preventDefault();
-
-        const input = document.querySelector('#chat');
-        const text = input.value;
-        input.value = '';
-
-        socket.emit('message', text); 
-      };
-
-      const addButtonListeners = () => {
-        ['rock', 'paper', 'scissors'].forEach((id) =>{
-          const button = document.getElementById(id);
-          button.addEventListener('click', () => {
-            socket.emit('turn', id);
-          });
-        });
-      };
+      </div> 
+    </div>
+        </br>
+  <!-- </center> -->
+<!-- </div> -->
+<!-- </div> -->
 
 
-      writeEvent('Welcome to Tokebattler!');
-      socket.on('message', writeEvent);
+      <div class="b"> 
+              <div class="column">
+                  <img id="tokiPics" src="/stylesheets/pictures/tokiPics.png" >
+                  <!-- <img id="toki1" src="stylesheets/gifs/jar1.gif" style="width:80%">
+                  <img id="toki2" src="/stylesheets/gifs/bobby1.gif" style="width:80%">
+                  <img id="toki3" src="/stylesheets//gifs/dry1.gif" style="width:80%"> -->
+              </div>
+              <!-- <div class="column2">
+                  <img id="toki4" src="/stylesheets/gifs/gust1.gif" style="width:80%">
+                  <img id="toki5" src="/stylesheets/gifs/cone2.gif" style="width:80%" >
+                  <img id="toki6" src="/stylesheets/gifs/stump2.gif" style="width:80%" >
+              </div> -->
+      </div>
+  <!-- ***************************************************** -->
+    <!-- <div class ="player1board"> -->
+      <div class="b2"> 
+          <div class="column3">
+            <img id="pokiPics" src="/stylesheets/pictures/pokiPics.png" >
+              <!-- <img id="toki7" src="/stylesheets/pictures/squirt.png" style="width:80%" onclick="changeImage(id)">
+              <img id="toki8" src="/stylesheets/pictures/squirt2.png" style="width:80%" onclick="changeImage(id)">
+              <img id="toki9" src="/stylesheets/pictures/squirt3.png" style="width:80%" onclick="changeImage(id)"> -->
 
-      document.querySelector('#chat-form').addEventListener('submit', onFormSubmitted);
+          </div>
+          <!-- <div class="column4">
+              <img id="toki10" src="/stylesheets/pictures/squirt4.png" style="width:80%" onclick="changeImage(id)">
+              <img id="toki11" src="/stylesheets/pictures/squirt5.png" style="width:80%" onclick="changeImage(id)">
+              <img id="toki12" src="/stylesheets/pictures/squirt6.png" style="width:80%" onclick="changeImage(id)">
+          </div>  -->
+      </div>  
 
-      addButtonListeners();
+    <!-- </div> -->
+<!-- ******************************************************************* -->
 
-
-      //////////Player 1 attacks /////////////////
-      function attack1Clicked(){
-        console.log("attack1");
-        var attack = "attack1";
-        socket.emit('attack1', attack);
-      }
-
-      function attack2Clicked(){
-        console.log("attack2");
-        socket.emit('attack2');
-      }
-
-      function attack3Clicked(){
-        console.log("attack3");
-        socket.emit('attack3');
-      }
-
-      function attack4Clicked(){
-        console.log("attack4");
-        socket.emit('attack4');
-      }
-
-///////////Player 2 attacks ////////////////////
-      function attack5Clicked(){
-        console.log("attack5");
-        socket.emit('attack5');
-      }
-
-      function attack6Clicked(){
-        console.log("attack6");
-        socket.emit('attack6');
-      }
-
-      function attack7Clicked(){
-        console.log("attack7");
-        socket.emit('attack7');
-      }
-
-      function attack8Clicked(){
-        console.log("attack8");
-        socket.emit('attack8');
-      }
-
-
-////////////ready button code////////////
-
-      var data = 0
-      function buttonClicked(){
-        console.log("clicked once");
-        data = data +1;
-        socket.emit('clicked', data);
-      }
-
-      socket.on('redirect', function(destination) {
-          window.location = '/battlepage_2';
-        });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </script>
-
-
-
-
-
-
-
-
-                </div>
   </div>
-  <div title="tokimon gif"></div>
-      <iframe id="gif0" src="https://giphy.com/embed/Myp2C0iWDMh2g" frameborder="0" width="80" height="90" class="giphy-embed" style="pointer-events: none;"></iframe>
-  </div>
+  <br>
+  <br>
+  <div class = "b3">
+      <div title="tokimon gif2">
 
-
-
+          <iframe id="rightToki" src="https://giphy.com/embed/cLl4Db3byHH4AOKe3F" frameborder="0" width="80" height="90" class="giphy-embed" style="pointer-events: none;"></iframe>
+    
+          <div class = "leftGif">
+    
+          <iframe id="leftPoke" src="https://giphy.com/embed/Myp2C0iWDMh2g" frameborder="0" width="80" height="90" class="giphy-embed" style="pointer-events: none;"></iframe>
+          
+    </div>
   <div  style = "display:none;">
+<!--     the pokemon -->
       <iframe id="gif1" src="https://giphy.com/embed/Myp2C0iWDMh2g" frameborder="0" width="80" height="90" class="giphy-embed" style="pointer-events: none;"></iframe>
       <iframe id="gif2"  src="https://giphy.com/embed/iIlxok6eMBeBW" width="384" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
       <iframe id="gif3" src="https://giphy.com/embed/mBp5qOyg2HjvlhGU09" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
@@ -229,8 +83,217 @@
       <iframe id="gif5" src="https://giphy.com/embed/GltC4HZLjJLvq" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
       <iframe id="gif6" src="https://giphy.com/embed/Owb158OZlURQA" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
 
+<!--       the tokimon -->
+
+
+<!--       killamonjaro -->
+      <iframe id="toki0A" src="https://giphy.com/embed/cLl4Db3byHH4AOKe3F" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="toki0B" src="https://giphy.com/embed/fqhyp7k335xD6cpHz3" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+<!--       fungust -->
+      <iframe id="toki1A" src="https://giphy.com/embed/IgXJiugnfMwPkEpFX2" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="toki1B" src="https://giphy.com/embed/XEZjiAqcZWXrPUsZ1x" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+
+<!--       bobby -->
+      <iframe id="toki2A" src="https://giphy.com/embed/WUIda5VPUNPLJdfKIL" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="toki2B" src="https://giphy.com/embed/JR0VORq8UozRwh7Thb" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+<!--       conyvor -->
+      <iframe id="toki3A" src="https://giphy.com/embed/dVuo3Rq4nO5JPKBwve" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="toki3B" src="https://giphy.com/embed/LrRFdf1P7OGclKNO8r" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+
+<!--       drygon -->
+      <iframe id="toki4A" src="https://giphy.com/embed/mBSD4fY9FC5oMeJmm6" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="toki4B" src="https://giphy.com/embed/RGXNe5I5LGAWlXygJS" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <!-- stumpy -->
+      <iframe id="toki5A" src="https://giphy.com/embed/Z9WJJxRKVY5CsC4DR3" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="toki5B" src="https://giphy.com/embed/RNWadB4LfyiY0xTvK4" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+
+
+
+s
   </div>
-  
+  <!-- Current change start -->
+    </div>
+    <div class= "tokimonSelection">
+        <button id="swap0" class ="turn"> Swap to 0 </button>
+        <button id="swap1" class ="turn"> Swap to 1 </button>
+        <br>
+        <button id="swap2" class ="turn"> Swap to 2 </button>
+        <button id="swap3" class ="turn"> Swap to 3 </button> 
+        <br>
+        <button id="swap4" class ="turn"> Swap to 4 </button>
+        <button id="swap5" class ="turn"> Swap to 5 </button>
+      </div>
+      </div>
+       
+      <script src="/socket.io/socket.io.js"></script>
+      <script>
+     // version for when starting from battlepage_2
+     // this version breaks the chat functions
+       //var socket = io.connect("http://localhost:5000/battlepage_2");
+       var socket = io.connect("https://gentle-earth-81618.herokuapp.com/battlepage_2");
+     // version for when starting socket.io from connection
+     //var socket = io.connect();
+ 
+ 
+ ////////////////////Rock paper scissors test ////////////
+       // addind text box for testing 
+       const writeEvent = (text) => {
+         //<ul> element
+         const parent = document.querySelector('#events');
+         // <li> element
+         const el = document.createElement('li');
+         el.innerHTML = text;
+ 
+         parent.appendChild(el);
+       };
+ 
+       const onFormSubmitted = (e) => {
+         e.preventDefault();
+ 
+         const input = document.querySelector('#chat');
+         const text = input.value;
+         input.value = '';
+         socket.emit('message', text); 
+       };
+ 
+       const addButtonListeners = () => {
+         // attack button functionaliity. 
+         ['Waterfall', 'Aerial Black', 'Agile Strike', 'Burnout'].forEach((id) => {
+           const button = document.getElementById(id);
+           button.addEventListener('click', () => {
+             socket.emit('turn', id);
+           });
+         });
+ 
+         [ 'swap0','swap1', 'swap2', 'swap3', 'swap4', 'swap5'].forEach((id) => {
+           const button = document.getElementById(id);
+           button.addEventListener('click', () => {
+             socket.emit('turn', id);
+           });
+         });
+ 
+       };
+ 
+ 
+       writeEvent('Welcome to Tokebattler!');
+       socket.on('message', writeEvent);
+ 
+      //  document.querySelector('#chat-form').addEventListener('submit', onFormSubmitted);
+ 
+       addButtonListeners();
+ 
+ 
+ 
+       socket.on('swapBroadcast', function(data){
+         // pokemon portion
+         if(data.description == "Charmander")
+         {
+           document.getElementById("leftPoke").src =  document.getElementById("gif1").src;
+         }
+         if(data.description == "Gastergar")
+         {
+           document.getElementById("leftPoke").src =  document.getElementById("gif4").src;
+         }
+         if(data.description == "Pikachu")
+         {
+                  document.getElementById("leftPoke").src =  document.getElementById("gif2").src;
+         }
+         if(data.description == "Squirtle")
+         {
+                  document.getElementById("leftPoke").src =  document.getElementById("gif5").src;
+         }
+         if(data.description == "Bellsprout")
+         {
+                  document.getElementById("leftPoke").src =  document.getElementById("gif3").src;
+         }
+         if(data.description == "Bulbasaur")
+         {
+                  document.getElementById("leftPoke").src =  document.getElementById("gif6").src;
+         }
+ 
+         //tokimon section
+         if(data.description == "Kilimonjaro")
+         {
+           document.getElementById("rightToki").src =  document.getElementById("toki0A").src;
+         }
+         if(data.description == "Fungust")
+         {
+           document.getElementById("rightToki").src =  document.getElementById("toki1B").src;
+         }
+         if(data.description == "Bobby")
+         {
+                  document.getElementById("rightToki").src =  document.getElementById("toki2B").src;
+         }
+         if(data.description == "Conyvore")
+         {
+                  document.getElementById("rightToki").src =  document.getElementById("toki3B").src;
+         }
+         if(data.description == "Drygon")
+         {
+                  document.getElementById("rightToki").src =  document.getElementById("toki4A").src;
+         }
+         if(data.description == "Stumpy")
+         {
+                  document.getElementById("rightToki").src =  document.getElementById("toki5B").src;
+         }        
+ 
+       })
+ 
+ 
+ 
+       // socket.on('attackBroadcast', function(data)
+       // {
+       //   if(data.description == "Kilimonjaro")
+       //   {
+       //     document.getElementById("rightToki").src =  document.getElementById("toki0B").src;
+       //   }
+       //   if(data.description == "Fungust")
+       //   {
+       //     document.getElementById("rightToki").src =  document.getElementById("toki1B").src;
+       //   }
+       //   if(data.description == "Bobby")
+       //   {
+       //            document.getElementById("rightToki").src =  document.getElementById("toki2B").src;
+       //   }
+       //   if(data.description == "Conyvore")
+       //   {
+       //            document.getElementById("rightToki").src =  document.getElementById("toki3B").src;
+       //   }
+       //   if(data.description == "Drygon")
+       //   {
+       //            document.getElementById("rightToki").src =  document.getElementById("toki4B").src;
+       //   }
+       //   if(data.description == "Stumpy")
+       //   {
+       //            document.getElementById("rightToki").src =  document.getElementById("toki5B").src;
+       //   }
+       // }
+ 
+ 
+ 
+       // if(document.getElementById(id) == toki2)
+       // {
+       //   document.getElementById("gif0").src =  document.getElementById("gif2").src;
+       // }
+ 
+ ////////////ready button code////////////
+ 
+       // var data = 0
+       // function buttonClicked(){
+       //   console.log("clicked once");
+       //   data = data +1;
+       //   socket.emit('clicked', data);
+       // }
+ 
+       socket.on('redirect', function(destination) {
+           window.location = '/victory';
+         });
+ 
+ 
+ 
+ 
+ 
+     </script>
   
   
   
@@ -263,7 +326,6 @@
       {
         document.getElementById("gif0").src =  document.getElementById("gif6").src;
       }
-  
   
     }
   </script>
