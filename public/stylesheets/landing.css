@@ -1,20 +1,24 @@
 body, html {
-    height: 100%;
-    margin: 0;
-    background-image: url("/stylesheets/pictures/1.jpg");
+  height: 100%;
+  margin: 0;
+  background-image: url("/stylesheets/gifs/giphy.gif");
 
 
-    background-position: center;
-    background-repeat: repeat;
-    background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: black;
 }
 
 h1 {
-  margin: 0 0 0% 20%;
+  margin: 10% 5% 10% 20%;
+  margin-left: 40%;
+  margin-top: -5%;
 }
 
 #maintitle{
-padding-top: 40px;
+padding-top: 10px;
+color: white;
 }
 
 h2 {
@@ -23,16 +27,32 @@ h2 {
 
 .navigationButton{
   padding-top: 0px;
+  width: 40% ;
+    margin: 10px;
+    box-sizing: border-box;
+    border-radius: 3px;
+  border: 3px solid #fafafa;
+  background-color:#db2a2a;
+  text-align: center;
+color: white;
+font-size: 37px;
+margin-left: 30%;
+margin-top: -8%;
+font-family: "Times New Roman", Times, serif;
+
+}
+
+.nagivationLogout{
   width: 7% ;
     margin: 10px;
     box-sizing: border-box;
     border-radius: 3px;
-  border: 1px solid #c90909;
-  background-color:#f54b4b;
+    border: 2px solid #fafafa;
+    background-color:#db2a2a;
   text-align: center;
 color: white;
 font-size: 20px;
-
+margin-top: 0%;
 }
 
 #formID{
@@ -51,7 +71,7 @@ div.teamBuilder{
 
 div.middle-div{
   position: relative;
-  top: -120%;
+  top: -30%;
 
 
 }

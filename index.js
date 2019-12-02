@@ -28,8 +28,8 @@ const TokiBattle = require('./battleServer')
 // Other specific use variables
 var pool;
 pool = new Pool({
-  //connectionString: process.env.DATABASE_URL
-    connectionString:'postgres://postgres:password@localhost/postgres'
+  connectionString: process.env.DATABASE_URL
+    //connectionString:'postgres://postgres:password@localhost/postgres'
 //  connectionString:'postgres://postgres:postgres@localhost/postgres'
 });
 pool.connect()
@@ -566,6 +566,7 @@ io.of("/battlepage_2").on('connection', (socket) => {
 
     if(waitingPlayer){
       socket.emit('message', 'You are player 1');
+      socket.emit('message', 'You are Team Pokemon');
       new TokiBattle(waitingPlayer, socket);
       waitingPlayer = null;
     }
@@ -573,6 +574,7 @@ io.of("/battlepage_2").on('connection', (socket) => {
     {
       waitingPlayer = socket;
       waitingPlayer.emit('message', 'Waiting for an opponent. You are player 0');
+      waitingPlayer.emit('message', 'You are Team Tokimon');
     }
 
     socket.on('message', (text) => {
