@@ -12,6 +12,8 @@ const session       =   require('express-session')
 const { Pool }      =   require('pg')
 //const redis         =   require('redis')
 const cookieParser  =   require('cookie-parser');
+const cookie        = require('cookie');
+
 //const redisStore    =   require('connect-redis')(session)
 const adapter       =   require('socket.io-adapter')
 const client        =   require('socket.io-client')
@@ -19,12 +21,15 @@ const parser        =   require('socket.io-parser')
 const http          =   require('http').Server(app)
 const io            =   require('socket.io')(http)
 const PORT          =   process.env.PORT || 5000
+var sessionFileStore = require('session-file-store')(session);
+
+const TokiBattle = require('./battleServer')
 
 // Other specific use variables
 var pool;
 pool = new Pool({
   //connectionString: process.env.DATABASE_URL
-     connectionString:'postgres://postgres:password@localhost/postgres'
+    connectionString:'postgres://postgres:password@localhost/postgres'
 //  connectionString:'postgres://postgres:postgres@localhost/postgres'
 });
 pool.connect()
@@ -45,13 +50,22 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({extended : false}))
 app.use(express.json())
 app.use(cookieParser('ssshhhhh'));
-app.use(session({
+
+
+var express_session = session({
   secret: 'ssshhhhh',
-  //store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
+  store: sessionFileStore({path: './TokiBattle/sessions'}),
   cookie: { secure: true, maxAge:86400000 },
   saveUninitialized: false,
   resave: false
-}));
+})
+// app.use(session({
+//   secret: 'ssshhhhh',
+//   //store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
+//   cookie: { secure: true, maxAge:86400000 },
+//   saveUninitialized: false,
+//   resave: false
+// }));
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 http.listen(PORT);
@@ -189,20 +203,31 @@ app.get('/loadingBattle', checkLoggedIn, (req, res) => {
 /**
  * battlepage_2 Page  
  */
-app.get('/battlepage_2', checkLoggedIn, (req, res) => {
+app.get('/battlepage_2', (req, res) => {
   res.render('pages/battlepage_2.ejs')
 })
-
-
 
 
 /**
  * battlepage_3 Page  
  */
-app.get('/battlepage_3A', (req, res) => {
-  res.render('pages/battlepage_3A.ejs')
-})
+// app.get('/battlepage_3A', checkLoggedIn, (req, res) => {
+//   res.render('pages/battlepage_3A.ejs')
+// })
 
+/**
+ * battlepage_3 Page  
+ */
+app.get('/battlepage_3A/:teamName', checkLoggedIn, (req, res) => {
+  var teamQuery = `SELECT tokiname, fire, water, electric, flying, fighting, ice, hp, attack, defense, speed, move1, move2, move3, move4, piclink, gif FROM tokimonteams JOIN tokimon ON tokimonteams.tokiname = tokimon.name WHERE team_name ='${req.params.teamName}'`;
+  console.log(teamQuery);
+  pool.query(teamQuery, (error, result) => {
+    if (error) res.end(error);
+    var results = {'rows' : result.rows};
+    console.log(results)
+    res.render('pages/battlepage_3A.ejs', results)
+  });
+})
 
 
 app.get('/login_update', (req, res) => {
@@ -212,6 +237,10 @@ app.get('/login_update', (req, res) => {
 app.get('/register_update', (req, res) => {
   res.render('pages/register_update.ejs')
 })
+
+/**
+ * photo_grid 
+ */
 
 
 /**
@@ -281,6 +310,7 @@ app.get('/victory', checkLoggedIn, (req, res) => {
   T.post('statuses/update', {status: `${winning_trainer} won the battle on ${timestamp}!` }, function(err, data, response) {
   })
 });
+
 
 /**
  * loser Page
@@ -366,13 +396,46 @@ app.post('/addTeam/:id', (req, res) => {
  */
 
 app.post('/addToTeam/:uid/:id', (req, res) => {
-  var query = `INSERT INTO tokimonTeams (team_name, tokiname) VALUES ('${req.body.uid}', '${req.body.tokiID}')`;
-  console.log(query);
-  pool.query(query, (error, result) => {
+  var countTokiQuery = `SELECT COUNT(*) FROM tokimonTeams WHERE team_name = '${req.body.uid}'`;
+
+  pool.query(countTokiQuery, (error, result) => {
     if (error)
       res.end(error);
-    res.redirect(`/addTokimon/${req.params.uid}/${req.params.id}`);
-  })
+    var CountResult = result.rows;
+    console.log(CountResult);
+    CountResult.forEach((r) => {
+      if(parseInt(r.count) <=5 ) {
+        var query = `INSERT INTO tokimonTeams (team_name, tokiname) VALUES ('${req.body.uid}', '${req.body.tokiID}')`;
+        console.log(query);
+        pool.query(query, (error, result) => {
+          if (error)
+            res.end(error);
+          res.redirect(`/addTokimon/${req.params.uid}/${req.params.id}`);
+        })
+      }
+      else {
+        var query = `SELECT * FROM tokimonTeams WHERE team_name = '${req.body.uid}'`;
+        console.log(query);
+        pool.query(query, (error, result) => {
+          if (error)
+            res.end(error);
+          var results = result.rows;
+          results['maxToki'] = "You cannot add more than six Tokimons";
+          results['teamName'] = req.params.id;
+          results['userName'] = req.params.uid;
+          res.render(`pages/teamPage`, results);
+        })
+      }
+    });
+
+  // var query = `INSERT INTO tokimonTeams (team_name, tokiname) VALUES ('${req.body.uid}', '${req.body.tokiID}')`;
+  // console.log(query);
+  // pool.query(query, (error, result) => {
+  //   if (error)
+  //     res.end(error);
+  //   res.redirect(`/addTokimon/${req.params.uid}/${req.params.id}`);
+  // })
+  });
 });
 
 /**
@@ -390,14 +453,14 @@ if(DEBUG) {
       res.render(`pages/teamPage`, results);
     })
   
-    console.log(query);
-    pool.query(query, (error, result) => {
-      if (error)
-        res.end(error);
-      var results = {'rows': result.rows};
-      results['teamName'] = req.params.id;
-      res.render(`pages/teamPage`, results);
-    })
+    // console.log(query);
+    // pool.query(query, (error, result) => {
+    //   if (error)
+    //     res.end(error);
+    //   var results = {'rows': result.rows};
+    //   results['teamName'] = req.params.id;
+    //   res.render(`pages/teamPage`, results);
+    // })
   });
 }
 
@@ -479,19 +542,73 @@ app.get('/admin/moves', checkAdmin, (req, res) => {
  /**
   * Function for listening to connections
   */
-io.on('connection', (socket) => { //listening for events
-  console.log('Client connected');
-  socket.on('disconnect', () => {
-    console.log('Client disconnected');
-  })
+
+// chat app testing page
+app.get('/index', function(req, res)  {
+    res.render('pages/index');
 });
 
-io.use(function(socket, next) {
-})
 
-// redisClient.on('connect', function(){
-//   console.log('Redis Connection Successful');
-// });
+io.use(function(socket,next){
+  express_session(socket.handshake, {}, next);
+  //console.log("io.use function: ",socket.handshake.headers.cookie);
+});
+
+
+// variable for finiding two players on the same page. 
+let waitingPlayer = null;
+
+// this version starts socket.io when we hit battlepage_2
+io.of("/battlepage_2").on('connection', (socket) => {
+// // this version just launches from the start
+//io.on('connection', (socket) => { //listening for events
+
+
+    if(waitingPlayer){
+      socket.emit('message', 'You are player 1');
+      new TokiBattle(waitingPlayer, socket);
+      waitingPlayer = null;
+    }
+    else
+    {
+      waitingPlayer = socket;
+      waitingPlayer.emit('message', 'Waiting for an opponent. You are player 0');
+    }
+
+    socket.on('message', (text) => {
+      io.emit('message', text);
+    }); 
+
+
+
+/////////old//////////////////
+
+
+    socket.on('username', function(username) {
+        socket.username = username;
+        io.emit('is_online', '🔵 <i>' + socket.username + ' join the chat..</i>');
+    });
+
+    socket.on('disconnect', function(username) {
+        io.emit('is_online', '🔴 <i>' + socket.username + ' left the chat..</i>');
+    })
+
+    socket.on('chat_message', function(message) {
+        io.emit('chat_message', '<strong>' + socket.username + '</strong>: ' + message);
+    });
+
+    socket.on('clicked', function(data, destination){
+      if(data >= 2)
+      {
+        io.emit('redirect', destination); 
+      }
+    })
+   
+
+
+
+});
+
 
 /*********************
  * Utility Functions *
