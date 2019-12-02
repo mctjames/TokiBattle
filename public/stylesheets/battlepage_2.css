@@ -1,263 +1,305 @@
 body{
 
-    background: url("/stylesheets/pictures/back.jpg"); 
-    text-align: center;
+  background: url("/stylesheets/pictures/back.jpg"); 
+  text-align: center;
 }
 .text-wrapper{
-  background-color: rgb(255, 255, 255);
-  width: 400px;
-  height: 300px;
-  max-height: 300px;
-  margin: 20px auto;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid lightgrey;
+background-color: rgb(255, 255, 255);
+width: 500px;
+height: 280px;
+max-height: 280px;
+margin: auto;
+display: flex;
+flex-direction: column;
+border: 1px solid lightgrey;
+margin-bottom: -20.50%;
+margin-right: 27%;
 
 }
 h1{
-    text-align: center;
-    font-size: 50px;
-    color: red;
-    background: black;
+  text-align: center;
+  font-size: 50px;
+  color: red;
+  background: black;
 }
 
 li{
-    text-align: center;
-    font-size: 25px;
-    color: red;
-    background: black;
+  text-align: center;
+  font-size: 25px;
+  color: red;
+  background: black;
+  overflow-y: visible;
 }
 
-#b{
-    background-size: cover;
-    background-color: rgb(255, 108, 71);
-    position: relative;
-    height: 330px;
-    width: 400px;
-    border: 5px solid rgb(230, 212, 49);
-    right: -1300px; 
-    border-radius: 5px;
+.b{
+  background-size: cover;
+  background-color: rgb(255, 108, 71);
+  position: relative;
+  height: 315px;
+  width: 385px;
+  border: 5px solid rgb(230, 212, 49);
+  right: -85%; 
+  border-radius: 5px;
+  margin-top: -0.75%;
 }
-
 div.b2{
   background-size: cover;
   background-color: rgb(255, 108, 71);
   position: relative;
-  height: 330px;
-  width: 400px;
+  height: 315px;
+  width: 385px;
   border: 5px solid rgb(230, 212, 49);
-  right: 0px; 
+  right: 0%; 
+  margin-top: -22.75%;
   border-radius: 5px;
-  align-content: center;
-  
 }
 
-div.b3{
-  background-size: cover;
-  position: relative;
-  height: 330px;
-  width: 900px;
-  /* border: 5px solid rgb(230, 212, 49); */
-  right: 0px; 
-  border-radius: 5px;
-  align-content: center;
-  padding-left: 500px;
+.b3{
+background-size: cover;
+position: relative;
+height: 330px;
+width: 870px;
+/* border: 5px solid rgb(230, 212, 49); */
+right: 0px; 
+border-radius: 5px;
+align-content: center;
+padding-left: 500px;
+margin-top: 5%;
+
 }
 
 div.leftGif{
-  margin-left: -350%;
-  margin-top: -83%;
+margin-left: -350%;
+margin-top: -83%;
+margin-bottom: 0%;
 }
 
-div.player1board{
-  margin-top: -23.90%;
-}
+/* div.player1board{
+margin-top: -23.90%;
+} */
 
 div.container{
-  margin-top: -265%;
-  margin-right: 40%;
+margin-top: -40%;
+margin-right: 20%;
 }
 
+
+
 div.tokimonSelection{
-  margin-right: -270%;
-  margin: 2%
+margin-right: 35%;
+margin-top: -270%
 }
 
 #battlePosition1{
-      border: 5px solid rgb(200, 49, 230);
-      border-radius: 5px;
-      width: 65%;
+    border: 5px solid rgb(200, 49, 230);
+    border-radius: 5px;
+    width: 65%;
 }
 
 #tokimonLeft{
-  margin-left: 15%;
-  margin-bottom: 50%;
+margin-left: 15%;
+margin-bottom: 50%;
 }
 
 .giphy-embed{
-  margin-left: 30%;
-  margin-bottom: 50%;
+margin-left: 30%;
+margin-bottom: 50%;
 }
 
 /* Create two equal columns that floats next to each other */
-.column {
-    float: left;
-    width: 49.9999999999999999%;
+div.column {
+  float: left;
+  width: 49.9999999999999999%;
 
-  }
-  .column2 {
-    float: right;
-    width: 49.9999999999999999%;
+}
+div.column2 {
+  float: right;
+  width: 49.9999999999999999%;
 
-  }
-
-  .column3 {
-    float: left;
-    width: 49.9999999999999999%;
-    margin-top: -72%;
-
-  }
-
-  .column4 {
-    float: left;
-    width: 49.9999999999999999%;
-    margin-top: -72%;
-
-  }
-
-  #gif0{
-    width: 400px;
-    height: 300px;
-    margin-left: 50%;
-  }
-
-
-  #gif1{
-    width: 400px;
-    height: 300px;
-    margin-left: 50%;
-  }
-
-  #gif2{
-    width: 300px;
-    height: 300px;
-    margin-left: 50%;
-  }
-  #gif3{
-    width: 300px;
-    height: 200px;
-    margin-left: 50%;
-  }
-  #gif4{
-    width: 400px;
-    height: 300px;
-    margin-left: 50%;
-  }
-  #gif5{
-    width: 400px;
-    height: 300px;
-    margin-left: 50%;
-  }
-  #gif6{
-    width: 400px;
-    height: 300px;
-    margin-left: 50%;
-  }
-  
-  .column2 img {
-    align-items: top;
-  }
- 
-  img{
-      padding: 4px;
-      display: inline-block;
-      height: 85px;
-      width: 7px;
-  }
-/* 
-  button{
-      background-color: crimson;
-      padding: 20px;
-      align-items: baseline;
-      color: white;
-
-  }
- */
-
- input {
-  outline: none;
-  font-size: 1.0rem;
-  padding: 0 5px;
 }
 
-  button {
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    padding: 3px 15px;
+div.column3 {
+  float: left;
+  width: 49.9999999999999999%;
+  margin-top: -60%;
+
+}
+
+div.column4 {
+  float: left;
+  width: 49.9999999999999999%;
+  margin-top: -60%;
+
+}
+
+#gif0{
+  width: 400px;
+  height: 300px;
+  margin-left: 50%;
+}
+
+
+#gif1{
+  width: 400px;
+  height: 300px;
+  margin-left: 50%;
+}
+
+#gif2{
+  width: 300px;
+  height: 300px;
+  margin-left: 50%;
+}
+#gif3{
+  width: 300px;
+  height: 200px;
+  margin-left: 50%;
+}
+#gif4{
+  width: 400px;
+  height: 300px;
+  margin-left: 50%;
+}
+#gif5{
+  width: 400px;
+  height: 300px;
+  margin-left: 50%;
+}
+#gif6{
+  width: 400px;
+  height: 300px;
+  margin-left: 50%;
+}
+
+.column2 img {
+  align-items: top;
+}
+
+img{
+    /* padding: 4px; */
+    display: inline-block;
+    height: 80px;
+    width: 7px;
+}
+/* 
+button{
+    background-color: crimson;
+    padding: 20px;
+    align-items: baseline;
     color: white;
-    line-height: 25px;
-    background-color: #00bcd4;
-    border: none;
-    border-radius: 2px;
-    cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px;
-    transition: all 150ms ease-in;
-    outline: none;
-  }
+
+}
+*/
+
+input {
+outline: none;
+font-size: 1.0rem;
+padding: 0 5px;
+}
+
+button {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  padding: 3px 15px;
+  color: white;
+  line-height: 25px;
+  background-color: #00bcd4;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px;
+  transition: all 150ms ease-in;
+  outline: none;
+  margin: 3px;
+}
 
 
-  button:hover {
-    background-color: #79d7e4;
+button:hover {
+  background-color: #80e477;
 }
 
 button.turn {
-  color: rgb(255, 64, 129);
-  background-color: white;
-  box-shadow:none;
-  padding: 10px;
+color: rgb(255, 64, 129);
+background-color: white;
+box-shadow:none;
+padding: 10px;
 }
 
 button.turn:hover {
-  background-color: #eaeaea;
+background-color: #eaeaea;
 }
 
 #events {
-  flex-grow: 1;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-bottom: 1px solid lightgrey;
-  overflow-y: scroll;
-  background-color: black; 
+flex-grow: 1;
+list-style: none;
+margin: 0;
+padding: 0;
+border-bottom: 1px solid lightgrey;
+overflow-y: scroll;
+background-color: black; 
 }
 
 #events li {
-  padding: 10px 10px 10px 10px;
+padding: 5px 10px 10px 10px;
 
 }
 
 .chat-wrapper {
-  padding: 10px;
+padding: 10px;
 
 }
 
 .chat-wrapper form {
-  display: flex;
+display: flex;
 }
 
 .chat-wrapper form input {
-  font-size: 1.0rem;
-  margin: 0 10px 0 0;
-  padding: 0 5px;
-  flex-grow: 1;
+font-size: 1.0rem;
+margin: 0 10px 0 0;
+padding: 0 5px;
+flex-grow: 1;
 }
 
 .chat-wrapper form button {
-  width: 80px;
+width: 80px;
 }
 
 .button-wrapper {
-  display: flex;
-  padding: 10px 50px;
-  justify-content: space-evenly;
+display: flex;
+padding: 10px 50px;
+justify-content: space-evenly;
+background-color: black;
 }
+
+.but{
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  padding: 15px 15px;
+  color: white;
+  line-height: 25px;
+  background-color: #e65a5a;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px;
+  transition: all 150ms ease-in;
+  outline: none;
+  margin: 3px;
+}
+
+#tokiPics{
+  padding: 50px;
+  height: 300px;
+  width: 330px;
+  margin-top: -25%;
+  padding-right: 20px;
+}
+
+
+#pokiPics{
+  padding: 150px;
+  height: 270px;
+  width: 250px;
+  margin-top: 43%;
+  margin-left: -140%;
+} 
