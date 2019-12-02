@@ -9,15 +9,15 @@
   <div id= "battle">
       <div id="b"> 
               <div class="column">
-                  <button class="btn item1"><img id="toki1" src="/stylesheets/pictures/squirt.png" style="width:80%" onclick="changeImage(id)"></button>
-                  <button class="btn item2"><img id="toki2" src="/stylesheets/pictures/squirt2.png" style="width:80%" onclick="changeImage(id)"></button>
-                  <button class="btn item3"><img id="toki3" src="/stylesheets/pictures/squirt3.png" style="width:80%" onclick="changeImage(id)"></button>
+                  <img id="toki1" src="/stylesheets/pictures/squirt.png" style="width:80%" onclick="changeImage(id)">
+                  <img id="toki2" src="/stylesheets/pictures/squirt2.png" style="width:80%" onclick="changeImage(id)">
+                  <img id="toki3" src="/stylesheets/pictures/squirt3.png" style="width:80%" onclick="changeImage(id)">
 
               </div>
               <div class="column2">
-                  <button class="btn item4"><img id="toki4" src="/stylesheets/pictures/squirt4.png" style="width:80%" onclick="changeImage(id)"></button>
-                  <button class="btn item5"><img id="toki5" src="/stylesheets/pictures/squirt5.png" style="width:80%" onclick="changeImage(id)"></button>
-                  <button class="btn item6"><img id="toki6" src="/stylesheets/pictures/squirt6.png" style="width:80%" onclick="changeImage(id)"></button>
+                  <img id="toki4" src="/stylesheets/pictures/squirt4.png" style="width:80%" onclick="changeImage(id)">
+                  <img id="toki5" src="/stylesheets/pictures/squirt5.png" style="width:80%" onclick="changeImage(id)">
+                  <img id="toki6" src="/stylesheets/pictures/squirt6.png" style="width:80%" onclick="changeImage(id)">
               </div>
               <style>
                   .btn {
@@ -43,160 +43,58 @@
           </br>  
           </br>    
 
-  <div class="container">
-    <center>
-      <button id="attack1" class = "turn"> player1 attack1 </button>
-      <button id="attack2" class = "turn"> player1 attack2 </button>
-      <button id="attack3" class = "turn"> player1 attack3 </button>
-      <button id="attack4" class = "turn"> player1 attack4 </button>
-        </br>
-        </br>
-      <button id="swap0" class = "turn"> swap to 0 </button>
-      <button id="swap1" class = "turn"> swap to 1 </button>
-      <button id="swap2" class = "turn"> swap to 2 </button>
-      <button id="swap3" class = "turn"> swap to 3 </button>
-      <button id="swap4" class = "turn"> swap to 4 </button>
-      <button id="swap5" class = "turn"> swap to 5 </button>
+  </div>
+  <!-- ***************************************************** -->
+    <div class ="player1board">
+      <div class="b2"> 
+          <div class="column3">
+              <img id="toki7" src="/stylesheets/pictures/squirt.png" style="width:80%" onclick="changeImage(id)">
+              <img id="toki8" src="/stylesheets/pictures/squirt2.png" style="width:80%" onclick="changeImage(id)">
+              <img id="toki9" src="/stylesheets/pictures/squirt3.png" style="width:80%" onclick="changeImage(id)">
 
-
-<!--         the text box -->
-      <div class = "text-wrapper">
-        <ul id ="events"></ul>
-
-        <div class = "button-wrapper">
-          <form id ="chat-form">         
-            <input id ="chat" />
-            <button id = "say"> Say </button> 
-          </form>
-
-          
-          <button id = "rock" class ="turn"> Rock </button>
-          <button id = "paper" class ="turn"> Paper </button>
-          <button id = "scissors" class ="turn"> Scissors </button>
-
+          </div>
+          <div class="column4">
+              <img id="toki10" src="/stylesheets/pictures/squirt4.png" style="width:80%" onclick="changeImage(id)">
+              <img id="toki11" src="/stylesheets/pictures/squirt5.png" style="width:80%" onclick="changeImage(id)">
+              <img id="toki12" src="/stylesheets/pictures/squirt6.png" style="width:80%" onclick="changeImage(id)">
+          </div>
         </div>
-      </div>
+        <style>
+            .btn {
+              border: none;
+              background-color:inherit;
+              padding: 14px 28px;
+              font-size: 16px;
+              cursor: pointer;
+              display: inline-block;
+            }
+            
+            .btn:hover {background: rgb(250, 229, 112);}
+            
+            .item1 {color: green;}
+            .item2 {color: green;}
+            .item3 {color: green;}
+            .item4 {color: green;}
+            .item5 {color: green;}
+            .item6 {color: green;}
 
-    </center>
+            </style>
+
+    </br>  
+    </br>    
+
+    </div>
+<!-- ******************************************************************* -->
+</div>
   </div>
-      
-
-     
-     <script src="/socket.io/socket.io.js"></script>
-     <script>
-    // version for when starting from battlepage_2
-    // this version breaks the chat functions
-      var socket = io.connect("http://localhost:5000/battlepage_2");
-    // version for when starting socket.io from connection
-    //var socket = io.connect();
-
-
-////////////////////Rock paper scissors test ////////////
-      // addind text box for testing 
-      const writeEvent = (text) => {
-        //<ul> element
-        const parent = document.querySelector('#events');
-        // <li> element
-        const el = document.createElement('li');
-        el.innerHTML = text;
-
-        parent.appendChild(el);
-      };
-
-      const onFormSubmitted = (e) => {
-        e.preventDefault();
-
-        const input = document.querySelector('#chat');
-        const text = input.value;
-        input.value = '';
-        socket.emit('message', text); 
-      };
-
-      const addButtonListeners = () => {
-        ['rock', 'paper', 'scissors'].forEach((id) =>{
-          const button = document.getElementById(id);
-          button.addEventListener('click', () => {
-            socket.emit('turn', id);
-          });
-        });
-
-        // attack button functionaliity. 
-        ['attack1', 'attack2', 'attack3', 'attack4'].forEach((id) => {
-          const button = document.getElementById(id);
-          button.addEventListener('click', () => {
-            socket.emit('turn', id);
-          });
-        });
-
-        [ 'swap0','swap1', 'swap2', 'swap3', 'swap4', 'swap5'].forEach((id) => {
-          const button = document.getElementById(id);
-          button.addEventListener('click', () => {
-            socket.emit('turn', id);
-          });
-        });
-
-      };
-
-
-      writeEvent('Welcome to Tokebattler!');
-      socket.on('message', writeEvent);
-
-      document.querySelector('#chat-form').addEventListener('submit', onFormSubmitted);
-
-      addButtonListeners();
-
-
-
-      socket.on('swapBroadcast', function(data){
-        alert(data.description);
-      })
-
-
-////////////ready button code////////////
-
-      // var data = 0
-      // function buttonClicked(){
-      //   console.log("clicked once");
-      //   data = data +1;
-      //   socket.emit('clicked', data);
-      // }
-
-      // socket.on('redirect', function(destination) {
-      //     window.location = '/battlepage_2';
-      //   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </script>
-
-
-
-
-
-
-
-
-                </div>
-  </div>
-  <div title="tokimon gif"></div>
+  <br>
+  <br>
+  <div class = "b3">
+  <div title="tokimon gif2">
+      <iframe id="gif0" src="https://giphy.com/embed/Myp2C0iWDMh2g" frameborder="0" width="80" height="90" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <div class = "leftGif">
       <iframe id="gif0" src="https://giphy.com/embed/Myp2C0iWDMh2g" frameborder="0" width="80" height="90" class="giphy-embed" style="pointer-events: none;"></iframe>
   </div>
-
-
-
   <div  style = "display:none;">
       <iframe id="gif1" src="https://giphy.com/embed/Myp2C0iWDMh2g" frameborder="0" width="80" height="90" class="giphy-embed" style="pointer-events: none;"></iframe>
       <iframe id="gif2"  src="https://giphy.com/embed/iIlxok6eMBeBW" width="384" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
@@ -206,7 +104,159 @@
       <iframe id="gif6" src="https://giphy.com/embed/Owb158OZlURQA" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
 
   </div>
+</div>
+  <div class="container">
+    <div class= "tokimonSelection">
+      <button onclick = "attack1Clicked()" id="attack1"> Tokimon 1 </button>
+      <button onclick = "attack2Clicked()" id="attack2"> Tokimon 4 </button>
+      <br>
+      <br>
+      <button onclick = "attack3Clicked()" id="attack3"> Tokimon 2 </button>
+      <button onclick = "attack4Clicked()" id="attack4"> Tokimon 5 </button>
+      <br>
+      <br>
+      <button onclick = "attack1Clicked()" id="attack1"> Tokimon 3 </button>
+      <button onclick = "attack2Clicked()" id="attack2"> Tokimon 6 </button>
+    </div>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+      <center>
+        <button onclick = "attack1Clicked()" id="attack1"> player1 attack1 </button>
+        <button onclick = "attack2Clicked()" id="attack2"> player1 attack2 </button>
+        <button onclick = "attack3Clicked()" id="attack3"> player1 attack3 </button>
+        <button onclick = "attack4Clicked()" id="attack4"> player1 attack4 </button>
+
+
+          </br>
+  <!--         the text box -->
+        <div class = "text-wrapper">
+          <div id ="events" ></div>
   
+          <div class = "button-wrapper">
+            <form id ="chat-form">         
+              <input id ="chat" />
+              <button id = "say"> Say </button> 
+            </form>
+          
+            <button id = "rock" class ="turn"> Rock </button>
+            <button id = "paper" class ="turn"> Paper </button>
+            <button id = "scissors" class ="turn"> Scissors </button>
+  
+          </div>
+        </div>
+      </center>
+    </div>
+        
+  
+       
+       <script src="/socket.io/socket.io.js"></script>
+       <script>
+      // version for when starting from battlepage_2
+      // this version breaks the chat functions
+        //var socket = io.connect("http://localhost:5000/battlepage_2");
+      // version for when starting socket.io from connection
+      var socket = io.connect();
+  
+  
+  ////////////////////Rock paper scissors test ////////////
+        // addind text box for testing 
+
+        const writeEvent = (text) => {
+          //<ul> element
+          const parent = document.querySelector('#events');
+          // <li> element
+          const el = document.createElement('li');
+          el.innerHTML = text;
+  
+          parent.appendChild(el);
+        };
+
+  
+        const onFormSubmitted = (e) => {
+          e.preventDefault();
+  
+          const input = document.querySelector('#chat');
+          const text = input.value;
+          input.value = '';
+  
+          socket.emit('message', text); 
+        };
+  
+        const addButtonListeners = () => {
+          ['rock', 'paper', 'scissors'].forEach((id) =>{
+            const button = document.getElementById(id);
+            button.addEventListener('click', () => {
+              socket.emit('turn', id);
+            });
+          });
+        };
+  
+  
+        writeEvent('Welcome to Tokebattler!');
+        socket.on('message', writeEvent);
+  
+        document.querySelector('#chat-form').addEventListener('submit', onFormSubmitted);
+  
+        addButtonListeners();
+  
+  
+        //////////Player 1 attacks /////////////////
+        function attack1Clicked(){
+          console.log("attack1");
+          var attack = "attack1";
+          socket.emit('attack1', attack);
+        }
+  
+        function attack2Clicked(){
+          console.log("attack2");
+          socket.emit('attack2');
+        }
+  
+        function attack3Clicked(){
+          console.log("attack3");
+          socket.emit('attack3');
+        }
+  
+        function attack4Clicked(){
+          console.log("attack4");
+          socket.emit('attack4');
+        }
+  
+  ///////////Player 2 attacks ////////////////////
+        function attack5Clicked(){
+          console.log("attack5");
+          socket.emit('attack5');
+        }
+  
+        function attack6Clicked(){
+          console.log("attack6");
+          socket.emit('attack6');
+        }
+  
+        function attack7Clicked(){
+          console.log("attack7");
+          socket.emit('attack7');
+        }
+  
+        function attack8Clicked(){
+          console.log("attack8");
+          socket.emit('attack8');
+        }
+  
+  ////////////ready button code////////////
+  
+        var data = 0
+        function buttonClicked(){
+          console.log("clicked once");
+          data = data +1;
+          socket.emit('clicked', data);
+        }
+  
+        socket.on('redirect', function(destination) {
+            window.location = '/battlepage_2';
+          });
+  
+      </script>
   
   
   
@@ -239,7 +289,6 @@
       {
         document.getElementById("gif0").src =  document.getElementById("gif6").src;
       }
-  
   
     }
   </script>
