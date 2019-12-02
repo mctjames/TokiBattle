@@ -11,13 +11,6 @@ h1{
     background: black;
 }
 
-li{
-    text-align: center;
-    font-size: 25px;
-    color: red;
-    background: black;
-}
-
 #b{
     background-size: cover;
     background-color: rgb(255, 108, 71);
@@ -29,21 +22,17 @@ li{
     border-radius: 5px;
 }
 
-#battlePosition1{
-      border: 5px solid rgb(200, 49, 230);
-      border-radius: 5px;
-      width: 65%;
-}
+
+
+
+
 
 #tokimonLeft{
   margin-left: 15%;
   margin-bottom: 50%;
 }
 
-.giphy-embed{
-  margin-left: 30%;
-  margin-bottom: 50%;
-}
+
 
 /* Create two equal columns that floats next to each other */
 .column {
@@ -61,6 +50,7 @@ li{
     width: 400px;
     height: 300px;
     margin-left: 50%;
+
   }
 
   #gif1{
@@ -94,6 +84,10 @@ li{
     height: 300px;
     margin-left: 50%;
   }
+
+
+
+
   
   .column2 img {
     align-items: top;
@@ -113,8 +107,4 @@ li{
       color: white;
 
   }
-
-
-
-
 

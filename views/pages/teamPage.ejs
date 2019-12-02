@@ -12,7 +12,17 @@
       <a href="/">Home</a>
 
       <p class="pageContent">Tokimons are rare. This is the list of Tokimons found so far. Each Tokimon has a unique ID which can be used to distinguish those with similar characteristics.</p>
-     
+      
+      <div class="container" style="background-color:#f1f1f1">
+        <div id="maxTokimons">
+          <% if (typeof maxToki !== 'undefined') { %>
+            <% if (maxToki == 'You cannot add more than six Tokimons') { %>
+              <p><%= maxToki %></p>
+            <% } %>
+          <% } %>
+        </div>
+      </div>
+
       <div class="greyPart">
         <p><%= teamName %></p>
         <table class="actualTable">

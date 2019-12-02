@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="/stylesheets/battlepage_3A.css" type="text/css" media="all">
+</head>
+<body>
+
+  <div id= "battle">
+      <div id="b"> 
+              <div class="column">
+                  <% var count = 0 %>
+                  <% rows.forEach((r) => { %>
+                    <% var toki_num = 1 %>
+                    <button class="btn item<%= ++count %>"><img id="toki<%= count %>" src="<%= r.piclink %>" style="width:80%" onclick="changeImage(id)"></button>
+                    <input type="text" id="move<%= count %><%= toki_num++ %>" value="<%= r.move1 %>">
+                    <input type="text" id="move<%= count %><%= toki_num++ %>" value="<%= r.move2 %>">
+                    <input type="text" id="move<%= count %><%= toki_num++ %>" value="<%= r.move3 %>">
+                    <input type="text" id="move<%= count %><%= toki_num++ %>" value="<%= r.move4 %>">
+                    <input type="text" id="giflink<%= count %>" value="<%= r.gif %>">
+                  <% }); %>
+              </div>
+              <style>
+                  .btn {
+                    border: none;
+                    background-color:inherit;
+                    padding: 14px 28px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    display: inline-block;
+                  }
+                  
+                  .btn:hover {background: #eee;}
+                  
+                  .item1 {color: green;}
+                  .item2 {color: green;}
+                  .item3 {color: green;}
+                  .item4 {color: green;}
+                  .item5 {color: green;}
+                  .item6 {color: green;}
+
+                  </style>
+                  <div>
+                    <input id="attack1"></input>
+                    <input id="attack2"></input>
+                    <input id="attack3"></input>
+                    <input id="attack4"></input>
+                  </div>
+                </div>
+  </div>
+
+
+
+
+
+
+    <iframe id="bobbyGif" src="stylesheets/gifs/bobbyFlip2.gif" class="giphy-embed" scrolling="no" width="384" height="480"  frameborder="0" style="pointer-events: none;"></iframe>
+
+    <div title="tokimon gif">
+        <iframe id="gif0" src="stylesheets/gifs/rex1.gif" scrolling="no" frameborder="0" width="80" height="90" class="giphy-embed"  style="pointer-events: none;"></iframe>
+    </div>
+
+
+
+
+  <div  style = "display:none;">
+      <iframe id="gif1" src="stylesheets/gifs/rex1.gif" scrolling="no" frameborder="0" width="80" height="90" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="gif2"  src="stylesheets/gifs/ucorn1.gif" scrolling="no"  width="384" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="gif3" src="stylesheets/gifs/jar1.gif" scrolling="no" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="gif4" src="stylesheets/gifs/disco1.gif" scrolling="no"  width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="gif5" src="stylesheets/gifs/stump1.gif" scrolling="no" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="gif6" src="stylesheets/gifs/cat1.gif" scrolling="no"  width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+
+  </div>
+  
+  
+  
+  
+  <script language="javascript">
+    function changeImage(id){
+      // document.getElementById("gif1").src = document.getElementById(id).src;
+  
+      if(document.getElementById(id) == toki1)
+      {
+        console.log("its not working");
+        document.getElementById("gif0").src = document.getElementById("giflink1").value;
+        console.log(document.getElementById("giflink1").src);
+        document.getElementById("attack1").value = document.getElementById("move11").value;
+        document.getElementById("attack2").value = document.getElementById("move12").value;
+        document.getElementById("attack3").value = document.getElementById("move13").value;
+        document.getElementById("attack4").value = document.getElementById("move14").value;
+
+      }
+      if(document.getElementById(id) == toki2)
+      {
+        document.getElementById("gif0").src = document.getElementById("giflink1").value;
+        console.log(document.getElementById("giflink1").src);
+        document.getElementById("attack1").value = document.getElementById("move21").value;
+        document.getElementById("attack2").value = document.getElementById("move22").value;
+        document.getElementById("attack3").value = document.getElementById("move23").value;
+        document.getElementById("attack4").value = document.getElementById("move24").value;
+      }
+      if(document.getElementById(id) == toki3)
+      {
+        document.getElementById("gif0").src = document.getElementById("giflink1").value;
+        console.log(document.getElementById("giflink1").src);
+        document.getElementById("attack1").value = document.getElementById("move31").value;
+        document.getElementById("attack2").value = document.getElementById("move32").value;
+        document.getElementById("attack3").value = document.getElementById("move33").value;
+        document.getElementById("attack4").value = document.getElementById("move34").value;
+      }
+      if(document.getElementById(id) == toki4)
+      {
+        document.getElementById("gif0").src = document.getElementById("giflink1").value;
+        console.log(document.getElementById("giflink1").src);
+        document.getElementById("attack1").value = document.getElementById("move41").value;
+        document.getElementById("attack2").value = document.getElementById("move42").value;
+        document.getElementById("attack3").value = document.getElementById("move43").value;
+        document.getElementById("attack4").value = document.getElementById("move44").value;
+      }
+      if(document.getElementById(id) == toki5)
+      {
+        document.getElementById("gif0").src = document.getElementById("giflink1").value;
+        console.log(document.getElementById("giflink1").src);
+        document.getElementById("attack1").value = document.getElementById("move51").value;
+        document.getElementById("attack2").value = document.getElementById("move52").value;
+        document.getElementById("attack3").value = document.getElementById("move53").value;
+        document.getElementById("attack4").value = document.getElementById("move54").value;
+      }
+      if(document.getElementById(id) == toki6)
+      {
+        document.getElementById("gif0").src = document.getElementById("giflink1").value;
+        console.log(document.getElementById("giflink1").src);
+        document.getElementById("attack1").value = document.getElementById("move61").value;
+        document.getElementById("attack2").value = document.getElementById("move62").value;
+        document.getElementById("attack3").value = document.getElementById("move63").value;
+        document.getElementById("attack4").value = document.getElementById("move64").value;
+      }
+  
+  
+    }
+  </script>
+
+</body> 
+</html>
