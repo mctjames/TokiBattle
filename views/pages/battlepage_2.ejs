@@ -137,10 +137,7 @@
 
 
 
-
-
-
-
+s
   </div>
 </div>
   <div class="container">
@@ -159,10 +156,10 @@
     <br><br><br><br><br><br><br><br><br><br><br><br><br>
 
       <center>
-        <button id="attack1" class ="turn"> player1 attack1 </button>
-        <button id="attack2" class ="turn"> player1 attack2 </button>
-        <button id="attack3" class ="turn"> player1 attack3 </button>
-        <button id="attack4" class ="turn"> player1 attack4 </button>
+        <button id="Waterfall" class ="turn">Waterfall </button>
+        <button id="Aerial Black" class ="turn">Aerial Black </button>
+        <button id="Agile Strike" class ="turn">Agile Strike </button>
+        <button id="Burnout" class ="turn">Burnout </button>
 
 
           </br>
@@ -215,7 +212,7 @@
 
       const addButtonListeners = () => {
         // attack button functionaliity. 
-        ['attack1', 'attack2', 'attack3', 'attack4'].forEach((id) => {
+        ['Waterfall', 'Aerial Black', 'Agile Strike', 'Burnout'].forEach((id) => {
           const button = document.getElementById(id);
           button.addEventListener('click', () => {
             socket.emit('turn', id);
@@ -275,15 +272,15 @@
         }
         if(data.description == "Fungust")
         {
-          document.getElementById("rightToki").src =  document.getElementById("toki1A").src;
+          document.getElementById("rightToki").src =  document.getElementById("toki1B").src;
         }
         if(data.description == "Bobby")
         {
-                 document.getElementById("rightToki").src =  document.getElementById("toki2A").src;
+                 document.getElementById("rightToki").src =  document.getElementById("toki2B").src;
         }
         if(data.description == "Conyvore")
         {
-                 document.getElementById("rightToki").src =  document.getElementById("toki3A").src;
+                 document.getElementById("rightToki").src =  document.getElementById("toki3B").src;
         }
         if(data.description == "Drygon")
         {
@@ -291,13 +288,40 @@
         }
         if(data.description == "Stumpy")
         {
-                 document.getElementById("rightToki").src =  document.getElementById("toki5A").src;
+                 document.getElementById("rightToki").src =  document.getElementById("toki5B").src;
         }        
 
       })
 
 
 
+      // socket.on('attackBroadcast', function(data)
+      // {
+      //   if(data.description == "Kilimonjaro")
+      //   {
+      //     document.getElementById("rightToki").src =  document.getElementById("toki0B").src;
+      //   }
+      //   if(data.description == "Fungust")
+      //   {
+      //     document.getElementById("rightToki").src =  document.getElementById("toki1B").src;
+      //   }
+      //   if(data.description == "Bobby")
+      //   {
+      //            document.getElementById("rightToki").src =  document.getElementById("toki2B").src;
+      //   }
+      //   if(data.description == "Conyvore")
+      //   {
+      //            document.getElementById("rightToki").src =  document.getElementById("toki3B").src;
+      //   }
+      //   if(data.description == "Drygon")
+      //   {
+      //            document.getElementById("rightToki").src =  document.getElementById("toki4B").src;
+      //   }
+      //   if(data.description == "Stumpy")
+      //   {
+      //            document.getElementById("rightToki").src =  document.getElementById("toki5B").src;
+      //   }
+      // }
 
 
 
@@ -334,9 +358,9 @@
       //   socket.emit('clicked', data);
       // }
 
-      // socket.on('redirect', function(destination) {
-      //     window.location = '/battlepage_2';
-      //   });
+      socket.on('redirect', function(destination) {
+          window.location = '/victory';
+        });
 
 
 

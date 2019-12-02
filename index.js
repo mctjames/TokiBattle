@@ -311,6 +311,7 @@ app.get('/victory', checkLoggedIn, (req, res) => {
   })
 });
 
+
 /**
  * loser Page
  */
@@ -563,7 +564,8 @@ io.of("/battlepage_2").on('connection', (socket) => {
 //io.on('connection', (socket) => { //listening for events
 
 
-     if(waitingPlayer){
+    if(waitingPlayer){
+      socket.emit('message', 'You are player 1');
       new TokiBattle(waitingPlayer, socket);
       waitingPlayer = null;
     }

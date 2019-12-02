@@ -74,24 +74,24 @@ class TokiBattle{
 	    var effectiveModifier = 100-typeAdjust;
 	    var damage = power * attacker[7] / defender[8];
 	    console.log("move is " + move);
-	    if (move == "attack1") {
+	    if (move == "Waterfall") {
 	        damage += damage * (attacker[2] - typeAdjust)/STABmodifier;
 	        damage += damage * (defender[1] - typeAdjust)/effectiveModifier;
 	        damage -= damage * (defender[2] - typeAdjust)/effectiveModifier;
 	    }
 
-	    else if (move == "attack2") {
+	    else if (move == "Aerial Black") {
 	        damage += damage * (attacker[4] - typeAdjust)/STABmodifier;
 	        damage += damage * (defender[5] - typeAdjust)/effectiveModifier;
 	        damage -= damage * (defender[3] - typeAdjust)/effectiveModifier;
 	    }
 
-	    else if (move == "attack3") {
+	    else if (move == "Agile Strike") {
 	        damage += damage * (attacker[5] - typeAdjust)/STABmodifier;
 	        damage += damage * (defender[6] - typeAdjust)/effectiveModifier;
 	        damage -= damage * (defender[4] - typeAdjust)/effectiveModifier;
 	    }
-	    else if (move == "attack4") {
+	    else if (move == "Burnout") {
 	        damage += damage * (attacker[1] - typeAdjust)/STABmodifier;
 	        damage += damage * (defender[6] - typeAdjust)/effectiveModifier;
 	        damage -= damage * (defender[1] - typeAdjust)/effectiveModifier;
@@ -110,14 +110,11 @@ class TokiBattle{
 		this.turns[playerIndex] = turn; 
 		this.sendToPlayer(playerIndex, `You selected ${turn}`);
 		
-
-		console.log("toki wthin onTurn " + toki[0]);
-
-		console.log("toki wthin onTurn " + poke[0]);		
+		toki = teamToki[0];
+		poke = teamPoke[0];
 
 		this.resolveAttacks(toki, poke , aliveToki, alivePoke); 
 
-		//this.checkGameOver();
 	}
 
 
@@ -371,6 +368,7 @@ class TokiBattle{
 			console.log(slow[9]);
 			this.sendToPlayers(fast[0] + " used " + fastmove);
 			this.sendToPlayers(slow[0] + " took " + damage + " damage");
+			this.sendToPlayers(slow[0] + " has " + slow[9] + " HP remaining");
 
 			//////if a tokimon/pokemon dies///////
 			if(slow[9] <= 0)
@@ -434,13 +432,24 @@ class TokiBattle{
 					}
 					else {
 						this.sendToPlayers('battle over');
+						//loser redirection for toki
+						// this.players[p0].emit('redirect', destination);
+						// // winner redirection for poke
+						// this.players[p1].emit('redirect', destination);
+
+						this.players.forEach((player) => {
+							var destination = '/victory';
+							player.emit('redirect', destination);
+						})
 					}
+					
+					this.players.forEach((player) => {
+						player.emit('swapBroadcast', {description: toki[0]});
+					})
 					this.sendToPlayers(toki[0] + ' got swapped in');
-					// var tokiDead = true;
-					// else
-					// {
-					// 	//send to winscreen //////////////////////////////////////////////////
-					// }					
+
+
+					
 				}
 				else
 				{
@@ -500,13 +509,21 @@ class TokiBattle{
 					}
 					else {
 						this.sendToPlayers('battle over');
+						//loser redirection for toki
+						// this.players[p0].emit('redirect', destination);
+						// // winner redirection for poke
+						// this.players[p1].emit('redirect', destination);
+						this.players.forEach((player) => {
+							var destination = '/victory';
+							player.emit('redirect', destination);
+						})
 					}
+
+					this.players.forEach((player) => {
+						player.emit('swapBroadcast', {description: poke[0]});
+					})
 					this.sendToPlayers(poke[0] + ' got swapped in');
-					// var tokiDead = true;
-					// else
-					// {
-					// 	//send to winscreen //////////////////////////////////////////////////
-					// }					
+				
 				}
 
 
@@ -519,6 +536,7 @@ class TokiBattle{
 				console.log(fast[9]);
 				this.sendToPlayers(slow[0] + " used " + slowmove);
 				this.sendToPlayers(fast[0] + " took " + damage + " damage");
+				this.sendToPlayers(fast[0] + " has " + fast[9] + " HP remaining");
 
 				//////if a tokimon/pokemon dies///////
 				if(fast[9] <= 0)
@@ -583,13 +601,23 @@ class TokiBattle{
 						}
 						else {
 							this.sendToPlayers('battle over');
+
+							//loser redirection for toki
+							// this.players[p0].emit('redirect', destination);
+							// // winner redirection for poke
+							// this.players[p1].emit('redirect', destination);
+							this.players.forEach((player) => {
+								        var  destination = '/victory';
+							player.emit('redirect', destination);
+						})
+
 						}
+
+						this.players.forEach((player) => {
+							player.emit('swapBroadcast', {description: toki[0]});
+						})
 						this.sendToPlayers(toki[0] + ' got swapped in');
-						// var tokiDead = true;
-						// else
-						// {
-						// 	//send to winscreen //////////////////////////////////////////////////
-						// }					
+			
 					}
 					else
 					{
@@ -649,13 +677,22 @@ class TokiBattle{
 						}
 						else {
 							this.sendToPlayers('battle over');
+
+							//loser redirection for toki
+							// this.players[p1].emit('redirect', destination);
+							// // winner redirection for poke
+							// this.players[p0].emit('redirect', destination);
+							this.players.forEach((player) => {
+								       var destination = '/victory';
+							player.emit('redirect', destination);
+						})
 						}
+
+						this.players.forEach((player) => {
+							player.emit('swapBroadcast', {description: poke[0]});
+						})
 						this.sendToPlayers(poke[0] + ' got swapped in');
-						// var tokiDead = true;
-						// else
-						// {
-						// 	//send to winscreen //////////////////////////////////////////////////
-						// }					
+					
 					}
 
 				}
