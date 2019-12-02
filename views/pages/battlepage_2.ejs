@@ -87,19 +87,59 @@
   </div>
   <br>
   <br>
+
+
   <div class = "b3">
   <div title="tokimon gif2">
-      <iframe id="gif0" src="https://giphy.com/embed/Myp2C0iWDMh2g" frameborder="0" width="80" height="90" class="giphy-embed" style="pointer-events: none;"></iframe>
+
+      <iframe id="rightToki" src="https://giphy.com/embed/cLl4Db3byHH4AOKe3F" frameborder="0" width="80" height="90" class="giphy-embed" style="pointer-events: none;"></iframe>
+
       <div class = "leftGif">
-      <iframe id="gif0" src="https://giphy.com/embed/Myp2C0iWDMh2g" frameborder="0" width="80" height="90" class="giphy-embed" style="pointer-events: none;"></iframe>
-  </div>
+
+      <iframe id="leftPoke" src="https://giphy.com/embed/Myp2C0iWDMh2g" frameborder="0" width="80" height="90" class="giphy-embed" style="pointer-events: none;"></iframe>
+      
+      </div>
+
+
+
   <div  style = "display:none;">
+<!--     the pokemon -->
       <iframe id="gif1" src="https://giphy.com/embed/Myp2C0iWDMh2g" frameborder="0" width="80" height="90" class="giphy-embed" style="pointer-events: none;"></iframe>
       <iframe id="gif2"  src="https://giphy.com/embed/iIlxok6eMBeBW" width="384" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
       <iframe id="gif3" src="https://giphy.com/embed/mBp5qOyg2HjvlhGU09" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
       <iframe id="gif4" src="https://giphy.com/embed/z8OcWLLk4SrpS" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
       <iframe id="gif5" src="https://giphy.com/embed/GltC4HZLjJLvq" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
       <iframe id="gif6" src="https://giphy.com/embed/Owb158OZlURQA" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+
+<!--       the tokimon -->
+
+
+<!--       killamonjaro -->
+      <iframe id="toki0A" src="https://giphy.com/embed/cLl4Db3byHH4AOKe3F" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="toki0B" src="https://giphy.com/embed/fqhyp7k335xD6cpHz3" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+<!--       fungust -->
+      <iframe id="toki1A" src="https://giphy.com/embed/IgXJiugnfMwPkEpFX2" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="toki1B" src="https://giphy.com/embed/XEZjiAqcZWXrPUsZ1x" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+
+<!--       bobby -->
+      <iframe id="toki2A" src="https://giphy.com/embed/WUIda5VPUNPLJdfKIL" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="toki2B" src="https://giphy.com/embed/JR0VORq8UozRwh7Thb" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+<!--       conyvor -->
+      <iframe id="toki3A" src="https://giphy.com/embed/dVuo3Rq4nO5JPKBwve" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="toki3B" src="https://giphy.com/embed/LrRFdf1P7OGclKNO8r" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+
+<!--       drygon -->
+      <iframe id="toki4A" src="https://giphy.com/embed/mBSD4fY9FC5oMeJmm6" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="toki4B" src="https://giphy.com/embed/RGXNe5I5LGAWlXygJS" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <!-- stumpy -->
+      <iframe id="toki5A" src="https://giphy.com/embed/Z9WJJxRKVY5CsC4DR3" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="toki5B" src="https://giphy.com/embed/RNWadB4LfyiY0xTvK4" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+
+
+
+
+
+
 
   </div>
 </div>
@@ -136,10 +176,7 @@
               <button id = "say"> Say </button> 
             </form>
           
-            <button id = "rock" class ="turn"> Rock </button>
-            <button id = "paper" class ="turn"> Paper </button>
-            <button id = "scissors" class ="turn"> Scissors </button>
-  
+ 
           </div>
         </div>
       </center>
@@ -177,13 +214,6 @@
       };
 
       const addButtonListeners = () => {
-        ['rock', 'paper', 'scissors'].forEach((id) =>{
-          const button = document.getElementById(id);
-          button.addEventListener('click', () => {
-            socket.emit('turn', id);
-          });
-        });
-
         // attack button functionaliity. 
         ['attack1', 'attack2', 'attack3', 'attack4'].forEach((id) => {
           const button = document.getElementById(id);
@@ -212,9 +242,88 @@
 
 
       socket.on('swapBroadcast', function(data){
-        alert(data.description);
+        // pokemon portion
+        if(data.description == "Charmander")
+        {
+          document.getElementById("leftPoke").src =  document.getElementById("gif1").src;
+        }
+        if(data.description == "Gastergar")
+        {
+          document.getElementById("leftPoke").src =  document.getElementById("gif4").src;
+        }
+        if(data.description == "Pikachu")
+        {
+                 document.getElementById("leftPoke").src =  document.getElementById("gif2").src;
+        }
+        if(data.description == "Squirtle")
+        {
+                 document.getElementById("leftPoke").src =  document.getElementById("gif5").src;
+        }
+        if(data.description == "Bellsprout")
+        {
+                 document.getElementById("leftPoke").src =  document.getElementById("gif3").src;
+        }
+        if(data.description == "Bulbasaur")
+        {
+                 document.getElementById("leftPoke").src =  document.getElementById("gif6").src;
+        }
+
+        //tokimon section
+        if(data.description == "Kilimonjaro")
+        {
+          document.getElementById("rightToki").src =  document.getElementById("toki0A").src;
+        }
+        if(data.description == "Fungust")
+        {
+          document.getElementById("rightToki").src =  document.getElementById("toki1A").src;
+        }
+        if(data.description == "Bobby")
+        {
+                 document.getElementById("rightToki").src =  document.getElementById("toki2A").src;
+        }
+        if(data.description == "Conyvore")
+        {
+                 document.getElementById("rightToki").src =  document.getElementById("toki3A").src;
+        }
+        if(data.description == "Drygon")
+        {
+                 document.getElementById("rightToki").src =  document.getElementById("toki4A").src;
+        }
+        if(data.description == "Stumpy")
+        {
+                 document.getElementById("rightToki").src =  document.getElementById("toki5A").src;
+        }        
+
       })
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      // if(document.getElementById(id) == toki2)
+      // {
+      //   document.getElementById("gif0").src =  document.getElementById("gif2").src;
+      // }
 
 ////////////ready button code////////////
 

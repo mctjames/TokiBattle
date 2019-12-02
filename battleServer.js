@@ -17,7 +17,7 @@
 	var bulbasaur = ["Bulbasaur", 45, 45, 26, 24, 93, 26, 23, 75, 34, 68, "https://giphy.com/stickers/bowz-ffrh-jUzq0gWDDMB3CiGnOr", "https://giphy.com/stickers/bowz-ffrh-UTY2bNeQJSUkofYlrp"];
 	var squirtle = ["Squirtle", 4, 92, 28, 47, 31, 53, 40, 90, 50, 20, "https://giphy.com/stickers/bowz-ffrh-XEVPdxchKc9i5dRkKF", "https://giphy.com/stickers/bowz-ffrh-ftpl2KPZURk39KqawY"];
 	
-	var teamPoke = [charmander, pikachu, gastergar, bellsprout, bulbasaur, squirtle];
+	var teamPoke = [charmander, gastergar, pikachu, squirtle, bellsprout, bulbasaur, ];
 		
 
 
@@ -679,50 +679,6 @@ class TokiBattle{
 		};
 	}
 
-
-
-
-
-
-	getGameResult(){
-		const p0 = this.decodeTurn(this.turns[0]);
-		const p1 = this.decodeTurn(this.turns[1]);
-
-		const distance = (p1 - p0 + 3) % 3;
-
-		switch(distance){
-			case 0:
-				// draw
-				this.sendToPlayers('Draw!');
-				break;
-			case 1:
-				// p0 won
-				this.sendWinMessage(this.players[0], this.players[1]);
-				break;
-			case 2:
-				// p1 won
-				this.sendWinMessage(this.players[1], this.players[0]);
-				break;
-		}
-	}
-
-	decodeTurn(turn){
-		switch (turn){
-			case 'rock':
-				return 0;
-			case 'scissors':
-				return 1;
-			case 'paper':
-				return 2;	
-			default:
-				throw new Error(`could not decode turn ${turn}`)							
-		}
-	}
-
-	sendWinMessage(winner, loser){
-		winner.emit('message', 'You Won!');
-		loser.emit('message', 'You lost!');
-	}
 
 
 }

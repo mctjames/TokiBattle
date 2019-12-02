@@ -132,6 +132,22 @@ div.tokimonSelection{
   }
 
 
+  #leftPoke{
+    width: 400px;
+    height: 300px;
+    margin-left: 50%;
+
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+  }
+
+  #rightToki{
+    width: 400px;
+    height: 300px;
+    margin-left: 50%;
+  }
+
+
   #gif1{
     width: 400px;
     height: 300px;
@@ -159,6 +175,67 @@ div.tokimonSelection{
     margin-left: 50%;
   }
   #gif6{
+    width: 400px;
+    height: 300px;
+    margin-left: 50%;
+  }
+
+  #toki0A{
+    width: 400px;
+    height: 300px;
+    margin-left: 50%;
+  }
+  #toki0B{
+    width: 400px;
+    height: 300px;
+    margin-left: 50%;
+  }
+  #toki1A{
+    width: 400px;
+    height: 300px;
+    margin-left: 50%;
+  }
+  #toki1B{
+    width: 400px;
+    height: 300px;
+    margin-left: 50%;
+  }
+  #toki2A{
+    width: 400px;
+    height: 300px;
+    margin-left: 50%;
+  }
+  #toki2B{
+    width: 400px;
+    height: 300px;
+    margin-left: 50%;
+  }
+  #toki3A{
+    width: 400px;
+    height: 300px;
+    margin-left: 50%;
+  }
+  #toki3B{
+    width: 400px;
+    height: 300px;
+    margin-left: 50%;
+  }
+  #toki4A{
+    width: 400px;
+    height: 300px;
+    margin-left: 50%;
+  }
+  #toki4B{
+    width: 400px;
+    height: 300px;
+    margin-left: 50%;
+  }
+  #toki5A{
+    width: 400px;
+    height: 300px;
+    margin-left: 50%;
+  }
+  #toki5B{
     width: 400px;
     height: 300px;
     margin-left: 50%;
