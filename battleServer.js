@@ -178,173 +178,194 @@ class TokiBattle{
 			//swap 1
 			if(turns[0] == 'swap1' && turns[1])
 			{
-				var temp = teamToki[0];
-				teamToki[0] = teamToki[1];
-				teamToki[1] = temp;
-				toki = teamToki[0];
-				temp = aliveToki[0];
-				aliveToki[0] = aliveToki[1];
-				aliveToki[1] = temp;
-				console.log(toki);
-				this.sendToPlayers('player 0 swapped to ' + toki[0]);
+				console.log(aliveToki);
+				// if (aliveToki[1] == true) {
+					var temp = teamToki[0];
+					teamToki[0] = teamToki[1];
+					teamToki[1] = temp;
+					toki = teamToki[0];
+					temp = aliveToki[0];
+					aliveToki[0] = aliveToki[1];
+					aliveToki[1] = temp;
+					console.log(toki);
+					this.sendToPlayers('player 0 swapped to ' + toki[0]);
 
-				//send current tokimon to ejs page. 
-				this.players.forEach((player) => {
-					player.emit('swapBroadcast', {description: toki[0]});
-				})
+					//send current tokimon to ejs page. 
+					this.players.forEach((player) => {
+						player.emit('swapBroadcast', {description: toki[0]});
+					})
+				// }
 				turns[0] = "Nothing";
 			}
 			if(turns[1] == 'swap1' && turns[0])
 			{
-				var temp = teamPoke[0];
-				teamPoke[0] = teamPoke[1];
-				teamPoke[1] = temp;
-				poke = teamPoke[0];
-				temp = alivePoke[0];
-				alivePoke[0] = alivePoke[1];
-				alivePoke[1] = temp;
-				console.log(poke);
-				this.sendToPlayers('player 1 swapped to ' + poke[0]);
-				this.players.forEach((player) => {
-					player.emit('swapBroadcast', {description: poke[0]});
-				})
-				turns[1] = "Nothing";		
+				// if (alivePoke[1] == true) {
+					var temp = teamPoke[0];
+					teamPoke[0] = teamPoke[1];
+					teamPoke[1] = temp;
+					poke = teamPoke[0];
+					temp = alivePoke[0];
+					alivePoke[0] = alivePoke[1];
+					alivePoke[1] = temp;
+					console.log(poke);
+					this.sendToPlayers('player 1 swapped to ' + poke[0]);
+					this.players.forEach((player) => {
+						player.emit('swapBroadcast', {description: poke[0]});
+					})
+				// }
+				turns[1] = "Nothing";	
 			}
 			//swap 2
 			if(turns[0] == 'swap2' && turns[1])
 			{
-				var temp = teamToki[0];
-				teamToki[0] = teamToki[2];
-				teamToki[2] = temp;
-				toki = teamToki[0];
-				temp = aliveToki[0];
-				aliveToki[0] = aliveToki[2];
-				aliveToki[2] = temp;
-				console.log(toki);
-				this.sendToPlayers('player 0 swapped to ' + toki[0]);
+				// if (aliveToki[2] == true) {
+					var temp = teamToki[0];
+					teamToki[0] = teamToki[2];
+					teamToki[2] = temp;
+					toki = teamToki[0];
+					temp = aliveToki[0];
+					aliveToki[0] = aliveToki[2];
+					aliveToki[2] = temp;
+					console.log(toki);
+					this.sendToPlayers('player 0 swapped to ' + toki[0]);
 
-				//send current tokimon to ejs page. 
-				this.players.forEach((player) => {
-					player.emit('swapBroadcast', {description: toki[0]});
-				})
-				turns[0] = "Nothing";			
+					//send current tokimon to ejs page. 
+					this.players.forEach((player) => {
+						player.emit('swapBroadcast', {description: toki[0]});
+					})
+				// }
+				turns[0] = "Nothing";		
 			}
 			if(turns[1] == 'swap2' && turns[0])
 			{
-				var temp = teamPoke[0];
-				teamPoke[0] = teamPoke[2];
-				teamPoke[2] = temp;
-				poke = teamPoke[0];
-				temp = alivePoke[0];
-				alivePoke[0] = alivePoke[2];
-				alivePoke[2] = temp;
-				console.log(poke);
-				this.sendToPlayers('player 1 swapped to ' + poke[0]);
-				this.players.forEach((player) => {
-					player.emit('swapBroadcast', {description: poke[0]});
-				})
+				// if (alivePoke[2] == true) {
+					var temp = teamPoke[0];
+					teamPoke[0] = teamPoke[2];
+					teamPoke[2] = temp;
+					poke = teamPoke[0];
+					temp = alivePoke[0];
+					alivePoke[0] = alivePoke[2];
+					alivePoke[2] = temp;
+					console.log(poke);
+					this.sendToPlayers('player 1 swapped to ' + poke[0]);
+					this.players.forEach((player) => {
+						player.emit('swapBroadcast', {description: poke[0]});
+					})
+				// }
 				turns[1] = "Nothing";
 			}
 			//swap3
 			if(turns[0] == 'swap3' && turns[1])
 			{
-				var temp = teamToki[0];
-				teamToki[0] = teamToki[3];
-				teamToki[3] = temp;
-				toki = teamToki[0];
-				temp = aliveToki[0];
-				aliveToki[0] = aliveToki[3];
-				aliveToki[3] = temp;
-				console.log(toki);
-				this.sendToPlayers('player 0 swapped to ' + toki[0]);
-				//send current tokimon to ejs page. 
-				this.players.forEach((player) => {
-					player.emit('swapBroadcast', {description: toki[0]});
-				})
+				// if (aliveToki[3] == true) {
+					var temp = teamToki[0];
+					teamToki[0] = teamToki[3];
+					teamToki[3] = temp;
+					toki = teamToki[0];
+					temp = aliveToki[0];
+					aliveToki[0] = aliveToki[3];
+					aliveToki[3] = temp;
+					console.log(toki);
+					this.sendToPlayers('player 0 swapped to ' + toki[0]);
+					//send current tokimon to ejs page. 
+					this.players.forEach((player) => {
+						player.emit('swapBroadcast', {description: toki[0]});
+					})
+				// }
 				turns[0] = "Nothing";
 			}
 			if(turns[1] == 'swap3' && turns[0])
 			{
-				var temp = teamPoke[0];
-				teamPoke[0] = teamPoke[3];
-				teamPoke[3] = temp;
-				poke = teamPoke[0];
-				temp = alivePoke[0];
-				alivePoke[0] = alivePoke[3];
-				alivePoke[3] = temp;
-				console.log(poke);
-				this.sendToPlayers('player 1 swapped to ' + poke[0]);
-				this.players.forEach((player) => {
-					player.emit('swapBroadcast', {description: poke[0]});
-				})
+				// if (alivePoke[3] == true) {
+					var temp = teamPoke[0];
+					teamPoke[0] = teamPoke[3];
+					teamPoke[3] = temp;
+					poke = teamPoke[0];
+					temp = alivePoke[0];
+					alivePoke[0] = alivePoke[3];
+					alivePoke[3] = temp;
+					console.log(poke);
+					this.sendToPlayers('player 1 swapped to ' + poke[0]);
+					this.players.forEach((player) => {
+						player.emit('swapBroadcast', {description: poke[0]});
+					})
+				// }
 				turns[1] = "Nothing";
 			}
 			//swap 4
 			if(turns[0] == 'swap4' && turns[1])
 			{
-				var temp = teamToki[0];
-				teamToki[0] = teamToki[4];
-				teamToki[4] = temp;
-				toki = teamToki[0];
-				temp = aliveToki[0];
-				aliveToki[0] = aliveToki[4];
-				aliveToki[4] = temp;
-			    console.log(toki);
-			    this.sendToPlayers('player 0 swapped to ' + toki[0]);
-			    //send current tokimon to ejs page. 
-				this.players.forEach((player) => {
-					player.emit('swapBroadcast', {description: toki[0]});
-				})
+				// if (aliveToki[4] == true) {
+					var temp = teamToki[0];
+					teamToki[0] = teamToki[4];
+					teamToki[4] = temp;
+					toki = teamToki[0];
+					temp = aliveToki[0];
+					aliveToki[0] = aliveToki[4];
+					aliveToki[4] = temp;
+					console.log(toki);
+					this.sendToPlayers('player 0 swapped to ' + toki[0]);
+					//send current tokimon to ejs page. 
+					this.players.forEach((player) => {
+						player.emit('swapBroadcast', {description: toki[0]});
+					})
+				// }
 			    turns[0] = "Nothing";
 			}
 			if(turns[1] == 'swap4' && turns[0])
 			{
-				var temp = teamPoke[0];
-				teamPoke[0] = teamPoke[4];
-				teamPoke[4] = temp;
-				poke = teamPoke[0];
-				temp = alivePoke[0];
-				alivePoke[0] = alivePoke[4];
-				alivePoke[4] = temp;
-			    console.log(poke);
-			    this.sendToPlayers('player 1 swapped to ' + poke[0]);
-			    this.players.forEach((player) => {
-					player.emit('swapBroadcast', {description: poke[0]});
-				})
-			    turns[1] = "Nothing";
+				// if (alivePoke[4] == true) {
+					var temp = teamPoke[0];
+					teamPoke[0] = teamPoke[4];
+					teamPoke[4] = temp;
+					poke = teamPoke[0];
+					temp = alivePoke[0];
+					alivePoke[0] = alivePoke[4];
+					alivePoke[4] = temp;
+					console.log(poke);
+					this.sendToPlayers('player 1 swapped to ' + poke[0]);
+					this.players.forEach((player) => {
+						player.emit('swapBroadcast', {description: poke[0]});
+					})
+				// }
+				turns[1] = "Nothing";
 			}
 			//swap5
 			if(turns[0] == 'swap5' && turns[1])
 			{
-				var temp = teamToki[0];
-				teamToki[0] = teamToki[5];
-				teamToki[5] = temp;
-				toki = teamToki[0];
-				temp = aliveToki[0];
-				aliveToki[0] = aliveToki[5];
-				aliveToki[5] = temp;
-			    console.log(toki);
-			    this.sendToPlayers('player 0 swapped to ' + toki[0]);
-			    //send current tokimon to ejs page. 
-				this.players.forEach((player) => {
-					player.emit('swapBroadcast', {description: toki[0]});
-				})
+				// if (aliveToki[5] == true) {
+					var temp = teamToki[0];
+					teamToki[0] = teamToki[5];
+					teamToki[5] = temp;
+					toki = teamToki[0];
+					temp = aliveToki[0];
+					aliveToki[0] = aliveToki[5];
+					aliveToki[5] = temp;
+					console.log(toki);
+					this.sendToPlayers('player 0 swapped to ' + toki[0]);
+					//send current tokimon to ejs page. 
+					this.players.forEach((player) => {
+						player.emit('swapBroadcast', {description: toki[0]});
+					})
+				// }
 			    turns[0] = "Nothing";
 			}
 			if(turns[1] == 'swap5' && turns[0])
 			{
-				var temp = teamPoke[0];
-				teamPoke[0] = teamPoke[5];
-				teamPoke[5] = temp;
-				poke = teamPoke[0];
-				temp = alivePoke[0];
-				alivePoke[0] = alivePoke[5];
-				alivePoke[5] = temp;
-			    console.log(poke);
-			    this.sendToPlayers('player 1 swapped to ' + poke[0]);
-			    this.players.forEach((player) => {
-					player.emit('swapBroadcast', {description: poke[0]});
-				})
+				// if (alivePoke[5] == true) {
+					var temp = teamPoke[0];
+					teamPoke[0] = teamPoke[5];
+					teamPoke[5] = temp;
+					poke = teamPoke[0];
+					temp = alivePoke[0];
+					alivePoke[0] = alivePoke[5];
+					alivePoke[5] = temp;
+					console.log(poke);
+					this.sendToPlayers('player 1 swapped to ' + poke[0]);
+					this.players.forEach((player) => {
+						player.emit('swapBroadcast', {description: poke[0]});
+					})
+				// }
 			    turns[1] = "Nothing";
 			}
 					
@@ -366,9 +387,11 @@ class TokiBattle{
 			}
 		
 			/////////damage/////////////
-			slow[9] -= this.damageCalc(fastmove, fast, slow);
+			var damage = this.damageCalc(fastmove, fast, slow);
+			slow[9] -= damage;
 			console.log(slow[9]);
-
+			this.sendToPlayers(fast[0] + " used " + fastmove);
+			this.sendToPlayers(slow[0] + " took " + damage + " damage");
 			//////if a tokimon/pokemon dies///////
 			if(slow[9] <= 0)
 			{
@@ -511,9 +534,12 @@ class TokiBattle{
 			else
 			//////if the slow tokimon/pokemon didn't die, it gets to attack now///////
 			{
-				fast[9] -= this.damageCalc(slowmove, slow, fast);
+				var damage = this.damageCalc(slowmove, slow, fast);
+				fast[9] -= damage;
 				console.log(fast[9]);
-
+				this.sendToPlayers(slow[0] + " used " + slowmove);
+				this.sendToPlayers(fast[0] + " took " + damage + " damage");
+				
 				//////if a tokimon/pokemon dies///////
 				if(fast[9] <= 0)
 				{
