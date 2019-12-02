@@ -148,6 +148,12 @@ class TokiBattle{
 				aliveToki[0] = temp;
 				console.log(toki);
 				this.sendToPlayers('player 0 swapped to ' + toki[0]);
+
+				//send current tokimon to ejs page. 
+				this.players.forEach((player) => {
+					player.emit('swapBroadcast', {description: toki[0]});
+				})
+
 				turns[0] = "Nothing";
 			}
 			if(turns[1] == 'swap0' && turns[0])
@@ -161,6 +167,12 @@ class TokiBattle{
 				alivePoke[0] = temp;
 				console.log(poke);
 				this.sendToPlayers('player 1 swapped to ' + poke[0]);
+
+				//send current pokemon to ejs page. 
+				this.players.forEach((player) => {
+					player.emit('swapBroadcast', {description: poke[0]});
+				})
+
 				turns[1] = "Nothing";
 			}
 			//swap 1
@@ -175,6 +187,11 @@ class TokiBattle{
 				aliveToki[1] = temp;
 				console.log(toki);
 				this.sendToPlayers('player 0 swapped to ' + toki[0]);
+
+				//send current tokimon to ejs page. 
+				this.players.forEach((player) => {
+					player.emit('swapBroadcast', {description: toki[0]});
+				})
 				turns[0] = "Nothing";
 			}
 			if(turns[1] == 'swap1' && turns[0])
@@ -188,6 +205,9 @@ class TokiBattle{
 				alivePoke[1] = temp;
 				console.log(poke);
 				this.sendToPlayers('player 1 swapped to ' + poke[0]);
+				this.players.forEach((player) => {
+					player.emit('swapBroadcast', {description: poke[0]});
+				})
 				turns[1] = "Nothing";		
 			}
 			//swap 2
@@ -202,6 +222,11 @@ class TokiBattle{
 				aliveToki[2] = temp;
 				console.log(toki);
 				this.sendToPlayers('player 0 swapped to ' + toki[0]);
+
+				//send current tokimon to ejs page. 
+				this.players.forEach((player) => {
+					player.emit('swapBroadcast', {description: toki[0]});
+				})
 				turns[0] = "Nothing";			
 			}
 			if(turns[1] == 'swap2' && turns[0])
@@ -215,6 +240,9 @@ class TokiBattle{
 				alivePoke[2] = temp;
 				console.log(poke);
 				this.sendToPlayers('player 1 swapped to ' + poke[0]);
+				this.players.forEach((player) => {
+					player.emit('swapBroadcast', {description: poke[0]});
+				})
 				turns[1] = "Nothing";
 			}
 			//swap3
@@ -229,6 +257,10 @@ class TokiBattle{
 				aliveToki[3] = temp;
 				console.log(toki);
 				this.sendToPlayers('player 0 swapped to ' + toki[0]);
+				//send current tokimon to ejs page. 
+				this.players.forEach((player) => {
+					player.emit('swapBroadcast', {description: toki[0]});
+				})
 				turns[0] = "Nothing";
 			}
 			if(turns[1] == 'swap3' && turns[0])
@@ -242,6 +274,9 @@ class TokiBattle{
 				alivePoke[3] = temp;
 				console.log(poke);
 				this.sendToPlayers('player 1 swapped to ' + poke[0]);
+				this.players.forEach((player) => {
+					player.emit('swapBroadcast', {description: poke[0]});
+				})
 				turns[1] = "Nothing";
 			}
 			//swap 4
@@ -256,6 +291,10 @@ class TokiBattle{
 				aliveToki[4] = temp;
 			    console.log(toki);
 			    this.sendToPlayers('player 0 swapped to ' + toki[0]);
+			    //send current tokimon to ejs page. 
+				this.players.forEach((player) => {
+					player.emit('swapBroadcast', {description: toki[0]});
+				})
 			    turns[0] = "Nothing";
 			}
 			if(turns[1] == 'swap4' && turns[0])
@@ -269,6 +308,9 @@ class TokiBattle{
 				alivePoke[4] = temp;
 			    console.log(poke);
 			    this.sendToPlayers('player 1 swapped to ' + poke[0]);
+			    this.players.forEach((player) => {
+					player.emit('swapBroadcast', {description: poke[0]});
+				})
 			    turns[1] = "Nothing";
 			}
 			//swap5
@@ -283,6 +325,10 @@ class TokiBattle{
 				aliveToki[5] = temp;
 			    console.log(toki);
 			    this.sendToPlayers('player 0 swapped to ' + toki[0]);
+			    //send current tokimon to ejs page. 
+				this.players.forEach((player) => {
+					player.emit('swapBroadcast', {description: toki[0]});
+				})
 			    turns[0] = "Nothing";
 			}
 			if(turns[1] == 'swap5' && turns[0])
@@ -296,6 +342,9 @@ class TokiBattle{
 				alivePoke[5] = temp;
 			    console.log(poke);
 			    this.sendToPlayers('player 1 swapped to ' + poke[0]);
+			    this.players.forEach((player) => {
+					player.emit('swapBroadcast', {description: poke[0]});
+				})
 			    turns[1] = "Nothing";
 			}
 					
