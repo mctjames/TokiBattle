@@ -9,15 +9,16 @@
   <div id= "battle">
       <div id="b"> 
               <div class="column">
-                  <button class="btn item1"><img id="toki1" src="/stylesheets/pictures/squirt.png" style="width:80%" onclick="changeImage(id)"></button>
-                  <button class="btn item2"><img id="toki2" src="/stylesheets/pictures/squirt2.png" style="width:80%" onclick="changeImage(id)"></button>
-                  <button class="btn item3"><img id="toki3" src="/stylesheets/pictures/squirt3.png" style="width:80%" onclick="changeImage(id)"></button>
-
-              </div>
-              <div class="column2">
-                  <button class="btn item4"><img id="toki4" src="/stylesheets/pictures/squirt4.png" style="width:80%" onclick="changeImage(id)"></button>
-                  <button class="btn item5"><img id="toki5" src="/stylesheets/pictures/squirt5.png" style="width:80%" onclick="changeImage(id)"></button>
-                  <button class="btn item6"><img id="toki6" src="/stylesheets/pictures/squirt6.png" style="width:80%" onclick="changeImage(id)"></button>
+                  <% var count = 0 %>
+                  <% rows.forEach((r) => { %>
+                    <% var toki_num = 1 %>
+                    <button class="btn item<%= ++count %>"><img id="toki<%= count %>" src="<%= r.piclink %>" style="width:80%" onclick="changeImage(id)"></button>
+                    <input type="text" id="move<%= count %><%= toki_num++ %>" value="<%= r.move1 %>">
+                    <input type="text" id="move<%= count %><%= toki_num++ %>" value="<%= r.move2 %>">
+                    <input type="text" id="move<%= count %><%= toki_num++ %>" value="<%= r.move3 %>">
+                    <input type="text" id="move<%= count %><%= toki_num++ %>" value="<%= r.move4 %>">
+                    <input type="text" id="giflink<%= count %>" value="<%= r.gif %>">
+                  <% }); %>
               </div>
               <style>
                   .btn {
@@ -40,10 +41,10 @@
 
                   </style>
                   <div>
-                    <button class="ready">Ability 1</button>
-                    <button class="ready">Ability 2</button>
-                    <button class="ready">Ability 3</button>
-                    <button class="ready">Ability 4</button>
+                    <input id="attack1"></input>
+                    <input id="attack2"></input>
+                    <input id="attack3"></input>
+                    <input id="attack4"></input>
                   </div>
                 </div>
   </div>
@@ -53,13 +54,10 @@
 
 
 
-    <iframe id="bobbyGif" src="stylesheets/gifs/bobbyFlip2.gif" class="giphy-embed" scrolling="no" frameborder="0" style="pointer-events: none;"></iframe>
-
-
-
+    <iframe id="bobbyGif" src="stylesheets/gifs/bobbyFlip2.gif" class="giphy-embed" scrolling="no" width="384" height="480"  frameborder="0" style="pointer-events: none;"></iframe>
 
     <div title="tokimon gif">
-        <iframe id="gif0" src="stylesheets/gifs/rex2.gif" scrolling="no" frameborder="0" width="80" height="90" class="giphy-embed"  style="pointer-events: none;"></iframe>
+        <iframe id="gif0" src="stylesheets/gifs/rex1.gif" scrolling="no" frameborder="0" width="80" height="90" class="giphy-embed"  style="pointer-events: none;"></iframe>
     </div>
 
 
@@ -70,7 +68,7 @@
       <iframe id="gif2"  src="stylesheets/gifs/ucorn1.gif" scrolling="no"  width="384" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
       <iframe id="gif3" src="stylesheets/gifs/jar1.gif" scrolling="no" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
       <iframe id="gif4" src="stylesheets/gifs/disco1.gif" scrolling="no"  width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
-      <iframe id="gif5" src="stylesheets/gifs/stumpy.gif" scrolling="no" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
+      <iframe id="gif5" src="stylesheets/gifs/stump1.gif" scrolling="no" width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
       <iframe id="gif6" src="stylesheets/gifs/cat1.gif" scrolling="no"  width="480" height="480" frameBorder="0" class="giphy-embed" style="pointer-events: none;"></iframe>
 
   </div>
@@ -85,27 +83,58 @@
       if(document.getElementById(id) == toki1)
       {
         console.log("its not working");
-        document.getElementById("gif0").src = document.getElementById("gif1").src;
+        document.getElementById("gif0").src = document.getElementById("giflink1").value;
+        console.log(document.getElementById("giflink1").src);
+        document.getElementById("attack1").value = document.getElementById("move11").value;
+        document.getElementById("attack2").value = document.getElementById("move12").value;
+        document.getElementById("attack3").value = document.getElementById("move13").value;
+        document.getElementById("attack4").value = document.getElementById("move14").value;
+
       }
       if(document.getElementById(id) == toki2)
       {
-        document.getElementById("gif0").src =  document.getElementById("gif2").src;
+        document.getElementById("gif0").src = document.getElementById("giflink1").value;
+        console.log(document.getElementById("giflink1").src);
+        document.getElementById("attack1").value = document.getElementById("move21").value;
+        document.getElementById("attack2").value = document.getElementById("move22").value;
+        document.getElementById("attack3").value = document.getElementById("move23").value;
+        document.getElementById("attack4").value = document.getElementById("move24").value;
       }
       if(document.getElementById(id) == toki3)
       {
-        document.getElementById("gif0").src =  document.getElementById("gif3").src;
+        document.getElementById("gif0").src = document.getElementById("giflink1").value;
+        console.log(document.getElementById("giflink1").src);
+        document.getElementById("attack1").value = document.getElementById("move31").value;
+        document.getElementById("attack2").value = document.getElementById("move32").value;
+        document.getElementById("attack3").value = document.getElementById("move33").value;
+        document.getElementById("attack4").value = document.getElementById("move34").value;
       }
       if(document.getElementById(id) == toki4)
       {
-        document.getElementById("gif0").src =  document.getElementById("gif4").src;
+        document.getElementById("gif0").src = document.getElementById("giflink1").value;
+        console.log(document.getElementById("giflink1").src);
+        document.getElementById("attack1").value = document.getElementById("move41").value;
+        document.getElementById("attack2").value = document.getElementById("move42").value;
+        document.getElementById("attack3").value = document.getElementById("move43").value;
+        document.getElementById("attack4").value = document.getElementById("move44").value;
       }
       if(document.getElementById(id) == toki5)
       {
-        document.getElementById("gif0").src =  document.getElementById("gif5").src;
+        document.getElementById("gif0").src = document.getElementById("giflink1").value;
+        console.log(document.getElementById("giflink1").src);
+        document.getElementById("attack1").value = document.getElementById("move51").value;
+        document.getElementById("attack2").value = document.getElementById("move52").value;
+        document.getElementById("attack3").value = document.getElementById("move53").value;
+        document.getElementById("attack4").value = document.getElementById("move54").value;
       }
       if(document.getElementById(id) == toki6)
       {
-        document.getElementById("gif0").src =  document.getElementById("gif6").src;
+        document.getElementById("gif0").src = document.getElementById("giflink1").value;
+        console.log(document.getElementById("giflink1").src);
+        document.getElementById("attack1").value = document.getElementById("move61").value;
+        document.getElementById("attack2").value = document.getElementById("move62").value;
+        document.getElementById("attack3").value = document.getElementById("move63").value;
+        document.getElementById("attack4").value = document.getElementById("move64").value;
       }
   
   
