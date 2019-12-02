@@ -83,12 +83,10 @@ margin-top: -40%;
 margin-right: 20%;
 }
 
-
-
 div.tokimonSelection{
-margin-right: 35%;
-margin-top: -270%
-}
+  margin-right: 35%;
+  margin-top: -270%
+  }
 
 div.b2{
   background-size: cover;
@@ -127,11 +125,6 @@ div.player1board{
 div.container{
   margin-top: -265%;
   margin-right: 40%;
-}
-
-div.tokimonSelection{
-  margin-right: -270%;
-  margin: 2%
 }
 
 #battlePosition1{
@@ -316,8 +309,108 @@ div.column4 {
   font-size: 1.0rem;
   padding: 0 5px;
   }
-  
-  button {
+
+
+  button.turn:hover {
+    background-color: #80e477;
+  }
+  #swap0{
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    padding: 15px 15px;
+    color: white;
+    line-height: 25px;
+    background-color: #e65a5a;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px;
+    transition: all 150ms ease-in;
+    outline: none;
+    margin: 3px;
+  }
+
+  #swap1{
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    padding: 15px 15px;
+    color: white;
+    line-height: 25px;
+    background-color: #e65a5a;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px;
+    transition: all 150ms ease-in;
+    outline: none;
+    margin: 3px;
+
+  }
+  #swap2{
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    padding: 15px 15px;
+    color: white;
+    line-height: 25px;
+    background-color: #e65a5a;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px;
+    transition: all 150ms ease-in;
+    outline: none;
+    margin: 3px;
+
+  }
+  #swap3{
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    padding: 15px 15px;
+    color: white;
+    line-height: 25px;
+    background-color: #e65a5a;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px;
+    transition: all 150ms ease-in;
+    outline: none;
+    margin: 3px;
+
+  }
+  #swap4{
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    padding: 15px 15px;
+    color: white;
+    line-height: 25px;
+    background-color: #e65a5a;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px;
+    transition: all 150ms ease-in;
+    outline: none;
+    margin: 3px;
+
+  }
+  #swap5{
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    padding: 15px 15px;
+    color: white;
+    line-height: 25px;
+    background-color: #e65a5a;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px;
+    transition: all 150ms ease-in;
+    outline: none;
+    margin: 3px;
+
+  }
+  button.turn {
     text-transform: uppercase;
     font-size: 0.8rem;
     padding: 3px 15px;
@@ -332,21 +425,25 @@ div.column4 {
     outline: none;
     margin: 3px;
   }
-
-  button:hover {
+  
+button#swap0:hover {
+  background-color: #80e477;
+  }
+button#swap1:hover {
     background-color: #80e477;
-  }
-  
-  button.turn {
-  color: rgb(255, 64, 129);
-  background-color: white;
-  box-shadow:none;
-  padding: 10px;
-  }
-  
-  button.turn:hover {
-  background-color: #eaeaea;
-  }
+    }
+button#swap2:hover {
+    background-color: #80e477;
+    }
+    button#swap3:hover {
+      background-color: #80e477;
+      }
+      button#swap4:hover {
+        background-color: #80e477;
+        }
+        button#swap5:hover {
+          background-color: #80e477;
+          }
   
   #events {
   flex-grow: 1;
@@ -390,21 +487,6 @@ div.column4 {
     background-color: black;
     }
 
-.turn{
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  padding: 15px 15px;
-  color: white;
-  line-height: 25px;
-  background-color: #e65a5a;
-  border: none;
-  border-radius: 2px;
-  cursor: pointer;
-  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px;
-  transition: all 150ms ease-in;
-  outline: none;
-  margin: 3px;
-}
 
 #tokiPics{
   padding: 50px;
@@ -419,6 +501,6 @@ div.column4 {
   padding: 150px;
   height: 270px;
   width: 250px;
-  margin-top: 43%;
+  margin-top: 45%;
   margin-left: -140%;
 } 
