@@ -21,7 +21,7 @@
     "express-generator": "^4.16.1",
     "express-session": "^1.17.0",
     "git": "^0.1.5",
-    "knex": "^0.20.3",
+    "knex": "^2.4.0",
     "mocha": "^6.2.2",
     "node": "^13.1.0",
     "nodejs": "0.0.0",
